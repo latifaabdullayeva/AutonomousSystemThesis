@@ -113,8 +113,8 @@ public class MainActivity extends Activity {
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        //finish();
-                        //System.exit(0);
+                        finish();
+                        System.exit(0);
                     }
                 });
                 builder.show();
@@ -127,7 +127,8 @@ public class MainActivity extends Activity {
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
                 @Override
-                public void onDismiss(DialogInterface dialog) { }
+                public void onDismiss(DialogInterface dialog) {
+                }
             });
             builder.show();
 

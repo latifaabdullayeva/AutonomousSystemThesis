@@ -7,7 +7,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.EditText;
 
-//import com.example.autonomoussystemthesis.network.HueRepository;
+import com.example.autonomoussystemthesis.network.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -26,8 +26,6 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranging);
         beaconManager = BeaconManager.getInstanceForApplication(this);
-        // -----
-        beaconManager.bind(this);
     }
 
     @Override
@@ -50,13 +48,11 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
-//        final HueRepository hueRepository = new HueRepository(
-//                "192.168.0.102",
-//                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
-//        );
+        final HueRepository hueRepository = new HueRepository(
+                "192.168.0.102",
+                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
+        );
 
-        // ---
-        beaconManager.removeAllRangeNotifiers();
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
@@ -64,29 +60,29 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     Beacon firstBeacon = beacons.iterator().next();
-//                    int brightness = (int) firstBeacon.getDistance() * 80;
-//                    if (brightness > 255) {
-//                        brightness = 255;
-//                    }
+                    int brightness = (int) firstBeacon.getDistance() * 80;
+                    if (brightness > 255) {
+                        brightness = 255;
+                    }
 
-                    // hueRepository.updateBrightness(brightness);
+                    hueRepository.updateBrightness(brightness);
 
                     if (firstBeacon.getDistance() <= 0.45) { // intimate
                         logToDisplay("Intimate Zone!!!! " +
                                 String.format("%.2f", firstBeacon.getDistance()) + " meters away.");
-//                        hueRepository.updateBrightness(255);
+                        hueRepository.updateBrightness(255);
                     } else if (firstBeacon.getDistance() >= 0.46 && firstBeacon.getDistance() <= 1.21) { // personal
                         logToDisplay("Personal Zone!!!! " +
                                 String.format("%.2f", firstBeacon.getDistance()) + " meters away.");
-//                        hueRepository.updateBrightness(180);
+                        hueRepository.updateBrightness(180);
                     } else if (firstBeacon.getDistance() >= 1.22 && firstBeacon.getDistance() <= 3.70) { // social
                         logToDisplay("Social Zone!!!! " +
                                 String.format("%.2f", firstBeacon.getDistance()) + " meters away.");
-//                        hueRepository.updateBrightness(90);
+                        hueRepository.updateBrightness(90);
                     } else if (firstBeacon.getDistance() > 3.70) { // public
                         logToDisplay("Public Zone!!!! " +
                                 String.format("%.2f", firstBeacon.getDistance()) + " meters away.");
-//                        hueRepository.updateBrightness(10);
+                        hueRepository.updateBrightness(10);
                     }
                 }
             }
