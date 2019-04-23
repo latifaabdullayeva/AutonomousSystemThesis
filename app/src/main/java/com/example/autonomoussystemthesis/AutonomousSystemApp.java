@@ -17,11 +17,20 @@ import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
 
-// Starting an App in the Background
+/* Starting an App in the Background
+The app launches itself when it first sees an beacon region.
+In order for this to work, the app must have been launched by the user at least once
+*/
 
-public class BeaconReference extends Application implements BootstrapNotifier {
-    private static final String TAG = "AutonomousSystemApp";
+/* We create class that extends Application and then we declare this in our AndroidManifest.xml,
+where we declares a custom Application class,
+and a background launch activity marked as “singleInstance */
+
+// This class launch the MainActivity as soon as any beacon is seen
+public class AutonomousSystemApp extends Application implements BootstrapNotifier {
+    private static final String TAG = ".AutonomousSystemApp";
     private RegionBootstrap regionBootstrap;
+
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MainActivity monitoringActivity = null;
@@ -29,17 +38,27 @@ public class BeaconReference extends Application implements BootstrapNotifier {
 
     public void onCreate() {
         super.onCreate();
-        BeaconManager beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
+        Log.d(TAG, "App started up");
+        BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
-        beaconManager.getBeaconParsers().clear();
+//        beaconManager.getBeaconParsers().clear();
+
+        // If we have a proprietary beacons, we find "setBeaconLayout" and get the proper expression.
+        /* beaconManager.getBeaconParsers().add(new BeaconParser()
+            .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+        in our case MacBook is served as Beacon, so for iBeacons it is 0215 */
+
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
-        beaconManager.setDebug(true);
+//        beaconManager.setDebug(true);
 
 
-        Log.d(TAG, "setting up background monitoring for beacons and power saving");
-        Region region = new Region("backgroundRegion",
+//        Log.d(TAG, "setting up background monitoring for beacons and power saving");
+
+        // wake up the app when any beacon is seen
+        //TODO: Region("backgroundRegion",
+        Region region = new Region(".boostrapRegion",
                 null, null, null);
         regionBootstrap = new RegionBootstrap(this, region);
 
@@ -63,11 +82,15 @@ public class BeaconReference extends Application implements BootstrapNotifier {
 
     @Override
     public void didEnterRegion(Region arg0) {
-        Log.d(TAG, "did enter region.");
+        Log.d(TAG, "Got a didEnterRegion call");
+        // This call to disable will make it so the activity below only gets launched the first time a beacon is seen (until the next time the app is launched)
+        // if you want the Activity to launch every single time beacons come into view, remove this call.
         if (!haveDetectedBeaconsSinceBoot) {
-            Log.d(TAG, "auto launching MainActivity");
-
+            Log.d(TAG, "automatically launch MainActivity");
             Intent intent = new Intent(this, MainActivity.class);
+            /* In the AndroidManifest.xml definition of this activity,
+            we have set android:launchMode="singleInstance" otherwise we will get two instances
+            created when a user launches the activity manually and it gets launched from here. */
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
             haveDetectedBeaconsSinceBoot = true;
@@ -79,8 +102,6 @@ public class BeaconReference extends Application implements BootstrapNotifier {
                 sendNotification();
             }
         }
-
-
     }
 
     @Override
@@ -113,9 +134,9 @@ public class BeaconReference extends Application implements BootstrapNotifier {
         notificationManager.notify(1, builder.build());
     }
 
-    public void setMonitoringActivity(MainActivity activity) {
-        this.monitoringActivity = activity;
-    }
+//    public void setMonitoringActivity(MainActivity activity) {
+//        this.monitoringActivity = activity;
+//    }
 
     private void logToDisplay(String line) {
         cumulativeLog += (line + "\n");
@@ -123,9 +144,8 @@ public class BeaconReference extends Application implements BootstrapNotifier {
             this.monitoringActivity.updateLog(cumulativeLog);
         }
     }
-
-    public String getLog() {
-        return cumulativeLog;
-    }
+//    public String getLog() {
+//        return cumulativeLog;
+//    }
 
 }
