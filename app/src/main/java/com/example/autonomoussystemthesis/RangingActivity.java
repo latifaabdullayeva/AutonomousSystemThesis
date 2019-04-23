@@ -48,6 +48,15 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
+        // in order to discover the IpAdress of the bridge, we used https://discovery.meethue.com/
+        // Once we have the address load the test app by visiting https://<bridge ip address>/debug/clip.html
+        // We need to use the randomly generated username that the bridge creates for you.
+        // Fill in the info below and press the POST button, after that press the link button on bridge.
+        // URL	/api
+        // Body	{"devicetype":"newDeveloper"}
+        // Method	POST
+        // the Command Response will show you a username
+        // The documentation of Hue Api is "https://developers.meethue.com/develop/get-started-2/"
         final HueRepository hueRepository = new HueRepository(
                 "192.168.0.102",
                 "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
