@@ -31,6 +31,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
     private static final String TAG = ".AutonomousSystemApp";
     private RegionBootstrap regionBootstrap;
 
+    // Auto Battery Saving
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MainActivity monitoringActivity = null;
@@ -41,20 +42,17 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         Log.d(TAG, "App started up");
         BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
-//        beaconManager.getBeaconParsers().clear();
+        beaconManager.getBeaconParsers().clear();
 
         // If we have a proprietary beacons, we find "setBeaconLayout" and get the proper expression.
         /* beaconManager.getBeaconParsers().add(new BeaconParser()
             .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         in our case MacBook is served as Beacon, so for iBeacons it is 0215 */
-
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
-//        beaconManager.setDebug(true);
+        beaconManager.setDebug(true);
 
-
-//        Log.d(TAG, "setting up background monitoring for beacons and power saving");
 
         // wake up the app when any beacon is seen
         //TODO: Region("backgroundRegion",
@@ -62,8 +60,8 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
                 null, null, null);
         regionBootstrap = new RegionBootstrap(this, region);
 
+        // enables auto battery saving of about 60%
         backgroundPowerSaver = new BackgroundPowerSaver(this);
-
     }
 
     public void disableMonitoring() {
@@ -134,9 +132,9 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         notificationManager.notify(1, builder.build());
     }
 
-//    public void setMonitoringActivity(MainActivity activity) {
-//        this.monitoringActivity = activity;
-//    }
+    public void setMonitoringActivity(MainActivity activity) {
+        this.monitoringActivity = activity;
+    }
 
     private void logToDisplay(String line) {
         cumulativeLog += (line + "\n");
@@ -144,8 +142,8 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
             this.monitoringActivity.updateLog(cumulativeLog);
         }
     }
-//    public String getLog() {
-//        return cumulativeLog;
-//    }
+    public String getLog() {
+        return cumulativeLog;
+    }
 
 }
