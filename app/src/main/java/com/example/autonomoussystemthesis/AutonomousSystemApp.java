@@ -51,7 +51,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
-        beaconManager.setDebug(true);
+        BeaconManager.setDebug(true);
 
 
         // wake up the app when any beacon is seen

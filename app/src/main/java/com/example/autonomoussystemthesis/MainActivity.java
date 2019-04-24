@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -139,7 +139,7 @@ public class MainActivity extends Activity {
     public void updateLog(final String log) {
         runOnUiThread(new Runnable() {
             public void run() {
-                EditText editText = (EditText) MainActivity.this
+                EditText editText = MainActivity.this
                         .findViewById(R.id.monitoringText);
                 editText.setText(log);
             }
