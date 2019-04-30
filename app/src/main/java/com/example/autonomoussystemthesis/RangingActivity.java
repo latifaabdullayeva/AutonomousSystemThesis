@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.autonomoussystemthesis.data.DatabaseHelper;
+//import com.example.autonomoussystemthesis.data.DatabaseHelper;
 import com.example.autonomoussystemthesis.network.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
@@ -29,7 +29,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     private BeaconManager beaconManager;
 
     // database
-    DatabaseHelper autonomousSystemDatabase;
+//    DatabaseHelper autonomousSystemDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         setContentView(R.layout.activity_ranging);
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
-        autonomousSystemDatabase = new DatabaseHelper(this);
+//        autonomousSystemDatabase = new DatabaseHelper(this);
     }
 
     @Override
@@ -91,9 +91,9 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                     if (firstBeacon.getDistance() <= 0.45) { // intimate
                         Log.d(TAG, "Intimate Zone!!!! " + round(firstBeacon.getDistance() * 100) + " cm away.");
                         hueRepository.updateBrightness(255);
-                        if (firstBeacon.getDistance() >= 0.10 && firstBeacon.getDistance() <= 0.12) {
-                            AddData((int) round(firstBeacon.getDistance() * 100));
-                        }
+//                        if (firstBeacon.getDistance() >= 0.10 && firstBeacon.getDistance() <= 0.12) {
+//                            AddData((int) round(firstBeacon.getDistance() * 100));
+//                        }
                     } else if (firstBeacon.getDistance() >= 0.46 && firstBeacon.getDistance() <= 1.21) { // personal
                         Log.d(TAG, "Personal Zone!!!! " + round(firstBeacon.getDistance() * 100) + " cm away.");
                         hueRepository.updateBrightness(180);
@@ -115,37 +115,37 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         }
     }
 
-    public void AddData(int distance) {
-        boolean insertData = autonomousSystemDatabase.addData(
-                "openness", "pink",
-                "kpop", distance);
+//    public void AddData(int distance) {
+//        boolean insertData = autonomousSystemDatabase.addData(
+//                "openness", "pink",
+//                "kpop", distance);
+//
+//        if (insertData) {
+//            Toast.makeText(RangingActivity.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+//            ViewData();
+//        } else {
+//            Toast.makeText(RangingActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-        if (insertData) {
-            Toast.makeText(RangingActivity.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
-            ViewData();
-        } else {
-            Toast.makeText(RangingActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void ViewData() {
-        Cursor viewData = autonomousSystemDatabase.showData();
-        Log.d(TAG, "DATABASE!!! " + viewData);
-        if (viewData.getCount() == 0) {
-            Log.d(TAG, "Error" + "No Data Found.");
-            return;
-        }
-        StringBuffer buffer = new StringBuffer();
-        while (viewData.moveToNext()) {
-            buffer.append("_id: " + viewData.getString(0) + "\n");
-            buffer.append("personaType: " + viewData.getString(1) + "\n");
-            buffer.append("color: " + viewData.getString(2) + "\n");
-            buffer.append("musicGenre: " + viewData.getString(3) + "\n");
-            buffer.append("distance: " + viewData.getString(4) + "\n");
-
-            Log.d(TAG, buffer.toString());
-        }
-    }
+//    public void ViewData() {
+//        Cursor viewData = autonomousSystemDatabase.showData();
+//        Log.d(TAG, "DATABASE!!! " + viewData);
+//        if (viewData.getCount() == 0) {
+//            Log.d(TAG, "Error" + "No Data Found.");
+//            return;
+//        }
+//        StringBuffer buffer = new StringBuffer();
+//        while (viewData.moveToNext()) {
+//            buffer.append("_id: " + viewData.getString(0) + "\n");
+//            buffer.append("personaType: " + viewData.getString(1) + "\n");
+//            buffer.append("color: " + viewData.getString(2) + "\n");
+//            buffer.append("musicGenre: " + viewData.getString(3) + "\n");
+//            buffer.append("distance: " + viewData.getString(4) + "\n");
+//
+//            Log.d(TAG, buffer.toString());
+//        }
+//    }
 }
 
 
