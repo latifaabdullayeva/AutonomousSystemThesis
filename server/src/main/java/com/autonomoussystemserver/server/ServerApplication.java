@@ -1,3 +1,5 @@
+// The server side of the project is using Spring Boot Framework together with Spring Data JPA and Hibernate.
+// The database management system that we use is PostgreSQL
 package com.autonomoussystemserver.server;
 
 import org.springframework.boot.SpringApplication;
