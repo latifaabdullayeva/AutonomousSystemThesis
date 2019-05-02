@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-// GET --> POST --> DETELE
+// GET --> POST --> DELETE
 @RestController
 public class DevicesController {
     // The @Autowired annotation allows you to skip configurations elsewhere of what to inject and just does it for you
@@ -32,7 +32,7 @@ public class DevicesController {
         return devicesRepository.save(devices);
     }
 
-    @DeleteMapping("/devices/{devicesId}")
+    @DeleteMapping("/devices/{deviceId}")
     public ResponseEntity<?> deleteDevice(@PathVariable UUID deviceId) {
         return devicesRepository.findById(deviceId)
                 .map(devices -> {

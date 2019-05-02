@@ -7,6 +7,7 @@ id -> a unique auto-generated Id of a device (phones with personalities, bench, 
 name -> a name (like Nexus, or Bench name) (TYPE: String)
 personality -> a personality of a device (if it is phone then personality type, if it is bench or tablet, then none),
 since in our study only phones has personalities (TYPE: String)
+name -> cannot be NULL, but personality can be, because our devices like Bench and Tablet do not have personality
 */
 
 import javax.persistence.*;
@@ -20,10 +21,10 @@ public class Devices {
     @Column(name = "_id", unique = true, nullable = false, updatable = false, table = "devices")
     private UUID id; // Hibernate will generate an id of the form “8dd5f315-9788-4d00-87bb-10eed9eff566”
 
-    @Column(name = "name", updatable = false, table = "devices")
+    @Column(name = "name", nullable = false, updatable = false, table = "devices")
     private String name;
 
-    @Column(name = "personality", nullable = false, updatable = false, table = "devices")
+    @Column(name = "personality", updatable = false, table = "devices")
     private String personality;
 
     public UUID getId() {
