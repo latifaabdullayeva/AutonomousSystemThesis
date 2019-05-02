@@ -1,75 +1,59 @@
 package com.autonomoussystemserver.server.controller;
 
+import com.autonomoussystemserver.server.domainModel.Devices;
+import com.autonomoussystemserver.server.domainModel.Distances;
+import com.autonomoussystemserver.server.exception.ResourceNotFoundException;
 import com.autonomoussystemserver.server.repository.DevicesRepository;
 import com.autonomoussystemserver.server.repository.DistancesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class DistancesController {
     @Autowired
     private DistancesRepository distancesRepository;
 
-    @Autowired
-    private DevicesRepository devicesRepository;
-
     @GetMapping("/distances")
-    public List<>
-}
-
-
-
-
-
-
-
-
-
-    @GetMapping("/questions/{questionId}/answers")
-    public List<Answer> getAnswersByQuestionId(@PathVariable Long questionId) {
-        return answerRepository.findByQuestionId(questionId);
+    public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
+        return distancesRepository.findAll(pageable);
     }
 
-    @PostMapping("/questions/{questionId}/answers")
-    public Answer addAnswer(@PathVariable Long questionId,
-                            @Valid @RequestBody Answer answer) {
-        return questionRepository.findById(questionId)
-                .map(question -> {
-                    answer.setQuestion(question);
-                    return answerRepository.save(answer);
-                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
+    @PostMapping("/distances")
+    public Distances addDistance(@Valid @RequestBody Distances distances) {
+        return distancesRepository.save(distances);
     }
 
-    @PutMapping("/questions/{questionId}/answers/{answerId}")
-    public Answer updateAnswer(@PathVariable Long questionId,
-                               @PathVariable Long answerId,
-                               @Valid @RequestBody Answer answerRequest) {
-        if (!questionRepository.existsById(questionId)) {
-            throw new ResourceNotFoundException("Question not found with id " + questionId);
+    @PutMapping("/distances/{distanceId}")
+    public Distances updateDistances(@PathVariable UUID distanceId,
+                                     @Valid @RequestBody Distances distancesRequest) {
+        if (!distancesRepository.existsById(distanceId)) {
+            throw new ResourceNotFoundException("Distance not found with id " + distanceId);
         }
-
-        return answerRepository.findById(answerId)
-                .map(answer -> {
-                    answer.setText(answerRequest.getText());
-                    return answerRepository.save(answer);
-                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
+        return distancesRepository.findById(distanceId)
+                .map(distances -> {
+                    distances.setFrom(distancesRequest.getFrom());
+                    distances.setTo(distancesRequest.getTo());
+                    distances.setDistance(distancesRequest.getDistance());
+                    return distancesRepository.save(distances);
+                }).orElseThrow(() -> new ResourceNotFoundException("Distance not found with id " + distanceId));
     }
 
-    @DeleteMapping("/questions/{questionId}/answers/{answerId}")
-    public ResponseEntity<?> deleteAnswer(@PathVariable Long questionId,
-                                          @PathVariable Long answerId) {
-        if (!questionRepository.existsById(questionId)) {
-            throw new ResourceNotFoundException("Question not found with id " + questionId);
-        }
 
-        return answerRepository.findById(answerId)
-                .map(answer -> {
-                    answerRepository.delete(answer);
+    @DeleteMapping("/distances/{distanceId}")
+    public ResponseEntity<?> deleteDistances(@PathVariable UUID distanceId) {
+        if (!distancesRepository.existsById(distanceId)) {
+            throw new ResourceNotFoundException("Distance not found with id " + distanceId);
+        }
+        return distancesRepository.findById(distanceId)
+                .map(distances -> {
+                    distancesRepository.delete(distances);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
-
+                }).orElseThrow(() -> new ResourceNotFoundException("Distance not found with id " + distanceId));
     }
+}

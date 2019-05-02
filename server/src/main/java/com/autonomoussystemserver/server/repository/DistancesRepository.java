@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface DistancesRepository extends JpaRepository<Distances, UUID> {
-    List<Distances> findByQuestionId(UUID device_id);
+    List<Distances> findByDistanceId(UUID device_id);
 }
