@@ -52,8 +52,13 @@ public class DistancesController {
         distances.setDistance(distanceDto.getDistance());
 
 
-        if (distanceDto.getFrom() == 1 && distanceDto.getTo() == 2) {
-            distancesRepository.deleteUsingSingleQuery(1, 2);
+        //TODO: if count>0, then do selectMatchingFromAndTo
+//        if (distanceDto.getFrom() == 1 && distanceDto.getTo() == 2) {
+        int selectMatchingFromAndToQuery = distancesRepository.selectMatchingFromAndTo(distanceDto.getFrom(), distanceDto.getTo());
+        System.out.println("PRINT!!!! selectMatchingFromAndToQuery = " + selectMatchingFromAndToQuery);
+        // esli kolichestvo strok ne ravno nolu, toqda UPDATE delay, a esli nol, toqda INSERT delay
+        if (selectMatchingFromAndToQuery != 0) {
+            distancesRepository.updateMatchingFromAndTo(distanceDto.getDistance(), distanceDto.getFrom(), distanceDto.getTo());
         } else {
 
             System.out.println();
