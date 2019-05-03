@@ -1,4 +1,4 @@
-package com.autonomoussystemserver.server.domainModel;
+package com.autonomoussystemserver.server.database.model;
 
 /*
 In our database we will have 2 tables (Devices and Distances)
@@ -12,10 +12,6 @@ distance -> the actual distances in cm (TYPE: integer)
     For example, FROM phone 5 TO phone 4 the DISTANCE is 45 cm
 */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -23,30 +19,39 @@ import java.util.UUID;
 @Table(name = "distances")
 public class Distances {
     @Id
-    @GeneratedValue
-    @Column(name = "_id", unique = true, nullable = false, updatable = false, table = "distances")
-    private UUID id; // Hibernate will generate an id of the form “8dd5f315-9788-4d00-87bb-10eed9eff566”
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false, updatable = false)
+    private Integer id; // Hibernate will generate an id of the form “8dd5f315-9788-4d00-87bb-10eed9eff566”
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "from_", nullable = false, table = "distances")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "from", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Devices from;
+//
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "to", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Devices to;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_from") // Foreign key for device.deviceID
     private Devices from;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "_to", nullable = false, table = "distances")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "FK_to") // Foreign key for device.deviceID
     private Devices to;
 
-    @Column(name = "distance", nullable = false, table = "distances")
+
+    @Column(name = "distance", nullable = false) // in cm
     private int distance;
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

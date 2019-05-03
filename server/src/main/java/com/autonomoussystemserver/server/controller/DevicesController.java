@@ -1,19 +1,16 @@
 package com.autonomoussystemserver.server.controller;
 
-import com.autonomoussystemserver.server.domainModel.Devices;
-import com.autonomoussystemserver.server.repository.DevicesRepository;
-import com.autonomoussystemserver.server.exception.ResourceNotFoundException;
+import com.autonomoussystemserver.server.controller.model.DeviceDto;
+import com.autonomoussystemserver.server.database.model.Devices;
+import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.UUID;
-
-// GET --> POST --> DELETE
+// GET --> POST
 @RestController
 public class DevicesController {
     // The @Autowired annotation allows you to skip configurations elsewhere of what to inject and just does it for you
@@ -28,17 +25,22 @@ public class DevicesController {
     }
 
     @PostMapping("/devices")
-    public Devices createDevice(@Valid @RequestBody Devices devices) {
+    public Devices postDevice(@RequestBody DeviceDto deviceDto) {
+
+        Devices devices = new Devices();
+        devices.setName(deviceDto.getName());
+        devices.setPersonality(deviceDto.getPersonality());
+
         return devicesRepository.save(devices);
     }
 
-    @DeleteMapping("/devices/{deviceId}")
-    public ResponseEntity<?> deleteDevice(@PathVariable UUID deviceId) {
-        return devicesRepository.findById(deviceId)
-                .map(devices -> {
-                    devicesRepository.delete(devices);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Device not found with id " + deviceId));
-    }
+//    @DeleteMapping("/devices/{deviceId}")
+//    public ResponseEntity<?> deleteDevice(@PathVariable UUID deviceId) {
+//        return devicesRepository.findById(deviceId)
+//                .map(devices -> {
+//                    devicesRepository.delete(devices);
+//                    return ResponseEntity.ok().build();
+//                }).orElseThrow(() -> new ResourceNotFoundException("Device not found with id " + deviceId));
+//    }
 
 }
