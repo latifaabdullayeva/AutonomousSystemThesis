@@ -40,10 +40,13 @@ public class DistancesController {
 
     @PostMapping("/distances")
     public Distances postDistance(@RequestBody DistanceDto distanceDto) {
-        Devices fromDevice = new Devices();
-        fromDevice.setId(distanceDto.getFrom());
+        distancesRepository.delete(distanceDto.getFrom(), distanceDto.getTo());
+        distancesRepository.delete(distanceDto.getTo(), distanceDto.getFrom());
 
+        Devices fromDevice = new Devices();
         Devices toDevice = new Devices();
+
+        fromDevice.setId(distanceDto.getFrom());
         toDevice.setId(distanceDto.getTo());
 
         Distances distances = new Distances();
@@ -51,24 +54,8 @@ public class DistancesController {
         distances.setTo(toDevice);
         distances.setDistance(distanceDto.getDistance());
 
-
-        //TODO: if count>0, then do selectMatchingFromAndTo
-//        if (distanceDto.getFrom() == 1 && distanceDto.getTo() == 2) {
-        int selectMatchingFromAndToQuery = distancesRepository.selectMatchingFromAndTo(distanceDto.getFrom(), distanceDto.getTo());
-        System.out.println("PRINT!!!! selectMatchingFromAndToQuery = " + selectMatchingFromAndToQuery);
-        // esli kolichestvo strok ne ravno nolu, toqda UPDATE delay, a esli nol, toqda INSERT delay
-        if (selectMatchingFromAndToQuery != 0) {
-            distancesRepository.updateMatchingFromAndTo(distanceDto.getDistance(), distanceDto.getFrom(), distanceDto.getTo());
-        } else {
-
-            System.out.println();
-            System.out.println("PRINT!!!! from = " + (distanceDto.getFrom())
-                    + " = " + distancesRepository.existsById((distanceDto.getFrom())));
-            System.out.println("PRINT!!!! to = " + (distanceDto.getTo())
-                    + " = " + distancesRepository.existsById((distanceDto.getTo())));
-            return distancesRepository.save(distances);
-        }
-        return null;
+        distancesRepository.save(distances);
+        return null; // return distances; esli tebe dlya muzike ponadobitsa
     }
 }
 
