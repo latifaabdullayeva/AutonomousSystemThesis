@@ -142,6 +142,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
             this.monitoringActivity.updateLog(cumulativeLog);
         }
     }
+
     public String getLog() {
         return cumulativeLog;
     }

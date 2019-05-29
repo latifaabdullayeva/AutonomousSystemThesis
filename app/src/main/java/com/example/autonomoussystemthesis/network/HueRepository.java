@@ -1,7 +1,9 @@
 package com.example.autonomoussystemthesis.network;
 
 import android.util.Log;
+
 import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +53,12 @@ public class HueRepository {
                         Log.e("HueRepository", "failure :(", t);
                     }
                 });
+    }
+
+    public void updateColor(int color) {
+        HueRequest req = new HueRequest();
+        req.setOn(true);
+        req.setBrightness(color);
     }
 }
 

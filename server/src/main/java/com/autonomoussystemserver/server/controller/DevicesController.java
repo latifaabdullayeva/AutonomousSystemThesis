@@ -34,13 +34,4 @@ public class DevicesController {
         return devicesRepository.save(devices);
     }
 
-//    @DeleteMapping("/devices/{deviceId}")
-//    public ResponseEntity<?> deleteDevice(@PathVariable UUID deviceId) {
-//        return devicesRepository.findById(deviceId)
-//                .map(devices -> {
-//                    devicesRepository.delete(devices);
-//                    return ResponseEntity.ok().build();
-//                }).orElseThrow(() -> new ResourceNotFoundException("Device not found with id " + deviceId));
-//    }
-
 }

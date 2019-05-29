@@ -13,7 +13,6 @@ name -> cannot be NULL, but personality can be, because our devices like Bench a
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Table(name = "devices")
 @Entity
@@ -21,7 +20,8 @@ public class Devices {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "deviceID", unique = true, nullable = false, updatable = false)
-    private Integer deviceID; // Hibernate will generate an id of the form “8dd5f315-9788-4d00-87bb-10eed9eff566”
+    private Integer deviceID; // Hibernate will generate an id of the Integer
+    // TODO: you can change to UUID -> form “8dd5f315-9788-4d00-87bb-10eed9eff566”
 
 
     @OneToMany(mappedBy="from", cascade = CascadeType.ALL)
