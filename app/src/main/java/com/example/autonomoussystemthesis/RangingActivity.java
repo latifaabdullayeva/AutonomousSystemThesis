@@ -22,7 +22,13 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.exp;
+import static java.lang.Math.incrementExact;
+import static java.lang.Math.log;
 import static java.lang.Math.round;
+import static java.lang.Math.scalb;
+import static java.lang.Math.toIntExact;
 
 public class RangingActivity extends Activity implements BeaconConsumer {
     protected static final String TAG = "RangingActivity";
@@ -103,7 +109,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                         hueRepository.updateBrightness(90);
                     } else if (firstBeacon.getDistance() > 3.70) { // public
                         Log.d(TAG, "Public Zone!!!! " +
-                                round(firstBeacon.getDistance() * 100) + " cm away."); // !!!a bilo String.format("%.2f", firstBeacon.getDistance())
+                                round(firstBeacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
                         hueRepository.updateBrightness(10);
                     }
                 }
@@ -147,5 +153,3 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 //        }
 //    }
 }
-
-
