@@ -73,11 +73,34 @@ public class RangingActivity extends Activity implements BeaconConsumer {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 if (beacons.size() > 0) {
-//                  Number of beacons that app found
+//                  Show in logs the number of beacons that app found
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
-//
+//                      beacon = beacons.iterator().next(); --
+                        Log.d(TAG, "---- The beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+                        int brightness = (int) beacon.getDistance() * 80;
+                        if (brightness > 255) {
+                            brightness = 255;
+                        }
+
+                        hueRepository.updateBrightness(brightness);
+
+                        if (beacon.getDistance() <= 0.45) { // intimate
+                            Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                            hueRepository.updateBrightness(255);
+                        } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
+                            Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                            hueRepository.updateBrightness(180);
+                        } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
+                            Log.d(TAG, "Social Zone!!!! " +
+                                    round(beacon.getDistance() * 100) + " cm away.");
+                            hueRepository.updateBrightness(90);
+                        } else if (beacon.getDistance() > 3.70) { // public
+                            Log.d(TAG, "Public Zone!!!! " +
+                                    round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
+                            hueRepository.updateBrightness(10);
+                        }
                     }
                 }
             }
