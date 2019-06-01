@@ -11,27 +11,27 @@ import android.util.Log;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
 
-/* Starting an App in the Background
-The app launches itself when it first sees an beacon region.
-In order for this to work, the app must have been launched by the user at least once
-*/
+// Starting an App in the Background
+// The app launches itself when it first sees an beacon region.
+// In order for this to work, the app must have been launched by the user at least once
 
-/* We create class that extends Application and then we declare this in our AndroidManifest.xml,
-where we declares a custom Application class,
-and a background launch activity marked as “singleInstance */
+// We create class that extends Application and then we declare this in our AndroidManifest.xml,
+// where we declares a custom Application class,
+// and a background launch activity marked as “singleInstance
 
 // This class launch the MainActivity as soon as any beacon is seen
 public class AutonomousSystemApp extends Application implements BootstrapNotifier {
     private static final String TAG = ".AutonomousSystemApp";
     private RegionBootstrap regionBootstrap;
 
-    // Auto Battery Saving
+//         Auto Battery Saving
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MainActivity monitoringActivity = null;
@@ -44,23 +44,23 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
         beaconManager.getBeaconParsers().clear();
 
-        // If we have a proprietary beacons, we find "setBeaconLayout" and get the proper expression.
-        /* beaconManager.getBeaconParsers().add(new BeaconParser()
-            .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
-        in our case MacBook is served as Beacon, so for iBeacons it is 0215 */
+//         If we have a proprietary beacons, we find "setBeaconLayout" and get the proper expression.
+//        beaconManager.getBeaconParsers().add(new BeaconParser()
+//            .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+//        in our case MacBook is served as Beacon, so for iBeacons it is 0215
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
         BeaconManager.setDebug(true);
 
 
-        // wake up the app when any beacon is seen
-        //TODO: Region("backgroundRegion",
+//        wake up the app when any beacon is seen
+//        TODO: Region("backgroundRegion",
         Region region = new Region(".boostrapRegion",
                 null, null, null);
         regionBootstrap = new RegionBootstrap(this, region);
 
-        // enables auto battery saving of about 60%
+//         enables auto battery saving of about 60%
         backgroundPowerSaver = new BackgroundPowerSaver(this);
     }
 
@@ -72,8 +72,12 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
     }
 
     public void enableMonitoring() {
+//        Region region = new Region("backgroundRegion",
+//                null, null, null);
         Region region = new Region("backgroundRegion",
-                null, null, null);
+                Identifier.parse("CE:3C:09:30:99:B0"),
+                Identifier.parse("C8:CB:EC:A6:32:55"),
+                Identifier.parse("F2:E4:35:BA:FB:D9"));
         regionBootstrap = new RegionBootstrap(this, region);
     }
 
@@ -81,14 +85,15 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
     @Override
     public void didEnterRegion(Region arg0) {
         Log.d(TAG, "Got a didEnterRegion call");
-        // This call to disable will make it so the activity below only gets launched the first time a beacon is seen (until the next time the app is launched)
-        // if you want the Activity to launch every single time beacons come into view, remove this call.
+//         This call to disable will make it so the activity below only gets launched the first
+//         time a beacon is seen (until the next time the app is launched)
+//         if you want the Activity to launch every single time beacons come into view, remove this call.
         if (!haveDetectedBeaconsSinceBoot) {
             Log.d(TAG, "automatically launch MainActivity");
             Intent intent = new Intent(this, MainActivity.class);
-            /* In the AndroidManifest.xml definition of this activity,
-            we have set android:launchMode="singleInstance" otherwise we will get two instances
-            created when a user launches the activity manually and it gets launched from here. */
+//            In the AndroidManifest.xml definition of this activity,
+//            we have set android:launchMode="singleInstance" otherwise we will get two instances
+//            created when a user launches the activity manually and it gets launched from here.
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
             haveDetectedBeaconsSinceBoot = true;

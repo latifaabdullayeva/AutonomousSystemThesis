@@ -27,10 +27,10 @@ public class MainActivity extends Activity {
         beaconManager = BeaconManager.getInstanceForApplication(this);
         verifyBluetooth();
 
-        // If targeting Android SDK 23+ (Marshmallow), in our case we have "targetSdkVersion: 28"
-        // the app must also request permission from the user to get location access.
+//         If targeting Android SDK 23+ (Marshmallow), in our case we have "targetSdkVersion: 28"
+//         the app must also request permission from the user to get location access.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
+//             Android M Permission check
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("This app needs location access");

@@ -17,16 +17,16 @@ public class HueRepository {
     private final String username;
 
     public HueRepository(String ipAddress, String user) {
-        // The Retrofit class generates an implementation of the HueService interface.
+//         The Retrofit class generates an implementation of the HueService interface.
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + ipAddress + "/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        // By default, Retrofit can only deserialize HTTP bodies into OkHttp's ResponseBody type
-        // and it can only accept its RequestBody type for @Body.
-        // Converters can be added to support other types. Gson: com.squareup.retrofit2:converter-gson
-        // GsonConverterFactory class is needed to generate an implementation of the HueService interface
-        // which uses Gson for its deserialization.
+//         By default, Retrofit can only deserialize HTTP bodies into OkHttp's ResponseBody type
+//         and it can only accept its RequestBody type for @Body.
+//         Converters can be added to support other types. Gson: com.squareup.retrofit2:converter-gson
+//         GsonConverterFactory class is needed to generate an implementation of the HueService interface
+//         which uses Gson for its deserialization.
         hueService = retrofit.create(HueService.class);
         username = user;
     }
