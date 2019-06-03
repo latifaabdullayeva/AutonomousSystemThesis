@@ -1,4 +1,4 @@
-package com.example.autonomoussystemthesis.network;
+package com.example.autonomoussystemthesis.network.hue;
 
 import android.util.Log;
 
@@ -32,9 +32,7 @@ public class HueRepository {
     }
 
     public void updateBrightness(int brightness) {
-        HueRequest request = new HueRequest();
-        request.setOn(true);
-        request.setBrightness(brightness);
+        HueRequest request = new HueRequest(true, brightness);
 
         hueService.updateHueLamp(username, 1, request)
                 .enqueue(new Callback<ResponseBody>() {
@@ -53,12 +51,6 @@ public class HueRepository {
                         Log.e("HueRepository", "failure :(", t);
                     }
                 });
-    }
-
-    public void updateColor(int color) {
-        HueRequest req = new HueRequest();
-        req.setOn(true);
-        req.setBrightness(color);
     }
 }
 

@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.example.autonomoussystemthesis.network.HueRepository;
+import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
+import com.example.autonomoussystemthesis.network.hue.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -68,6 +69,9 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                 "192.168.0.102",
                 "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
         );
+        final DistanceRepository distanceRepository = new DistanceRepository();
+
+        distanceRepository.sendNetworkRequest(3, 1, 25);
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
@@ -88,6 +92,12 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
                         if (beacon.getDistance() <= 0.45) { // intimate
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+
+//                          TODO: it should send the distance to all mascots to the DATABASE
+                            distanceRepository.sendNetworkRequest(3, 1, beacon.getDistance());
+                            // delay();
+                            // mojet on ne uspevaet zapisivat .getDistance() v BD, app je kajduyu sekundu vichislaet eto rasstoyanie
+
                             hueRepository.updateBrightness(255);
                         } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
                             Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");

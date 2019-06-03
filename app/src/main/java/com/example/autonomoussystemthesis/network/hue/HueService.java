@@ -1,4 +1,4 @@
-package com.example.autonomoussystemthesis.network;
+package com.example.autonomoussystemthesis.network.hue;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
