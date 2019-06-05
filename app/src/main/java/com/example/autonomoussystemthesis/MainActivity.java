@@ -1,24 +1,28 @@
 package com.example.autonomoussystemthesis;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import org.altbeacon.beacon.BeaconManager;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     protected static final String TAG = "MonitoringMainActivity";
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         Log.d(TAG, "MonitoringMainActivity started up");
         setContentView(R.layout.activity_main);
@@ -44,8 +48,16 @@ public class MainActivity extends Activity {
                 builder.show();
             }
         }
-        Intent myIntent = new Intent(this, ChooseExperiment.class);
-        this.startActivity(myIntent);
+        Button buttonSave = findViewById(R.id.gotoQuestionnare);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, ChoosingExperiment.class);
+                startActivity(myIntent);
+            }
+        });
+
+        getSupportActionBar().setTitle("Home");
     }
 
     @Override

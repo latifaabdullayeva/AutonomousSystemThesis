@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a71058"
+    android:background="#fbe8ef"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".NameDevice">
+    tools:context=".DeviceInitialisation">
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Choose the Name of your device"
-            android:textColor="#ffffff"
+            android:textColor="#FDB91266"
             android:textSize="22sp" />
 
         <RadioButton
@@ -31,8 +31,8 @@
             android:checked="true"
             android:onClick="checkButton"
             android:text="Tablet"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameLamp"
@@ -41,8 +41,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Lamp"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameSpeakers"
@@ -51,8 +51,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Speakers"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNamePhone"
@@ -61,8 +61,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Phone"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
     </RadioGroup>
 
@@ -70,16 +70,18 @@
         android:id="@+id/phoneNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Give a name to your Phone..."
-        android:textColor="#ffffff" />
+        android:layout_marginBottom="10dp"
+        android:hint="Give a name to your Phone..."
+        android:textColor="#FDB91266"
+        android:textColorHint="#ffffff" />
 
     <Button
         android:id="@+id/buttonDeviceName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="#FDB91266"
         android:text="Save"
-        android:textColor="#a71058" />
+        android:textColor="#ffffff" />
 
     <!--<Button-->
     <!--android:id="@+id/vibtationButton"-->

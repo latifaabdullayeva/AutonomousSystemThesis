@@ -16,9 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChoosePersonality"/>
-        <activity android:name=".ChooseExperiment" />
-        <activity android:name=".NameDevice" />
+        <activity
+            android:name=".ChoosingExperiment"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".DeviceInitialisation"
+            android:parentActivityName=".ChoosingExperiment" />
+        <activity
+            android:name=".PersonalityInitialisation"
+            android:parentActivityName=".DeviceInitialisation" />
         <!--
          the singleInstance is important to keep two copies of our activity
         from getting launched on automatic startup

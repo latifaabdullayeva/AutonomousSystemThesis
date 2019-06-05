@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a71058"
+    android:background="#fbe8ef"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".ChoosePersonality">
+    tools:context=".PersonalityInitialisation">
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Choose Personality for your Phone!"
-            android:textColor="#ffffff"
+            android:textColor="#FDB91266"
             android:textSize="22sp" />
 
         <RadioButton
@@ -31,8 +31,8 @@
             android:checked="true"
             android:onClick="checkButton"
             android:text="Openness"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersC"
@@ -41,8 +41,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Conscientiousness"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersE"
@@ -51,8 +51,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Extraversion"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersA"
@@ -61,8 +61,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Agreeableness"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersN"
@@ -71,8 +71,8 @@
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
             android:text="Neuroticism"
-            android:textColor="#ffffff"
-            app:buttonTint="#ffffff" />
+            android:textColor="#FDB91266"
+            app:buttonTint="#FDB91266" />
 
     </RadioGroup>
 
@@ -80,9 +80,9 @@
         android:id="@+id/buttonPersonality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="#FDB91266"
         android:text="Save"
-        android:textColor="#a71058" />
+        android:textColor="#ffffff" />
 
 
 </LinearLayout>

@@ -103,18 +103,18 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                             distanceRepository.sendNetworkRequest(3, 1, round(beacon.getDistance() * 100));
                             // TODO: vibration
                             // START: When you click on VIBRATE button, phone vibrates */
-                            Button vibrationButton = findViewById(R.id.vibtationButton);
-                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                            vibrationButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if (Build.VERSION.SDK_INT >= 26) {
-                                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                                    } else {
-                                        vibrator.vibrate(200);
-                                    }
-                                }
-                            });
+//                            Button vibrationButton = findViewById(R.id.vibtationButton);
+//                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+//                            vibrationButton.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    if (Build.VERSION.SDK_INT >= 26) {
+//                                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+//                                    } else {
+//                                        vibrator.vibrate(200);
+//                                    }
+//                                }
+//                            });
                             //
                             hueRepository.updateBrightness(255);
 

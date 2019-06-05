@@ -2,6 +2,7 @@ package com.example.autonomoussystemthesis;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NameDevice extends AppCompatActivity {
+public class ChoosingExperiment extends AppCompatActivity {
 
-    protected static final String TAG = "NameDeviceActivity";
+    protected static final String TAG = "ChooseExpActivity";
+
+    // put some delays
+    private Handler mHandler = new Handler();
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -22,20 +26,25 @@ public class NameDevice extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "NameDeviceActivity started up");
+        Log.d(TAG, "ChooseExperimentActivity started up");
 
-        setContentView(R.layout.activity_name_device);
+        setContentView(R.layout.activity_choosing_experiment);
+
 
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.IntroText);
-        Button buttonSave = findViewById(R.id.buttonDeviceName);
+        Button buttonSave = findViewById(R.id.buttonExperiment);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(NameDevice.this, ChoosePersonality.class);
+                Intent myIntent = new Intent(ChoosingExperiment.this, DeviceInitialisation.class);
                 startActivity(myIntent);
             }
         });
+
+        getSupportActionBar().setTitle("Experiment");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void checkButton(View view) {
