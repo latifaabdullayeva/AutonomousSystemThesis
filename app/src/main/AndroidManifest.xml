@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ChooseExperiment" />
+        <activity android:name=".NameDevice" />
         <!--
          the singleInstance is important to keep two copies of our activity
         from getting launched on automatic startup
