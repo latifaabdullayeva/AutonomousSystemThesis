@@ -13,13 +13,14 @@ import android.util.Log;
 import org.altbeacon.beacon.BeaconManager;
 
 public class MainActivity extends Activity {
-    protected static final String TAG = "MonitoringActivity";
+    protected static final String TAG = "MonitoringMainActivity";
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "MonitoringMainActivity started up");
         setContentView(R.layout.activity_main);
         beaconManager = BeaconManager.getInstanceForApplication(this);
         verifyBluetooth();
@@ -43,7 +44,7 @@ public class MainActivity extends Activity {
                 builder.show();
             }
         }
-        Intent myIntent = new Intent(this, RangingActivity.class);
+        Intent myIntent = new Intent(this, ChooseExperiment.class);
         this.startActivity(myIntent);
     }
 

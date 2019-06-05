@@ -28,10 +28,10 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 
 // This class launch the MainActivity as soon as any beacon is seen
 public class AutonomousSystemApp extends Application implements BootstrapNotifier {
-    private static final String TAG = ".AutonomousSystemApp";
+    private static final String TAG = "AutonomousSystemApp";
     private RegionBootstrap regionBootstrap;
 
-//         Auto Battery Saving
+//             Auto Battery Saving
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MainActivity monitoringActivity = null;
@@ -39,7 +39,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "App started up");
+        Log.d(TAG, "AutonomousSystemApp started up");
         BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
         beaconManager.getBeaconParsers().clear();

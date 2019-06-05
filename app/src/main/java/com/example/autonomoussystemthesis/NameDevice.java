@@ -1,7 +1,9 @@
 package com.example.autonomoussystemthesis;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 public class NameDevice extends AppCompatActivity {
 
+    protected static final String TAG = "NameDeviceActivity";
+
     RadioGroup radioGroup;
     RadioButton radioButton;
     TextView textView;
@@ -18,6 +22,8 @@ public class NameDevice extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "NameDeviceActivity started up");
+
         setContentView(R.layout.activity_name_device);
 
         radioGroup = findViewById(R.id.radioGroup);
@@ -32,10 +38,13 @@ public class NameDevice extends AppCompatActivity {
 
             }
         });
+        Intent myIntent = new Intent(this, ChoosePersonality.class);
+        this.startActivity(myIntent);
     }
-    public void checkButton(View view){
+
+    public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected "+ radioButton.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
     }
 }

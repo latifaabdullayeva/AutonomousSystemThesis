@@ -35,6 +35,9 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "RangingActivity started up");
+
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
 //     autonomousSystemDatabase = new DatabaseHelper(this);
