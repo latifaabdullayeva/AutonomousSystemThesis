@@ -36,6 +36,6 @@ public class ChoosePersonality extends AppCompatActivity {
     public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected Radio Button " + radioButton.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
     }
 }
