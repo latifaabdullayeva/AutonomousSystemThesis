@@ -3,12 +3,16 @@ package com.example.autonomoussystemthesis;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.hue.HueRepository;
@@ -25,9 +29,11 @@ import static java.lang.Math.round;
 
 // import com.example.autonomoussystemthesis.data.DatabaseHelper;
 
-public class RangingActivity extends Activity implements BeaconConsumer {
+public class RangingActivity extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "RangingActivity";
     private BeaconManager beaconManager;
+    private TextView measurementText;
+    private TextView measurementBeaconList;
 
 //     database
 //     DatabaseHelper autonomousSystemDatabase;
@@ -35,12 +41,15 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ranging);
 
         Log.d(TAG, "RangingActivity started up");
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
 //     autonomousSystemDatabase = new DatabaseHelper(this);
+
+        getSupportActionBar().setTitle("Ranging Activity");
     }
 
     @Override
@@ -89,6 +98,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                     for (Beacon beacon : beacons) {
 //                      beacon = beacons.iterator().next(); --
                         Log.d(TAG, "---- The beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+
                         int brightness = (int) beacon.getDistance() * 80;
                         if (brightness > 255) {
                             brightness = 255;
@@ -125,6 +135,12 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                         } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
                             Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             // TODO: bench is here, lights
+                            // get from DB all devices in the system, and beacon.toString()
+                            measurementBeaconList = (TextView) findViewById(R.id.measurementBeaconList);
+                            measurementBeaconList.setText("The beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+
+                            measurementText = (TextView) findViewById(R.id.measurementText);
+                            measurementText.setText("Lamps: \n Social Zone: " + round(beacon.getDistance() * 100) + " cm away.");
 
                             hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
@@ -140,4 +156,5 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         } catch (RemoteException e) {
         }
     }
+
 }

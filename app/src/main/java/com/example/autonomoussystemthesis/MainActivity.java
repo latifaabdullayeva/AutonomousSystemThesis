@@ -57,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button deteleITRangingActivity = findViewById(R.id.DeleteItLaterRangingActivity);
+        deteleITRangingActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, RangingActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
         getSupportActionBar().setTitle("Home");
     }
 
