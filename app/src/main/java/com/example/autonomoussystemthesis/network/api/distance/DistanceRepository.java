@@ -18,7 +18,7 @@ public class DistanceRepository {
     public DistanceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://ff7e260e.ngrok.io/")
+                .baseUrl("http://17c01c12.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

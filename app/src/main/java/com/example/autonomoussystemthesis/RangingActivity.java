@@ -1,9 +1,14 @@
 package com.example.autonomoussystemthesis;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.hue.HueRepository;
@@ -30,7 +35,6 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ranging);
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
 //     autonomousSystemDatabase = new DatabaseHelper(this);
@@ -66,12 +70,11 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 //         the Command Response will show you a username
 //         The documentation of Hue Api is "https://developers.meethue.com/develop/get-started-2/"
         final HueRepository hueRepository = new HueRepository(
-                "192.168.0.102",
+                "192.168.0.100",
                 "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
         );
         final DistanceRepository distanceRepository = new DistanceRepository();
 
-        distanceRepository.sendNetworkRequest(3, 1, 25);
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
@@ -94,22 +97,36 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
 
 //                          TODO: it should send the distance to all mascots to the DATABASE
-                            distanceRepository.sendNetworkRequest(3, 1, beacon.getDistance());
-                            // delay();
-                            // mojet on ne uspevaet zapisivat .getDistance() v BD, app je kajduyu sekundu vichislaet eto rasstoyanie
-
+                            distanceRepository.sendNetworkRequest(3, 1, round(beacon.getDistance() * 100));
+                            // TODO: vibration
+                            // START: When you click on VIBRATE button, phone vibrates */
+                            Button vibrationButton = findViewById(R.id.vibtationButton);
+                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                            vibrationButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (Build.VERSION.SDK_INT >= 26) {
+                                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+                                        vibrator.vibrate(200);
+                                    }
+                                }
+                            });
+                            //
                             hueRepository.updateBrightness(255);
+
                         } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
                             Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                            hueRepository.updateBrightness(180);
+                            // TODO: tablet color
+
                         } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
-                            Log.d(TAG, "Social Zone!!!! " +
-                                    round(beacon.getDistance() * 100) + " cm away.");
+                            Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                            // TODO: bench is here, lights
+
                             hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
-                            Log.d(TAG, "Public Zone!!!! " +
-                                    round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
-                            hueRepository.updateBrightness(10);
+                            Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
+                            // TODO: speakers
                         }
                     }
                 }

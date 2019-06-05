@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#a71058"
+    android:orientation="vertical"
+    android:padding="30dp"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/IntroText"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:text="This is Main Activity!"
+        android:textColor="#ffffff"
+        android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:text="Monitoring Events:" />
+    <!--<Button-->
+    <!--android:id="@+id/vibtationButton"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#FFA71058"-->
+    <!--android:text="VIBRATE!!"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="20sp" />-->
 
-    <EditText
-        android:id="@+id/monitoringText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:gravity="left|top"
-        android:inputType="textMultiLine" >
-        <requestFocus />
-    </EditText>
+    <!--<LinearLayout-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-    <Button
-        android:id="@+id/Button01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:onClick="onRangingClicked"
-        android:layout_below="@+id/monitoringText"
-        android:text="Start Ranging" />
+    <!--<Button-->
+    <!--android:id="@+id/playMusicButton"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#FFA71058"-->
+    <!--android:text="Play Music!!"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="20sp" />-->
 
-    <Button
-        android:id="@+id/enableButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onEnableClicked"
-        android:layout_below="@+id/monitoringText"
-        android:layout_toRightOf="@id/Button01"
-        android:text="Disable monitoring" />
+    <!--<Button-->
+    <!--android:id="@+id/stopMusicnButton"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#FFA71058"-->
+    <!--android:text="Stop Music!!"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="20sp" />-->
+    <!--</LinearLayout>-->
 
-</RelativeLayout>
+</LinearLayout>

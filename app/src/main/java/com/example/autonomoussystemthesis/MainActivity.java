@@ -9,9 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import org.altbeacon.beacon.BeaconManager;
 
@@ -46,6 +43,8 @@ public class MainActivity extends Activity {
                 builder.show();
             }
         }
+        Intent myIntent = new Intent(this, RangingActivity.class);
+        this.startActivity(myIntent);
     }
 
     @Override
@@ -71,29 +70,11 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void onRangingClicked(View view) {
-        Intent myIntent = new Intent(this, RangingActivity.class);
-        this.startActivity(myIntent);
-    }
-
-    public void onEnableClicked(View view) {
-        AutonomousSystemApp application = ((AutonomousSystemApp) this.getApplicationContext());
-        if (BeaconManager.getInstanceForApplication(this).getMonitoredRegions().size() > 0) {
-            application.disableMonitoring();
-            ((Button) findViewById(R.id.enableButton)).setText("Re-Enable Monitoring");
-        } else {
-            ((Button) findViewById(R.id.enableButton)).setText("Disable Monitoring");
-            application.enableMonitoring();
-        }
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         AutonomousSystemApp application = ((AutonomousSystemApp) this.getApplicationContext());
         application.setMonitoringActivity(this);
-        updateLog(application.getLog());
     }
 
     @Override
@@ -134,16 +115,6 @@ public class MainActivity extends Activity {
 
         }
 
-    }
-
-    public void updateLog(final String log) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                EditText editText = MainActivity.this
-                        .findViewById(R.id.monitoringText);
-                editText.setText(log);
-            }
-        });
     }
 
 }
