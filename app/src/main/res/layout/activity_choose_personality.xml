@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#a71058"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ChoosePersonality">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/IntroText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Choose Personality for your Phone!"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:checked="true"
+            android:onClick="checkButton"
+            android:text="Openness"
+            android:textColor="#ffffff"
+            app:buttonTint="#ffffff" />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:onClick="checkButton"
+            android:text="Conscientiousness"
+            android:textColor="#ffffff"
+            app:buttonTint="#ffffff" />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:onClick="checkButton"
+            android:text="Extraversion"
+            android:textColor="#ffffff"
+            app:buttonTint="#ffffff" />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:onClick="checkButton"
+            android:text="Agreeableness"
+            android:textColor="#ffffff"
+            app:buttonTint="#ffffff" />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:onClick="checkButton"
+            android:text="Neuroticism"
+            android:textColor="#ffffff"
+            app:buttonTint="#ffffff" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonPersonality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:text="Save"
+        android:textColor="#a71058" />
+
+
+</LinearLayout>
