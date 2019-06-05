@@ -2,6 +2,7 @@ package com.example.autonomoussystemthesis;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 public class ChooseExperiment extends AppCompatActivity {
 
     protected static final String TAG = "ChooseExpActivity";
+
+    // put some delays
+    private Handler mHandler = new Handler();
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -32,14 +36,10 @@ public class ChooseExperiment extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int radioId = radioGroup.getCheckedRadioButtonId();
-                radioButton = findViewById(radioId);
-                textView.setText("Your choice: " + radioButton.getText());
-
+                Intent myIntent = new Intent(ChooseExperiment.this, NameDevice.class);
+                startActivity(myIntent);
             }
         });
-        Intent myIntent = new Intent(this, NameDevice.class);
-        this.startActivity(myIntent);
     }
 
     public void checkButton(View view) {

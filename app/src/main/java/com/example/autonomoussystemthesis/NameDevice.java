@@ -32,14 +32,10 @@ public class NameDevice extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int radioId = radioGroup.getCheckedRadioButtonId();
-                radioButton = findViewById(radioId);
-                textView.setText("Your choice: " + radioButton.getText());
-
+                Intent myIntent = new Intent(NameDevice.this, ChoosePersonality.class);
+                startActivity(myIntent);
             }
         });
-        Intent myIntent = new Intent(this, ChoosePersonality.class);
-        this.startActivity(myIntent);
     }
 
     public void checkButton(View view) {
