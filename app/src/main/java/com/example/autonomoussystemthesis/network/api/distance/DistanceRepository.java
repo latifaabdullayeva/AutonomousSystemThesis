@@ -18,8 +18,9 @@ public class DistanceRepository {
     public DistanceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.
+        // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://17c01c12.ngrok.io/")
+                .baseUrl("http://75f14d6f.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

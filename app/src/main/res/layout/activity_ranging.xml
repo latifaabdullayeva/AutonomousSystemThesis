@@ -13,16 +13,16 @@
         android:id="@+id/measurementBeaconList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sdfs"
+        android:text=""
         android:textColor="#FDB91266"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/measurementText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sdfs"
-        android:textColor="#FDB91266"
-        android:textSize="25sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/measurementText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text=""-->
+        <!--android:textColor="#FDB91266"-->
+        <!--android:textSize="25sp" />-->
 
 </LinearLayout>

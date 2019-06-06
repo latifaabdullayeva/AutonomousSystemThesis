@@ -1,17 +1,9 @@
 package com.example.autonomoussystemthesis;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.RemoteException;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
@@ -137,10 +129,13 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                             // TODO: bench is here, lights
                             // get from DB all devices in the system, and beacon.toString()
                             measurementBeaconList = (TextView) findViewById(R.id.measurementBeaconList);
-                            measurementBeaconList.setText("The beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+                            measurementBeaconList.setText("The number of beacons: " + beacons.size() +
+                                    "\nThe beacon \n" + beacon +
+                                    "\nis about " + round(beacon.getDistance() * 100) + " cm away.");
 
-                            measurementText = (TextView) findViewById(R.id.measurementText);
-                            measurementText.setText("Lamps: \n Social Zone: " + round(beacon.getDistance() * 100) + " cm away.");
+//                            measurementText = (TextView) findViewById(R.id.measurementText);
+//                            measurementText.setText("Lamps: \n Social Zone: " +
+//                                    round(beacon.getDistance() * 100) + " cm away.");
 
                             hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
