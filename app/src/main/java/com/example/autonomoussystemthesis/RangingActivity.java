@@ -90,7 +90,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
-                        deviceRepository.sendNetworkRequest(beacon.toString(), "intimatness");
+                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString() ,"intimatness");
                         Log.d(TAG, "The beacon " + beacon.toString());
 
                         int brightness = (int) beacon.getDistance() * 80;

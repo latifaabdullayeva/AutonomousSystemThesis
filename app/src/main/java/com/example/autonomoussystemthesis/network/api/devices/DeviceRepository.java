@@ -29,8 +29,8 @@ public class DeviceRepository {
         deviceService = retrofit.create(DeviceService.class);
     }
 
-    public void sendNetworkRequest(String name, String personality) {
-        Device deviceRequest = new Device(name, personality);
+    public void sendNetworkRequest(String device_name, String beacon_tag, String device_personality) {
+        Device deviceRequest = new Device(device_name, beacon_tag, device_personality);
 
         deviceService.postDevice(deviceRequest)
                 .enqueue(new Callback<ResponseBody>() {
