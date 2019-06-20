@@ -42,6 +42,6 @@ public class DistancesController {
         distances.setDistance(distanceDto.getDistance());
 
         distancesRepository.save(distances);
-        return null; // return distances; esli tebe dlya muzike ponadobitsa
+        return distances; // return distances; esli tebe dlya muzike ponadobitsa
     }
 }

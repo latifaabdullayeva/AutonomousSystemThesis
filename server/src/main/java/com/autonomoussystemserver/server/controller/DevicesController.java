@@ -3,6 +3,7 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +28,16 @@ public class DevicesController {
     @PostMapping("/devices")
     public Devices postDevice(@RequestBody DeviceDto deviceDto) {
 
-        Devices devices = new Devices();
-        devices.setName(deviceDto.getName());
-        devices.setPersonality(deviceDto.getPersonality());
+        devicesRepository.delete(deviceDto.getDevice_name());
 
-        return devicesRepository.save(devices);
+        Devices devices = new Devices();
+        devices.setDevice_name(deviceDto.getDevice_name());
+        devices.setBeacon_tag(deviceDto.getBeacon_tag());
+        devices.setDevice_personality(deviceDto.getDevice_personality());
+
+        devicesRepository.save(devices);
+        return devices;
+
     }
 
 }

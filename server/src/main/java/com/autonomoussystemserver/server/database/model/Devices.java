@@ -4,8 +4,9 @@ package com.autonomoussystemserver.server.database.model;
 In our database we will have 2 tables (Devices and Distances)
 Devices table will hold
 id -> a unique auto-generated Id of a device (phones with personalities, bench, tablet) (TYPE: UUID)
-name -> a name (like Nexus, or Bench name) (TYPE: String)
-personality -> a personality of a device (if it is phone then personality type, if it is bench or tablet, then none),
+device_name -> a name (like Nexus, or Bench name) (TYPE: String)
+beacon_tag -->
+device_personality -> a personality of a device (if it is phone then personality type, if it is bench or tablet, then none),
 since in our study only phones has personalities (TYPE: String)
 name -> cannot be NULL, but personality can be, because our devices like Bench and Tablet do not have personality
 */
@@ -21,7 +22,6 @@ public class Devices {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "deviceID", unique = true, nullable = false, updatable = false)
     private Integer deviceID; // Hibernate will generate an id of the Integer
-    // TODO: you can change to UUID -> form “8dd5f315-9788-4d00-87bb-10eed9eff566”
 
 
     @OneToMany(mappedBy="from", cascade = CascadeType.ALL)
@@ -32,11 +32,14 @@ public class Devices {
     Set<Distances> to = new HashSet<Distances>();
 
 
-    @Column(name = "name", nullable = false, updatable = false)
-    private String name;
+    @Column(name = "device_name", nullable = false, updatable = false)
+    private String device_name;
 
-    @Column(name = "personality", updatable = false)
-    private String personality;
+    @Column(name = "beacon_tag", updatable = false)
+    private String beacon_tag;
+
+    @Column(name = "device_personality", updatable = false)
+    private String device_personality;
 
     public Integer getId() {
         return deviceID;
@@ -46,19 +49,27 @@ public class Devices {
         this.deviceID = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDevice_name() {
+        return device_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDevice_name(String device_name) {
+        this.device_name = device_name;
     }
 
-    public String getPersonality() {
-        return personality;
+    public String getBeacon_tag() {
+        return beacon_tag;
     }
 
-    public void setPersonality(String personality) {
-        this.personality = personality;
+    public void setBeacon_tag(String beacon_tag) {
+        this.beacon_tag = beacon_tag;
+    }
+
+    public String getDevice_personality() {
+        return device_personality;
+    }
+
+    public void setDevice_personality(String device_personality) {
+        this.device_personality = device_personality;
     }
 }

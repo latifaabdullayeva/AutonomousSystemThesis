@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.hue.HueRepository;
 
@@ -78,6 +79,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                 "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
         );
         final DistanceRepository distanceRepository = new DistanceRepository();
+        final DeviceRepository deviceRepository = new DeviceRepository();
 
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
@@ -88,8 +90,8 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
-//                      beacon = beacons.iterator().next(); --
-                        Log.d(TAG, "---- The beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+                        deviceRepository.sendNetworkRequest(beacon.toString(), "intimatness");
+                        Log.d(TAG, "The beacon " + beacon.toString());
 
                         int brightness = (int) beacon.getDistance() * 80;
                         if (brightness > 255) {
@@ -100,9 +102,10 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
                         if (beacon.getDistance() <= 0.45) { // intimate
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-
+                            Log.d(TAG, "-");
 //                          TODO: it should send the distance to all mascots to the DATABASE
                             distanceRepository.sendNetworkRequest(3, 1, round(beacon.getDistance() * 100));
+
                             // TODO: vibration
                             // START: When you click on VIBRATE button, phone vibrates */
 //                            Button vibrationButton = findViewById(R.id.vibtationButton);
@@ -122,10 +125,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
                         } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
                             Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                            Log.d(TAG, "-");
                             // TODO: tablet color
 
                         } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
                             Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                            Log.d(TAG, "-");
                             // TODO: bench is here, lights
                             // get from DB all devices in the system, and beacon.toString()
                             measurementBeaconList = (TextView) findViewById(R.id.measurementBeaconList);
@@ -140,15 +145,18 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                             hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
                             Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
+                            Log.d(TAG, "-");
                             // TODO: speakers
                         }
                     }
+                    Log.d(TAG, "------------------------------------------------------------");
                 }
             }
         });
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-        } catch (RemoteException e) {
+        } catch (
+                RemoteException e) {
         }
     }
 

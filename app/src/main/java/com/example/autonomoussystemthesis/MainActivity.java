@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, ChoosingExperiment.class);
+                Intent myIntent = new Intent(MainActivity.this, DeviceInitialisation.class);
                 startActivity(myIntent);
             }
         });

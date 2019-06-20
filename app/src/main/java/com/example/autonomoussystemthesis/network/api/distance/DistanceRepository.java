@@ -20,7 +20,7 @@ public class DistanceRepository {
         // ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://75f14d6f.ngrok.io")
+                .baseUrl("http://ed5bd5bc.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

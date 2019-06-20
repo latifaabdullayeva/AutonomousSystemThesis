@@ -64,22 +64,22 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         backgroundPowerSaver = new BackgroundPowerSaver(this);
     }
 
-    public void disableMonitoring() {
-        if (regionBootstrap != null) {
-            regionBootstrap.disable();
-            regionBootstrap = null;
-        }
-    }
+//    public void disableMonitoring() {
+//        if (regionBootstrap != null) {
+//            regionBootstrap.disable();
+//            regionBootstrap = null;
+//        }
+//    }
 
-    public void enableMonitoring() {
+//    public void enableMonitoring() {
+////        Region region = new Region("backgroundRegion",
+////                null, null, null);
 //        Region region = new Region("backgroundRegion",
-//                null, null, null);
-        Region region = new Region("backgroundRegion",
-                Identifier.parse("CE:3C:09:30:99:B0"),
-                Identifier.parse("C8:CB:EC:A6:32:55"),
-                Identifier.parse("F2:E4:35:BA:FB:D9"));
-        regionBootstrap = new RegionBootstrap(this, region);
-    }
+//                Identifier.parse("CE:3C:09:30:99:B0"),
+//                Identifier.parse("C8:CB:EC:A6:32:55"),
+//                Identifier.parse("F2:E4:35:BA:FB:D9"));
+//        regionBootstrap = new RegionBootstrap(this, region);
+//    }
 
 
     @Override
@@ -145,8 +145,8 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         cumulativeLog += (line + "\n");
     }
 
-    public String getLog() {
-        return cumulativeLog;
-    }
+//    public String getLog() {
+//        return cumulativeLog;
+//    }
 
 }
