@@ -41,6 +41,10 @@ public class DistancesController {
         distances.setTo(toDevice);
         distances.setDistance(distanceDto.getDistance());
 
+        // find lamp beacon
+        // send color to lamp
+        // but how is lamp???
+
         distancesRepository.save(distances);
         return distances; // return distances; esli tebe dlya muzike ponadobitsa
     }

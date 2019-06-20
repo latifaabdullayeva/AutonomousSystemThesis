@@ -11,24 +11,27 @@ since in our study only phones has personalities (TYPE: String)
 name -> cannot be NULL, but personality can be, because our devices like Bench and Tablet do not have personality
 */
 
-import javax.persistence.*;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.*;
+
 @Table(name = "devices")
 @Entity
-public class Devices {
+public class Devices{
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "deviceID", unique = true, nullable = false, updatable = false)
     private Integer deviceID; // Hibernate will generate an id of the Integer
 
 
-    @OneToMany(mappedBy="from", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
     Set<Distances> from = new HashSet<Distances>();
 
 
-    @OneToMany(mappedBy="to", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "to", cascade = CascadeType.ALL)
     Set<Distances> to = new HashSet<Distances>();
 
 

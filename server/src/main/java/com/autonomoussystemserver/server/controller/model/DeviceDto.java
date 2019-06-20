@@ -2,6 +2,7 @@ package com.autonomoussystemserver.server.controller.model;
 
 public class DeviceDto {
 
+    // TODO: why snake case, and not camel case?
     private String device_name;
     private String beacon_tag;
     private String device_personality;
@@ -16,6 +17,7 @@ public class DeviceDto {
         return device_name;
     }
 
+    // TODO: why tag?
     public String getBeacon_tag() {
         return beacon_tag;
     }

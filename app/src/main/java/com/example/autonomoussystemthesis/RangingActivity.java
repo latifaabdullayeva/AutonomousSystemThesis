@@ -15,8 +15,11 @@ import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.utils.EddystoneTelemetryAccessor;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.lang.Math.round;
 
@@ -83,14 +86,27 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
+
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+
+
                 if (beacons.size() > 0) {
 //                  Show in logs the number of beacons that app found
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
-                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString() ,"intimatness");
+//                        // ExtraDataFields
+//                        List<Long> myExtraField= new ArrayList<Long>();
+//                        myExtraField.add(39832L);
+//                        beacon.setExtraDataFields(myExtraField);
+//                        long myExtraField2 = beacon.getExtraDataFields().get(0);
+//                        Log.d(TAG, "????....." + myExtraField2);
+//                        // TODO may delete, this is test code
+
+
+                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
+
                         Log.d(TAG, "The beacon " + beacon.toString());
 
                         int brightness = (int) beacon.getDistance() * 80;
@@ -104,7 +120,11 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
 //                          TODO: it should send the distance to all mascots to the DATABASE
-                            distanceRepository.sendNetworkRequest(3, 1, round(beacon.getDistance() * 100));
+                            distanceRepository.sendNetworkRequest(1
+                                    , 2, round(beacon.getDistance() * 100));
+
+                            deviceRepository.getNetworkRequest();
+//                            Log.d(TAG, deviceRepository.getNetworkRequest());
 
                             // TODO: vibration
                             // START: When you click on VIBRATE button, phone vibrates */

@@ -20,8 +20,7 @@ public class Distances {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
-    private Integer id; // Hibernate will generate an id of Integer,
-    // TODO: If you want change to UUID -> the form “8dd5f315-9788-4d00-87bb-10eed9eff566”
+    private Integer id; // Hibernate will generate an id of Integer
 
 
     @ManyToOne
