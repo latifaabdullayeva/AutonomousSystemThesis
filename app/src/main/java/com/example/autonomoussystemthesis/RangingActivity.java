@@ -1,10 +1,17 @@
 package com.example.autonomoussystemthesis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
@@ -15,37 +22,50 @@ import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-import org.altbeacon.beacon.utils.EddystoneTelemetryAccessor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
 
 import static java.lang.Math.round;
-
-// import com.example.autonomoussystemthesis.data.DatabaseHelper;
 
 public class RangingActivity extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "RangingActivity";
     private BeaconManager beaconManager;
-    private TextView measurementText;
-    private TextView measurementBeaconList;
+    private TextView numbOfBeacons;
 
-//     database
-//     DatabaseHelper autonomousSystemDatabase;
+    //-----
+    private ArrayList<String> beaconList;
+    private ListView beaconListView;
+    private ArrayAdapter<String> adapter;
+    //-----
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranging);
-
         Log.d(TAG, "RangingActivity started up");
+        getSupportActionBar().setTitle("Ranging Activity");
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
-//     autonomousSystemDatabase = new DatabaseHelper(this);
-
-        getSupportActionBar().setTitle("Ranging Activity");
+        //-----
+        // Choose the device out of list
+        this.beaconList = new ArrayList<String>();
+        this.beaconListView = findViewById(R.id.listView);
+        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.beaconList);
+        this.beaconListView.setAdapter(adapter);
+        //-----
+        // Action for Save button
+        Button buttonSave = findViewById(R.id.buttonBeaconSave);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     @Override
@@ -90,41 +110,73 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
-
                 if (beacons.size() > 0) {
+
+                    // Show the List of all beacons
+                    beaconList.clear();
+                    for (Iterator<Beacon> iterator = beacons.iterator(); iterator.hasNext(); ) {
+                        Beacon beacon = iterator.next();
+                        if (!beaconList.contains(beacon.getId1().toString())) {
+                            beaconList.add(beacon.getBluetoothAddress()); // if you want to get ID of beacon -> .getId1();
+                        }
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    numbOfBeacons = findViewById(R.id.numbOfBeacons);
+                    numbOfBeacons.setText("Number of Beacon devices: " + beacons.size());
+
+                    // Bind onclick event handler
+                    beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> parent, View view,
+                                                int position, long id) {
+
+                            Toast.makeText(RangingActivity.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+                            // TODO: Logic for:
+                            // 1) if user chooses second time
+                            //      -> show message -> app ignore in DB new value
+                            // 2) if this UUID already exists in DB, so make get request first
+
+                        }
+                    });
+
+                    //-----
+
 //                  Show in logs the number of beacons that app found
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
-//                        // ExtraDataFields
-//                        List<Long> myExtraField= new ArrayList<Long>();
-//                        myExtraField.add(39832L);
-//                        beacon.setExtraDataFields(myExtraField);
-//                        long myExtraField2 = beacon.getExtraDataFields().get(0);
-//                        Log.d(TAG, "????....." + myExtraField2);
-//                        // TODO may delete, this is test code
-
 
                         deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
-
                         Log.d(TAG, "The beacon " + beacon.toString());
 
                         int brightness = (int) beacon.getDistance() * 80;
                         if (brightness > 255) {
                             brightness = 255;
                         }
-
                         hueRepository.updateBrightness(brightness);
+
+                        // set extra data field for beacon, name each beacon according to device
+                        beacon = new Beacon.Builder().setExtraDataFields(Arrays
+                                .asList(1L, 2L, 3L, 4L)).build();
+
+                        // get from DB all devices in the system, and beacon.toString()
+//                        measurementBeaconList = (TextView) findViewById(R.id.measurementText);
+//                        measurementBeaconList.setText("The number of beacons: " + beacons.size() +
+//                                "\nThe beacon [" + beacon + "] is about " + round(beacon.getDistance() * 100) + " cm away.\n" +
+//                                beacon.getBluetoothAddress() + "\n" +
+//                                beacon.getExtraDataFields());
 
                         if (beacon.getDistance() <= 0.45) { // intimate
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
 //                          TODO: it should send the distance to all mascots to the DATABASE
-                            distanceRepository.sendNetworkRequest(1
-                                    , 2, round(beacon.getDistance() * 100));
+                            distanceRepository.sendNetworkRequest(13, 14, round(beacon.getDistance() * 100));
 
                             deviceRepository.getNetworkRequest();
-//                            Log.d(TAG, deviceRepository.getNetworkRequest());
 
                             // TODO: vibration
                             // START: When you click on VIBRATE button, phone vibrates */
@@ -140,28 +192,15 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 //                                    }
 //                                }
 //                            });
-                            //
-                            hueRepository.updateBrightness(255);
 
                         } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
                             Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
                             // TODO: tablet color
-
                         } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
                             Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
                             // TODO: bench is here, lights
-                            // get from DB all devices in the system, and beacon.toString()
-                            measurementBeaconList = (TextView) findViewById(R.id.measurementBeaconList);
-                            measurementBeaconList.setText("The number of beacons: " + beacons.size() +
-                                    "\nThe beacon \n" + beacon +
-                                    "\nis about " + round(beacon.getDistance() * 100) + " cm away.");
-
-//                            measurementText = (TextView) findViewById(R.id.measurementText);
-//                            measurementText.setText("Lamps: \n Social Zone: " +
-//                                    round(beacon.getDistance() * 100) + " cm away.");
-
                             hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
                             Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
@@ -179,5 +218,4 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                 RemoteException e) {
         }
     }
-
 }
