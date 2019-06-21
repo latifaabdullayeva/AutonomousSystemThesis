@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -50,15 +49,6 @@ public class MainActivity extends AppCompatActivity {
         }
         Button buttonSave = findViewById(R.id.gotoQuestionnare);
         buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, DeviceInitialisation.class);
-                startActivity(myIntent);
-            }
-        });
-
-        Button deteleITRangingActivity = findViewById(R.id.DeleteItLaterRangingActivity);
-        deteleITRangingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, RangingActivity.class);

@@ -20,24 +20,26 @@ public class DistanceRepository {
         // ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://29305a18.ngrok.io")
+                .baseUrl("http://1433e990.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         distanceService = retrofit.create(DistanceService.class);
     }
 
-    public void sendNetworkRequest(Integer from, Integer to, double distance) {
-        Distance distanceRequest = new Distance(from, to, distance);
+    public void sendNetworkRequest(Integer from_device, Integer to_device, double distance) {
+        Distance distanceRequest = new Distance(from_device, to_device, distance);
 
         distanceService.postDistance(distanceRequest)
                 .enqueue(new Callback<ResponseBody>() {
 
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.d("DistanceRepository", "success!");
+                        Log.d("DistanceRepository", "Response: " + response.body());
                         try {
-                            Log.d("DistanceRepository", response.body().string());
+                            if (response.body() != null) {
+                                Log.d("DistanceRepository", "success! \n" + response.body().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

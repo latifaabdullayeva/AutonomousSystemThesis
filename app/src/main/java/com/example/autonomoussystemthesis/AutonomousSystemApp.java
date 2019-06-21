@@ -53,7 +53,6 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
         BeaconManager.setDebug(true);
 
-
 //        wake up the app when any beacon is seen
 //        TODO: Region("backgroundRegion",
         Region region = new Region(".boostrapRegion",

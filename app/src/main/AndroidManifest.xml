@@ -17,11 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DeviceInitialisation"
+            android:name=".RangingActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".PersonalityInitialisation"
-            android:parentActivityName=".DeviceInitialisation" />
+            android:name=".DeviceInitialisation"
+            android:parentActivityName=".RangingActivity" />
         <!--
          the singleInstance is important to keep two copies of our activity
         from getting launched on automatic startup
@@ -36,7 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RangingActivity" />
+        <activity android:name=".PersonalityInitialisation" />
     </application>
 
 </manifest>

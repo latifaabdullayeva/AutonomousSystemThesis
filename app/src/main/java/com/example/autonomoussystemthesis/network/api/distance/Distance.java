@@ -1,22 +1,22 @@
 package com.example.autonomoussystemthesis.network.api.distance;
 
 public class Distance {
-    private final Integer from;
-    private final Integer to;
+    private final Integer from_device;
+    private final Integer to_device;
     private final double distance;
 
-    public Distance(Integer from, Integer to, double distance) {
-        this.from = from;
-        this.to = to;
+    public Distance(Integer from_device, Integer to_device, double distance) {
+        this.from_device = from_device;
+        this.to_device = to_device;
         this.distance = distance;
     }
 
-    public Integer getFrom() {
-        return from;
+    public Integer getFrom_device() {
+        return from_device;
     }
 
-    public Integer getTo() {
-        return to;
+    public Integer getTo_device() {
+        return to_device;
     }
 
     public double getDistance() {

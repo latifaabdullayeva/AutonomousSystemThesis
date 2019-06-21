@@ -19,44 +19,44 @@ import javax.persistence.*;
 public class Distances {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false, updatable = false)
-    private Integer id; // Hibernate will generate an id of Integer
+    @Column(name = "device_id", unique = true, nullable = false, updatable = false)
+    private Integer device_id; // Hibernate will generate an id of Integer
 
 
     @ManyToOne
-    @JoinColumn(name = "FK_from") // Foreign key for device.deviceID
-    private Devices from;
+    @JoinColumn(name = "from_device") // Foreign key for device.deviceID
+    private Devices from_device;
 
     @ManyToOne
-    @JoinColumn(name = "FK_to") // Foreign key for device.deviceID
-    private Devices to;
+    @JoinColumn(name = "to_device") // Foreign key for device.deviceID
+    private Devices to_device;
 
 
     @Column(name = "distance", nullable = false) // in cm
     private int distance;
 
-    public Integer getId() {
-        return id;
+    public Integer getDevice_id() {
+        return device_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDevice_id(Integer device_id) {
+        this.device_id = device_id;
     }
 
-    public Devices getFrom() {
-        return from;
+    public Devices getFrom_device() {
+        return from_device;
     }
 
-    public void setFrom(Devices from) {
-        this.from = from;
+    public void setFrom_device(Devices from_device) {
+        this.from_device = from_device;
     }
 
-    public Devices getTo() {
-        return to;
+    public Devices getTo_device() {
+        return to_device;
     }
 
-    public void setTo(Devices to) {
-        this.to = to;
+    public void setTo_device(Devices to_device) {
+        this.to_device = to_device;
     }
 
     public int getDistance() {

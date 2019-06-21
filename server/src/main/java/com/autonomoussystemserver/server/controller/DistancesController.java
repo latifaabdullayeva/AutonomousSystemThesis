@@ -27,25 +27,21 @@ public class DistancesController {
     public Distances postDistance(@RequestBody DistanceDto distanceDto) {
         // if the distances between two objects exists, delete this row, and then post a new distance value
         // if the values of FROM or TO (i.e the objects are do not exists in database), do not do POST request
-        distancesRepository.delete(distanceDto.getFrom(), distanceDto.getTo());
-        distancesRepository.delete(distanceDto.getTo(), distanceDto.getFrom());
+        distancesRepository.delete(distanceDto.getFrom_device(), distanceDto.getTo_device());
+        distancesRepository.delete(distanceDto.getTo_device(), distanceDto.getFrom_device());
 
-        Devices fromDevice = new Devices();
-        Devices toDevice = new Devices();
+        Devices from_device = new Devices();
+        Devices to_device = new Devices();
 
-        fromDevice.setId(distanceDto.getFrom());
-        toDevice.setId(distanceDto.getTo());
+        from_device.setDevice_id(distanceDto.getFrom_device());
+        to_device.setDevice_id(distanceDto.getTo_device());
 
         Distances distances = new Distances();
-        distances.setFrom(fromDevice);
-        distances.setTo(toDevice);
+        distances.setFrom_device(from_device);
+        distances.setTo_device(to_device);
         distances.setDistance(distanceDto.getDistance());
 
-        // find lamp beacon
-        // send color to lamp
-        // but how is lamp???
-
         distancesRepository.save(distances);
-        return distances; // return distances; esli tebe dlya muzike ponadobitsa
+        return distances;
     }
 }

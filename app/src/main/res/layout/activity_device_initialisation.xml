@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Choose the Name of your device"
+            android:text="Choose a Type of your device:"
             android:textColor="#FDB91266"
             android:textSize="22sp" />
 
@@ -55,25 +55,24 @@
             app:buttonTint="#FDB91266" />
 
         <RadioButton
-            android:id="@+id/radioButtonDeviceNamePhone"
+            android:id="@+id/radioButtonDeviceNameMascot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Phone"
+            android:text="Mascot"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
     </RadioGroup>
 
     <EditText
-        android:id="@+id/phoneNameEditText"
+        android:id="@+id/mascotNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Give a name to your Phone..."
-        android:textColor="#FDB91266"
-        android:textColorHint="#ffffff" />
+        android:hint="If you choose Mascot, give it a name ..."
+        android:textColor="#FDB91266" />
 
     <Button
         android:id="@+id/buttonDeviceName"
@@ -93,12 +92,5 @@
     <!--android:text="VIBRATE!!"-->
     <!--android:textColor="#ffffff"-->
     <!--android:textSize="20sp" />-->
-
-    <Button
-        android:id="@+id/beaconsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="a"
-        android:textColor="#FDB91266" />
 
 </LinearLayout>

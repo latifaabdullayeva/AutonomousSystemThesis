@@ -15,7 +15,8 @@ Supervisor: Donald Degraen, German Research Center for Artificial Intelligence, 
 
 CREATE TABLE public."testTableThesis"
 (
-    id integer NOT NULL DEFAULT nextval('"testTableThesis_id_seq"'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    id integer NOT NULL DEFAULT nextval('"testTableThesis_id_seq"'::regclass) 
+    ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     CONSTRAINT id PRIMARY KEY (id)
 )
 WITH (
@@ -28,7 +29,8 @@ ALTER TABLE public."testTableThesis"
 
 ----------------------------------------------------------------------------------------------------
 ALTER TABLE public."testTableThesis"
-    ADD COLUMN id integer NOT NULL DEFAULT nextval('"testTableThesis_id_seq"'::regclass)  ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 )
+    ADD COLUMN id integer NOT NULL DEFAULT nextval('"testTableThesis_id_seq"'::regclass)  
+    ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 )
 ----------------------------------------------------------------------------------------------------
 ALTER TABLE public."testTableThesis"
     ADD COLUMN "timestamp" timestamp with time zone NOT NULL

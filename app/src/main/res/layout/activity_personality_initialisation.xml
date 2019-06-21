@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Choose Personality for your Phone!"
+            android:text="Choose Personality for your Mascot:"
             android:textColor="#FDB91266"
             android:textSize="22sp" />
 
