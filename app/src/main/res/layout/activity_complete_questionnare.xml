@@ -6,39 +6,39 @@
     android:background="#fbe8ef"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".RangingActivity">
+    tools:context=".CompleteQuestionnare">
 
     <TextView
-        android:id="@+id/numbOfBeacons"
+        android:id="@+id/passBeacon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text=""
         android:textColor="#FDB91266"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/IntroText"
+        android:id="@+id/passDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Choose one UUID for your beacon:"
+        android:layout_marginBottom="20dp"
         android:textColor="#FDB91266"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
-    <ListView
-        android:id="@+id/listView"
+    <TextView
+        android:id="@+id/passPersonality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:choiceMode="singleChoice" />
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonBeaconSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FDB91266"
-        android:text="Next"
+        android:text="Save All data"
         android:textColor="#ffffff" />
+
 
 </LinearLayout>

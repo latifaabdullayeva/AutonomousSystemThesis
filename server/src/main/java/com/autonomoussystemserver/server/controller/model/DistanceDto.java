@@ -3,9 +3,9 @@ package com.autonomoussystemserver.server.controller.model;
 public class DistanceDto {
     private Integer fromDevice;
     private Integer toDevice;
-    private Long distance;
+    private Integer distance;
 
-    public DistanceDto(Integer fromDevice, Integer toDevice, Long distance) {
+    public DistanceDto(Integer fromDevice, Integer toDevice, Integer distance) {
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;
         this.distance = distance;
@@ -19,7 +19,7 @@ public class DistanceDto {
         return toDevice;
     }
 
-    public Long getDistance() {
+    public Integer getDistance() {
         return distance;
     }
 }

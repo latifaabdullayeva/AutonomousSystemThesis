@@ -22,6 +22,9 @@ public class DeviceInitialisation extends AppCompatActivity {
     TextView textView;
     EditText editText;
 
+    TextView beaconUuid;
+    EditText mascotPersonality;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +35,12 @@ public class DeviceInitialisation extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.IntroText);
 
-        Button buttonSave = findViewById(R.id.buttonDeviceName);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(DeviceInitialisation.this, PersonalityInitialisation.class);
-                startActivity(myIntent);
-            }
-        });
         getSupportActionBar().setTitle("Device Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        beaconUuid = findViewById(R.id.passBeacon);
+        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
 
     }
 
@@ -57,6 +55,35 @@ public class DeviceInitialisation extends AppCompatActivity {
     public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+
+        Button buttonSave = findViewById(R.id.buttonDeviceName);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deviceValue = radioButton.getText().toString();
+
+                if (deviceValue.equals("Mascot")) {
+                    String mascotValue = mascotPersonality.getText().toString();
+                    Intent myIntent = new Intent(DeviceInitialisation.this, PersonalityInitialisation.class);
+
+                    myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                    myIntent.putExtra("DEVICENAME", mascotValue);
+
+                    startActivity(myIntent);
+                } else {
+                    Intent myIntent = new Intent(DeviceInitialisation.this, CompleteQuestionnare.class);
+
+                    myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                    myIntent.putExtra("DEVICENAME", deviceValue);
+                    myIntent.putExtra("PERSONALITY", "empty");
+
+                    startActivity(myIntent);
+                }
+
+            }
+        });
     }
+
+
 }

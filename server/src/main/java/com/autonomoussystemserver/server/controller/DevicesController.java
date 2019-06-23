@@ -3,6 +3,7 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ public class DevicesController {
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
+
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
         if (existingDevice != null) {

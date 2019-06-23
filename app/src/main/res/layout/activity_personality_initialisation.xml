@@ -81,8 +81,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FDB91266"
-        android:text="Save"
+        android:text="Next"
         android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/passBeacon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/passDeviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

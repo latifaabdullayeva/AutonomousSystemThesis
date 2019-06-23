@@ -20,6 +20,8 @@ public class PersonalityInitialisation extends AppCompatActivity {
     RadioButton radioButton;
     TextView textView;
 
+    TextView beaconUuid, deviceName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +31,16 @@ public class PersonalityInitialisation extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.IntroText);
-        Button buttonSave = findViewById(R.id.buttonPersonality);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(PersonalityInitialisation.this, RangingActivity.class);
-                startActivity(myIntent);
-            }
-        });
+
         getSupportActionBar().setTitle("Personality");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        beaconUuid = findViewById(R.id.passBeacon);
+        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
+
+        deviceName = findViewById(R.id.passDeviceName);
+        deviceName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -53,6 +54,21 @@ public class PersonalityInitialisation extends AppCompatActivity {
     public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+
+        Button buttonSave = findViewById(R.id.buttonPersonality);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(PersonalityInitialisation.this, CompleteQuestionnare.class);
+
+                String perValue = radioButton.getText().toString();
+                myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                myIntent.putExtra("DEVICENAME", getIntent().getStringExtra("DEVICENAME"));
+                myIntent.putExtra("PERSONALITY", perValue);
+
+                startActivity(myIntent);
+            }
+        });
     }
 }

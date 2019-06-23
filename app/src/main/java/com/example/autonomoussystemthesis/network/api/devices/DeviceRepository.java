@@ -19,7 +19,7 @@ public class DeviceRepository {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://7f3bdf20.ngrok.io")
+                .baseUrl("http://d7dce07b.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
