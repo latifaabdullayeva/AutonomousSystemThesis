@@ -1,25 +1,25 @@
 package com.example.autonomoussystemthesis.network.api.devices;
 
 public class Device {
-    private final String device_name;
-    private final String beacon_UUID;
-    private final String device_personality;
+    private final String deviceName;
+    private final String beaconUuid;
+    private final String devicePersonality;
 
-    public Device(String device_name, String beacon_UUID, String device_personality) {
-        this.device_name = device_name;
-        this.beacon_UUID = beacon_UUID;
-        this.device_personality = device_personality;
+    public Device(String deviceName, String beaconUuid, String devicePersonality) {
+        this.deviceName = deviceName;
+        this.beaconUuid = beaconUuid;
+        this.devicePersonality = devicePersonality;
     }
 
-    public String getDevice_name() {
-        return device_name;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public String getBeacon_UUID() {
-        return beacon_UUID;
+    public String getBeaconUuid() {
+        return beaconUuid;
     }
 
-    public String getDevice_personality() {
-        return device_personality;
+    public String getDevicePersonality() {
+        return devicePersonality;
     }
 }

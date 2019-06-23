@@ -31,7 +31,7 @@ public class Distances {
     private Devices toDevice;
 
     @Column(name = "distance", nullable = false) // in cm
-    private long distance;
+    private Long distance;
 
     public Integer getDistanceId() {
         return distanceId;
@@ -57,11 +57,11 @@ public class Distances {
         this.toDevice = toDevice;
     }
 
-    public long getDistance() {
+    public Long getDistance() {
         return distance;
     }
 
-    public void setDistance(long distance) {
+    public void setDistance(Long distance) {
         this.distance = distance;
     }
 }

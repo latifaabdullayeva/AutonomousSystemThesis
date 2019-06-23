@@ -151,7 +151,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
                         deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
                         Log.d(TAG, "The beacon " + beacon.toString());
-                        distanceRepository.sendNetworkRequest(17, 23, 555);
+                        distanceRepository.sendNetworkRequest(1, 2, round(beacon.getDistance() * 100));
 
                         int brightness = (int) beacon.getDistance() * 80;
                         if (brightness > 255) {

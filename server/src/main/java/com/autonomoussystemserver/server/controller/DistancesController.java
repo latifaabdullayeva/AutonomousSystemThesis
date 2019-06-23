@@ -40,12 +40,12 @@ public class DistancesController {
         Devices fromDevice = new Devices();
         Devices toDevice = new Devices();
 
-        fromDevice.setDevice_id(distanceDto.getFromDevice());
-        toDevice.setDevice_id(distanceDto.getToDevice());
+        fromDevice.setDeviceId(distanceDto.getFromDevice());
+        toDevice.setDeviceId(distanceDto.getToDevice());
 
         Distances distances = new Distances();
-        distances.setFrom_device(fromDevice);
-        distances.setTo_device(toDevice);
+        distances.setFromDevice(fromDevice);
+        distances.setToDevice(toDevice);
         distances.setDistance(distanceDto.getDistance());
 
         distancesRepository.save(distances);

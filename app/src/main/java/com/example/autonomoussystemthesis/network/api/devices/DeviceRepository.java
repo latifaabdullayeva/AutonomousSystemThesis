@@ -19,15 +19,15 @@ public class DeviceRepository {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://bbd51509.ngrok.io")
+                .baseUrl("http://7f3bdf20.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         deviceService = retrofit.create(DeviceService.class);
     }
 
-    public void sendNetworkRequest(String device_name, String beacon_UUID, String device_personality) {
-        Device deviceRequest = new Device(device_name, beacon_UUID, device_personality);
+    public void sendNetworkRequest(String deviceName, String beaconUuid, String devicePersonality) {
+        Device deviceRequest = new Device(deviceName, beaconUuid, devicePersonality);
 
         deviceService.createDevice(deviceRequest)
                 .enqueue(new Callback<ResponseBody>() {
