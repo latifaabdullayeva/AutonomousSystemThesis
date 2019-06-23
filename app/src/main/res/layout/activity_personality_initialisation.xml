@@ -93,7 +93,15 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/passDeviceName"
+        android:id="@+id/passDeviceType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/passMascotName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

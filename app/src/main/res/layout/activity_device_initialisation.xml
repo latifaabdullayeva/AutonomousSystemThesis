@@ -66,13 +66,22 @@
 
     </RadioGroup>
 
+    <!--<TextView-->
+        <!--android:id="@+id/mascotText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:textColor="#FDB91266"-->
+        <!--android:textSize="18sp" />-->
+
     <EditText
         android:id="@+id/mascotNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="If you choose Mascot, give it a name ..."
-        android:textColor="#FDB91266" />
+        android:hint="Please give your Mascot a name ..."
+        android:textColor="#FDB91266"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/buttonDeviceName"

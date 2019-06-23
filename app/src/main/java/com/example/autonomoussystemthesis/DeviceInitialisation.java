@@ -19,11 +19,8 @@ public class DeviceInitialisation extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton radioButton;
-    TextView textView;
-    EditText editText;
-
-    TextView beaconUuid;
-    EditText mascotPersonality;
+    TextView beaconUuid, textView;
+    EditText mascotNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +52,30 @@ public class DeviceInitialisation extends AppCompatActivity {
     public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+        String deviceValue = radioButton.getText().toString();
+
+        if (radioButton.getText().toString().equals("Mascot")) {
+//            mascotText = findViewById(R.id.mascotText);
+//            mascotText.setText("Please come up with a Mascot Name: ");
+            mascotNameEditText = findViewById(R.id.mascotNameEditText);
+            mascotNameEditText.setVisibility(View.VISIBLE);
+        } else {
+            Toast.makeText(DeviceInitialisation.this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+        }
 
         Button buttonSave = findViewById(R.id.buttonDeviceName);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String deviceValue = radioButton.getText().toString();
 
-                if (deviceValue.equals("Mascot")) {
-                    String mascotValue = mascotPersonality.getText().toString();
+                if (radioButton.getText().toString().equals("Mascot")) {
+//                    mascotNameEditText.setText("Mascot Name: \n" + getIntent().getStringExtra("DEVICENAME"));
+                    Toast.makeText(DeviceInitialisation.this, "Selected " + mascotNameEditText.getText(), Toast.LENGTH_LONG).show();
+                    String mascotValue = mascotNameEditText.getText().toString();
                     Intent myIntent = new Intent(DeviceInitialisation.this, PersonalityInitialisation.class);
 
                     myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                    myIntent.putExtra("DEVICETYPE", deviceValue);
                     myIntent.putExtra("DEVICENAME", mascotValue);
 
                     startActivity(myIntent);
@@ -75,7 +83,7 @@ public class DeviceInitialisation extends AppCompatActivity {
                     Intent myIntent = new Intent(DeviceInitialisation.this, CompleteQuestionnare.class);
 
                     myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
-                    myIntent.putExtra("DEVICENAME", deviceValue);
+                    myIntent.putExtra("DEVICETYPE", deviceValue);
                     myIntent.putExtra("PERSONALITY", "empty");
 
                     startActivity(myIntent);

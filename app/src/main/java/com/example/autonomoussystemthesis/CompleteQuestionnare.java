@@ -2,6 +2,7 @@ package com.example.autonomoussystemthesis;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,7 +11,7 @@ import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 
 public class CompleteQuestionnare extends AppCompatActivity {
     final DeviceRepository deviceRepository = new DeviceRepository();
-    TextView beaconUuid, deviceName, devicePersonality;
+    TextView beaconUuid, deviceType, deviceName, devicePersonality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,23 +20,35 @@ public class CompleteQuestionnare extends AppCompatActivity {
         Button buttonSave = findViewById(R.id.buttonBeaconSave);
 
         beaconUuid = findViewById(R.id.passBeacon);
-        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
+        String beaconUuidReq = getIntent().getStringExtra("BEACONUUID");
+        beaconUuid.setText("Beacon UUID: \n" + beaconUuidReq);
+
+        deviceType = findViewById(R.id.passDeviceType);
+        String deviceTypeReq = getIntent().getStringExtra("DEVICETYPE");
+        deviceType.setText("Device Type: \n" + deviceTypeReq);
+
 
         deviceName = findViewById(R.id.passDeviceName);
-        deviceName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
+        String deviceNameReq = getIntent().getStringExtra("DEVICENAME");
+        if (deviceTypeReq.equals("Mascot")) {
+            deviceName.setText("Device Name: \n" + deviceNameReq);
+            deviceName.setVisibility(View.VISIBLE);
+        }
 
         devicePersonality = findViewById(R.id.passPersonality);
-        devicePersonality.setText("Mascot Personality: \n" + getIntent().getStringExtra("PERSONALITY"));
-
+        String devicePersonalityReq = getIntent().getStringExtra("PERSONALITY");
+        devicePersonality.setText("Mascot Personality: \n" + devicePersonalityReq);
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deviceRepository.sendNetworkRequest(
-                        getIntent().getStringExtra("DEVICENAME"),
-                        getIntent().getStringExtra("BEACONUUID"),
-                        getIntent().getStringExtra("PERSONALITY")
-                );
+                Log.d("CompleteQuestionnare", deviceTypeReq);
+                if (deviceTypeReq.equals("Mascot")) {
+                    Log.d("CompleteQuestionnare", deviceTypeReq + beaconUuidReq + devicePersonalityReq);
+                    deviceRepository.sendNetworkRequest(deviceNameReq, beaconUuidReq, devicePersonalityReq);
+                } else {
+                    deviceRepository.sendNetworkRequest(deviceTypeReq, beaconUuidReq, devicePersonalityReq);
+                }
             }
         });
     }

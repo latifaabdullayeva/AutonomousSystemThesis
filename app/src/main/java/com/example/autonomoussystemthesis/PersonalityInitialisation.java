@@ -20,7 +20,7 @@ public class PersonalityInitialisation extends AppCompatActivity {
     RadioButton radioButton;
     TextView textView;
 
-    TextView beaconUuid, deviceName;
+    TextView beaconUuid, deviceType, mascotName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,11 @@ public class PersonalityInitialisation extends AppCompatActivity {
         beaconUuid = findViewById(R.id.passBeacon);
         beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
 
-        deviceName = findViewById(R.id.passDeviceName);
-        deviceName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
+        deviceType = findViewById(R.id.passDeviceType);
+        deviceType.setText("Device Type: \n" + getIntent().getStringExtra("DEVICETYPE"));
+
+        mascotName = findViewById(R.id.passMascotName);
+        mascotName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -64,6 +67,7 @@ public class PersonalityInitialisation extends AppCompatActivity {
 
                 String perValue = radioButton.getText().toString();
                 myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                myIntent.putExtra("DEVICETYPE", getIntent().getStringExtra("DEVICETYPE"));
                 myIntent.putExtra("DEVICENAME", getIntent().getStringExtra("DEVICENAME"));
                 myIntent.putExtra("PERSONALITY", perValue);
 
