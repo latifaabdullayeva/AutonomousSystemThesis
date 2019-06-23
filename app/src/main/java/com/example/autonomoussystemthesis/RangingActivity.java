@@ -50,21 +50,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
         //-----
-        // Choose the device out of list
-        this.beaconList = new ArrayList<String>();
+        // Choose the Beacon Device out of list
+        this.beaconList = new ArrayList<>();
         this.beaconListView = findViewById(R.id.listView);
-        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.beaconList);
+        this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.beaconList);
         this.beaconListView.setAdapter(adapter);
         //-----
-        // Action for Save button
-        Button buttonSave = findViewById(R.id.buttonBeaconSave);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
-                startActivity(myIntent);
-            }
-        });
     }
 
     @Override
@@ -116,7 +107,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                     for (Iterator<Beacon> iterator = beacons.iterator(); iterator.hasNext(); ) {
                         Beacon beacon = iterator.next();
                         if (!beaconList.contains(beacon.getId1().toString())) {
-                            beaconList.add(beacon.getBluetoothAddress()); // if you want to get ID of beacon -> .getId1();
+                            beaconList.add(beacon.getId1().toString()); // if you want to get ID of beacon -> .getId1();
                         }
                     }
                     runOnUiThread(new Runnable() {
@@ -133,7 +124,22 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                         public void onItemClick(AdapterView<?> parent, View view,
                                                 int position, long id) {
 
-                            Toast.makeText(RangingActivity.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RangingActivity.this, "Selected Beacon: " +
+                                    beaconList.get(position), Toast.LENGTH_LONG).show();
+
+                            // Action for Save button
+                            Button buttonSave = findViewById(R.id.buttonBeaconSave);
+                            buttonSave.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deviceRepository.sendNetworkRequest("Nexus", beaconList.get(position), "intimate");
+                                    Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
+                                    startActivity(myIntent);
+                                }
+                            });
+
+                            //-----
+
                             // TODO: Logic for:
                             // 1) if user chooses second time
                             //      -> show message -> app ignore in DB new value
@@ -142,14 +148,13 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                         }
                     });
 
-                    //-----
 
 //                  Show in logs the number of beacons that app found
                     Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
                     for (Beacon beacon : beacons) {
 
-                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
+//                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
                         Log.d(TAG, "The beacon " + beacon.toString());
                         distanceRepository.sendNetworkRequest(1, 2, round(beacon.getDistance() * 100));
 
