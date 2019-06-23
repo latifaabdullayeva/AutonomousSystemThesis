@@ -19,7 +19,7 @@ public class DeviceRepository {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://1433e990.ngrok.io")
+                .baseUrl("http://bbd51509.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -51,19 +51,19 @@ public class DeviceRepository {
                 });
     }
 
-    // TODO: get request does not return anything :(
-    public void getNetworkRequest() {
-        deviceService.getDevices().enqueue(new Callback<Device>() {
-            @Override
-            public void onResponse(Call<Device> call, Response<Device> response) {
-                Log.d("DeviceRepository", "GET success!");
-            }
-
-            @Override
-            public void onFailure(Call<Device> call, Throwable t) {
-                Log.d("DeviceRepository", "error loading from API");
-
-            }
-        });
-    }
+//    // TODO: get request does not return anything :(
+//    public void getNetworkRequest() {
+//        deviceService.getDevices().enqueue(new Callback<Device>() {
+//            @Override
+//            public void onResponse(Call<Device> call, Response<Device> response) {
+//                Log.d("DeviceRepository", "GET success!");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Device> call, Throwable t) {
+//                Log.d("DeviceRepository", "error loading from API");
+//
+//            }
+//        });
+//    }
 }

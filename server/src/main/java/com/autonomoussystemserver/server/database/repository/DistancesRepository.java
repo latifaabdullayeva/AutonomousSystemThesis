@@ -13,7 +13,7 @@ public interface DistancesRepository extends JpaRepository<Distances, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Distances WHERE from_device=:from_device and to_device=:to_device")
+    @Query("DELETE FROM Distances WHERE fromDevice.deviceId=:fromDevice and toDevice.deviceId=:toDevice")
         // HQL
-    void delete(Integer from_device, Integer to_device);
+    void delete(Integer fromDevice, Integer toDevice);
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DevicesRepository extends JpaRepository<Devices, Integer>, CrudRepository<Devices, Integer> {
 
-    @Query("select dev from Devices dev where beacon_UUID=:beacon_UUID")
-    Devices findByBeacon(String beacon_UUID);
+    @Query("select dev from Devices dev where beaconUuid=:beaconUuid")
+    Devices findByBeacon(String beaconUuid);
 
 }

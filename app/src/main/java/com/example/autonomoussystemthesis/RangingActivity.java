@@ -24,7 +24,6 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -152,16 +151,17 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
                         deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
                         Log.d(TAG, "The beacon " + beacon.toString());
+                        distanceRepository.sendNetworkRequest(17, 23, 555);
 
                         int brightness = (int) beacon.getDistance() * 80;
                         if (brightness > 255) {
                             brightness = 255;
                         }
-                        hueRepository.updateBrightness(brightness);
+//                        hueRepository.updateBrightness(brightness);
 
                         // set extra data field for beacon, name each beacon according to device
-                        beacon = new Beacon.Builder().setExtraDataFields(Arrays
-                                .asList(1L, 2L, 3L, 4L)).build();
+//                        beacon = new Beacon.Builder().setExtraDataFields(Arrays
+//                                .asList(1L, 2L, 3L, 4L)).build();
 
                         // get from DB all devices in the system, and beacon.toString()
 //                        measurementBeaconList = (TextView) findViewById(R.id.measurementText);
@@ -174,9 +174,8 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                             Log.d(TAG, "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
 //                          TODO: it should send the distance to all mascots to the DATABASE
-                            distanceRepository.sendNetworkRequest(13, 14, round(beacon.getDistance() * 100));
 
-                            deviceRepository.getNetworkRequest();
+//                            deviceRepository.getNetworkRequest();
 
                             // TODO: vibration
                             // START: When you click on VIBRATE button, phone vibrates */
@@ -201,7 +200,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                             Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
                             Log.d(TAG, "-");
                             // TODO: bench is here, lights
-                            hueRepository.updateBrightness(90);
+//                            hueRepository.updateBrightness(90);
                         } else if (beacon.getDistance() > 3.70) { // public
                             Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
                             Log.d(TAG, "-");

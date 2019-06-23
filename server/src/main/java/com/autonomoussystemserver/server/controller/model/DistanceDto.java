@@ -1,25 +1,25 @@
 package com.autonomoussystemserver.server.controller.model;
 
 public class DistanceDto {
-    private Integer from_device;
-    private Integer to_device;
-    private int distance;
+    private Integer fromDevice;
+    private Integer toDevice;
+    private Integer distance;
 
-    public DistanceDto(Integer from_device, Integer to_device, int distance) {
-        this.from_device = from_device;
-        this.to_device = to_device;
+    public DistanceDto(Integer fromDevice, Integer toDevice, Integer distance) {
+        this.fromDevice = fromDevice;
+        this.toDevice = toDevice;
         this.distance = distance;
     }
 
-    public Integer getFrom_device() {
-        return from_device;
+    public Integer getFromDevice() {
+        return fromDevice;
     }
 
-    public Integer getTo_device() {
-        return to_device;
+    public Integer getToDevice() {
+        return toDevice;
     }
 
-    public int getDistance() {
+    public Integer getDistance() {
         return distance;
     }
 }

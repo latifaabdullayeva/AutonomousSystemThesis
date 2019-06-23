@@ -20,59 +20,50 @@ import javax.persistence.*;
 
 @Table(name = "devices")
 @Entity
-public class Devices{
+public class Devices {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "device_id", unique = true, nullable = false, updatable = false)
-    private Integer device_id; // Hibernate will generate an id of the Integer
+    @Column(name = "deviceId", unique = true, nullable = false, updatable = false)
+    private Integer deviceId; // Hibernate will generate an id of the Integer
 
+    @Column(name = "deviceName", nullable = false, updatable = false)
+    private String deviceName;
 
-    @OneToMany(mappedBy = "from_device", cascade = CascadeType.ALL)
-    Set<Distances> from_device = new HashSet<Distances>();
+    @Column(name = "beaconUuid", updatable = false)
+    private String beaconUuid;
 
+    @Column(name = "devicePersonality", updatable = false)
+    private String devicePersonality;
 
-    @OneToMany(mappedBy = "to_device", cascade = CascadeType.ALL)
-    Set<Distances> to_device = new HashSet<Distances>();
-
-
-    @Column(name = "device_name", nullable = false, updatable = false)
-    private String device_name;
-
-    @Column(name = "beacon_UUID", updatable = false)
-    private String beacon_UUID;
-
-    @Column(name = "device_personality", updatable = false)
-    private String device_personality;
-
-    public Integer getDevice_id() {
-        return device_id;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setDevice_id(Integer device_id) {
-        this.device_id = device_id;
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getDevice_name() {
-        return device_name;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public void setDevice_name(String device_name) {
-        this.device_name = device_name;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
-    public String getBeacon_UUID() {
-        return beacon_UUID;
+    public String getBeaconUuid() {
+        return beaconUuid;
     }
 
-    public void setBeacon_UUID(String beacon_UUID) {
-        this.beacon_UUID = beacon_UUID;
+    public void setBeaconUuid(String beaconUuid) {
+        this.beaconUuid = beaconUuid;
     }
 
-    public String getDevice_personality() {
-        return device_personality;
+    public String getDevicePersonality() {
+        return devicePersonality;
     }
 
-    public void setDevice_personality(String device_personality) {
-        this.device_personality = device_personality;
+    public void setDevicePersonality(String devicePersonality) {
+        this.devicePersonality = devicePersonality;
     }
 }

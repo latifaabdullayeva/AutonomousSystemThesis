@@ -29,16 +29,16 @@ public class DevicesController {
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
-        Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeacon_UUID());
+        Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
         if (existingDevice != null) {
             return ResponseEntity.badRequest()
                     .body(null);
         } else {
             Devices newDevice = new Devices();
-            newDevice.setDevice_name(deviceDto.getDevice_name());
-            newDevice.setBeacon_UUID(deviceDto.getBeacon_UUID());
-            newDevice.setDevice_personality(deviceDto.getDevice_personality());
+            newDevice.setDeviceName(deviceDto.getDeviceName());
+            newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
+            newDevice.setDevicePersonality(deviceDto.getDevicePersonality());
 
             devicesRepository.save(newDevice);
             return ResponseEntity.ok(newDevice);

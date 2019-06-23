@@ -19,51 +19,49 @@ import javax.persistence.*;
 public class Distances {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "device_id", unique = true, nullable = false, updatable = false)
-    private Integer device_id; // Hibernate will generate an id of Integer
-
-
-    @ManyToOne
-    @JoinColumn(name = "from_device") // Foreign key for device.deviceID
-    private Devices from_device;
+    @Column(name = "distanceId", unique = true, nullable = false, updatable = false)
+    private Integer distanceId; // Hibernate will generate an id of Integer
 
     @ManyToOne
-    @JoinColumn(name = "to_device") // Foreign key for device.deviceID
-    private Devices to_device;
+    @JoinColumn(name = "fromDevice") // Foreign key for device.deviceID
+    private Devices fromDevice;
 
+    @ManyToOne
+    @JoinColumn(name = "toDevice") // Foreign key for device.deviceID
+    private Devices toDevice;
 
     @Column(name = "distance", nullable = false) // in cm
-    private int distance;
+    private long distance;
 
-    public Integer getDevice_id() {
-        return device_id;
+    public Integer getDistanceId() {
+        return distanceId;
     }
 
-    public void setDevice_id(Integer device_id) {
-        this.device_id = device_id;
+    public void setDistanceId(Integer distanceId) {
+        this.distanceId = distanceId;
     }
 
-    public Devices getFrom_device() {
-        return from_device;
+    public Devices getFromDevice() {
+        return fromDevice;
     }
 
-    public void setFrom_device(Devices from_device) {
-        this.from_device = from_device;
+    public void setFromDevice(Devices fromDevice) {
+        this.fromDevice = fromDevice;
     }
 
-    public Devices getTo_device() {
-        return to_device;
+    public Devices getToDevice() {
+        return toDevice;
     }
 
-    public void setTo_device(Devices to_device) {
-        this.to_device = to_device;
+    public void setToDevice(Devices toDevice) {
+        this.toDevice = toDevice;
     }
 
-    public int getDistance() {
+    public long getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(long distance) {
         this.distance = distance;
     }
 }
