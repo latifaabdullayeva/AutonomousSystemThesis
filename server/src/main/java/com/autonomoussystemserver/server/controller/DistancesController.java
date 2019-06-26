@@ -23,48 +23,37 @@ public class DistancesController {
     @Autowired
     private DistancesRepository distancesRepository;
 
-    //      Show logs in the terminal ->
-    private static final Logger LOGGER = LoggerFactory.getLogger(DistancesController.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(DistancesController.class);
+//  Show logs in the terminal ->
 //  LOGGER.info("here-2");
 
     @GetMapping("/distances")
-    public Page<Distances> getDistances(Pageable pageable) {
+    public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
         return distancesRepository.findAll(pageable);
     }
 
     @PostMapping("/distances")
-    public ResponseEntity<Distances> postDistance(@RequestBody DistanceDto distanceDto) {
+    public Distances postDistance(@RequestBody DistanceDto distanceDto) {
         // if the distances between two objects exists, delete this row, and then post a new distance value
         // if the values of FROM or TO (i.e the objects are do not exists in database), do not do POST request
-//        distancesRepository.delete(distanceDto.getFromDevice(), distanceDto.getToDevice());
-//        distancesRepository.delete(distanceDto.getToDevice(), distanceDto.getFromDevice());
+        distancesRepository.delete(distanceDto.getFromDevice(), distanceDto.getToDevice());
+        distancesRepository.delete(distanceDto.getToDevice(), distanceDto.getFromDevice());
 
-        Distances existingEndPoints = distancesRepository.findByFromAndTo(distanceDto.getFromDevice(), distanceDto.getToDevice());
+        Devices fromDevice = new Devices();
+        Devices toDevice = new Devices();
 
-        if (existingEndPoints != null) {
-            Distances newDistances = new Distances();
-            newDistances.setDistance(distanceDto.getDistance());
-            return ResponseEntity.ok(newDistances);
+        fromDevice.setDeviceId(distanceDto.getFromDevice());
+        toDevice.setDeviceId(distanceDto.getToDevice());
 
-//            return ResponseEntity.badRequest()
-//                    .body(null);
-        } else {
+        Distances distances = new Distances();
+        distances.setFromDevice(fromDevice);
+        distances.setToDevice(toDevice);
+        distances.setDistance(distanceDto.getDistance());
 
-            Devices newFromDevice = new Devices();
-            newFromDevice.setDeviceId(distanceDto.getFromDevice());
+        distancesRepository.save(distances);
 
-            Devices newToDevice = new Devices();
-            newToDevice.setDeviceId(distanceDto.getToDevice());
-
-            Distances newDistances = new Distances();
-            newDistances.setFromDevice(newFromDevice);
-            newDistances.setToDevice(newToDevice);
-            newDistances.setDistance(distanceDto.getDistance());
-
-            distancesRepository.save(newDistances);
-
-            return ResponseEntity.ok(newDistances);
-        }
+        return distances;
     }
 
 }

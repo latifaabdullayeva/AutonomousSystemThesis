@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ShowAllDistances"></activity>
         <activity
             android:name=".DeviceInitialisation"
             android:parentActivityName=".MainActivity" />
