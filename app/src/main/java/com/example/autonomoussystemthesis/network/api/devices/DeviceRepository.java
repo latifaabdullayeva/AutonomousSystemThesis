@@ -19,7 +19,7 @@ public class DeviceRepository {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://b83db3ad.ngrok.io")
+                .baseUrl("http://d3881ab9.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -51,19 +51,33 @@ public class DeviceRepository {
                 });
     }
 
-//    // TODO: get request does not return anything :(
-//    public void getNetworkRequest() {
-//        deviceService.getDevices().enqueue(new Callback<Device>() {
-//            @Override
-//            public void onResponse(Call<Device> call, Response<Device> response) {
-//                Log.d("DeviceRepository", "GET success!");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Device> call, Throwable t) {
-//                Log.d("DeviceRepository", "error loading from API");
-//
-//            }
-//        });
-//    }
+    // TODO: get request does not return anything :(
+    public void getNetworkRequest() {
+        deviceService.getDevices().enqueue(new Callback<ApiDevicesResponse>() {
+            @Override
+            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d("DeviceRepository", "Code: " + response.code());
+                    return;
+                }
+                ApiDevicesResponse devices = response.body();
+
+                for (Device device : devices.getContent()) {
+                    String content = "";
+                    content += "DeviceName: " + device.getDeviceName() + "\n";
+                    content += "BeaconUuid: " + device.getBeaconUuid() + "\n";
+                    content += "DevicePersonality: " + device.getDevicePersonality() + "\n";
+
+                    Log.d("DeviceRepository", content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
+                Log.d("DeviceRepository", "error loading from API");
+                Log.d("DeviceRepository", t.getMessage());
+
+            }
+        });
+    }
 }

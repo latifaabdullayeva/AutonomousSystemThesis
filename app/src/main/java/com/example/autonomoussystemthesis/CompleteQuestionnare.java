@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 
@@ -46,8 +47,10 @@ public class CompleteQuestionnare extends AppCompatActivity {
                 if (deviceTypeReq.equals("Mascot")) {
                     Log.d("CompleteQuestionnare", deviceTypeReq + beaconUuidReq + devicePersonalityReq);
                     deviceRepository.sendNetworkRequest(deviceNameReq, beaconUuidReq, devicePersonalityReq);
+                    Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     deviceRepository.sendNetworkRequest(deviceTypeReq, beaconUuidReq, devicePersonalityReq);
+                    Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

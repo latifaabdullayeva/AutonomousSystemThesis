@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
+
 import org.altbeacon.beacon.BeaconManager;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String TAG = "MonitoringMainActivity";
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private BeaconManager beaconManager;
+    final DeviceRepository deviceRepository = new DeviceRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "MonitoringMainActivity started up");
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Home");
+
         beaconManager = BeaconManager.getInstanceForApplication(this);
         verifyBluetooth();
 
@@ -56,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setTitle("Home");
     }
 
     @Override
