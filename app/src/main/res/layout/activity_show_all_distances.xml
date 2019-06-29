@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fbe8ef"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ShowAllDistances">
+
+    <TextView
+        android:id="@+id/passDeviceType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/passMascotName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/passPersonality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_view_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="Hello"/>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

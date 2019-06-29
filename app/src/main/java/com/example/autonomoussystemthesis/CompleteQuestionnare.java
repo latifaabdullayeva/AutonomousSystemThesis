@@ -1,5 +1,6 @@
 package com.example.autonomoussystemthesis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -46,12 +47,21 @@ public class CompleteQuestionnare extends AppCompatActivity {
                 Log.d("CompleteQuestionnare", deviceTypeReq);
                 if (deviceTypeReq.equals("Mascot")) {
                     Log.d("CompleteQuestionnare", deviceTypeReq + beaconUuidReq + devicePersonalityReq);
-                    deviceRepository.sendNetworkRequest(deviceNameReq, beaconUuidReq, devicePersonalityReq);
-                    Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();
+                    deviceRepository.sendNetworkRequest(null, deviceNameReq, beaconUuidReq, devicePersonalityReq);
                 } else {
-                    deviceRepository.sendNetworkRequest(deviceTypeReq, beaconUuidReq, devicePersonalityReq);
-                    Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();
+                    deviceRepository.sendNetworkRequest(null, deviceTypeReq, beaconUuidReq, devicePersonalityReq);
                 }
+
+                Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();
+
+                Intent myIntent = new Intent(CompleteQuestionnare.this, ShowAllDistances.class);
+
+                myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
+                myIntent.putExtra("DEVICETYPE", getIntent().getStringExtra("DEVICETYPE"));
+                myIntent.putExtra("DEVICENAME", getIntent().getStringExtra("DEVICENAME"));
+                myIntent.putExtra("PERSONALITY", getIntent().getStringExtra("PERSONALITY"));
+
+                startActivity(myIntent);
             }
         });
     }
