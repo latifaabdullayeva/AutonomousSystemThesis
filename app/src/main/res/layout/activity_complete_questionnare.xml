@@ -25,6 +25,14 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/passPersonality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="#FDB91266"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/passDeviceName"
         android:visibility="invisible"
         android:layout_width="wrap_content"
@@ -33,20 +41,13 @@
         android:textColor="#FDB91266"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/passPersonality"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textColor="#FDB91266"
-        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonBeaconSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FDB91266"
-        android:text="Save All data"
+        android:text="@string/save_all_data"
         android:textColor="#ffffff" />
 
 

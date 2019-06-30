@@ -29,17 +29,17 @@ public class CompleteQuestionnare extends AppCompatActivity {
         String deviceTypeReq = getIntent().getStringExtra("DEVICETYPE");
         deviceType.setText("Device Type: \n" + deviceTypeReq);
 
+        devicePersonality = findViewById(R.id.passPersonality);
+        String devicePersonalityReq = getIntent().getStringExtra("PERSONALITY");
 
         deviceName = findViewById(R.id.passDeviceName);
         String deviceNameReq = getIntent().getStringExtra("DEVICENAME");
         if (deviceTypeReq.equals("Mascot")) {
             deviceName.setText("Device Name: \n" + deviceNameReq);
             deviceName.setVisibility(View.VISIBLE);
-        }
 
-        devicePersonality = findViewById(R.id.passPersonality);
-        String devicePersonalityReq = getIntent().getStringExtra("PERSONALITY");
-        devicePersonality.setText("Mascot Personality: \n" + devicePersonalityReq);
+            devicePersonality.setText("Mascot Personality: \n" + devicePersonalityReq);
+        }
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class CompleteQuestionnare extends AppCompatActivity {
                     Log.d("CompleteQuestionnare", deviceTypeReq + beaconUuidReq + devicePersonalityReq);
                     deviceRepository.sendNetworkRequest(null, deviceNameReq, beaconUuidReq, devicePersonalityReq);
                 } else {
-                    deviceRepository.sendNetworkRequest(null, deviceTypeReq, beaconUuidReq, devicePersonalityReq);
+                    deviceRepository.sendNetworkRequest(null, deviceTypeReq, beaconUuidReq, null);
                 }
 
                 Toast.makeText(CompleteQuestionnare.this, "Your data saved successfully!", Toast.LENGTH_SHORT).show();

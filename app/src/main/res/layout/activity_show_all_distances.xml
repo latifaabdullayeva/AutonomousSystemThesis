@@ -32,17 +32,11 @@
         android:textColor="#FDB91266"
         android:textSize="18sp" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/text_view_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:text="Hello"/>
-
-    </android.support.v4.widget.NestedScrollView>
+    <ListView
+        android:id="@+id/list_view_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:choiceMode="singleChoice" />
 
 </LinearLayout>

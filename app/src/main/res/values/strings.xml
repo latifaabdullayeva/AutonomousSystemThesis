@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">AutonomousSystemThesis</string>
+    <string name="save_all_data">Save All data</string>
+    <string name="choose_a_type_of_your_device">Choose a Type of your device:</string>
+    <string name="tablet">Tablet</string>
+    <string name="lamp">Lamp</string>
+    <string name="speakers">Speakers</string>
+    <string name="mascot">Mascot</string>
+    <string name="please_give_your_mascot_a_name">Please give your Mascot a name</string>
+    <string name="welcome_to_our_autonomous_system_app">Welcome to our Autonomous System App!</string>
+    <string name="let_s_go_to_questionnare">Let\'s go to Questionnare</string>
+    <string name="choose_personality_for_your_mascot">Choose Personality for your Mascot:</string>
+    <string name="openness">Openness</string>
+    <string name="conscientiousness">Conscientiousness</string>
+    <string name="extraversion">Extraversion</string>
+    <string name="agreeableness">Agreeableness</string>
+    <string name="neuroticism">Neuroticism</string>
+    <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
+    <string name="next">Next</string>
 </resources>

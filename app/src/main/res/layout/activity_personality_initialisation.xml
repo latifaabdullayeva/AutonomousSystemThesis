@@ -19,58 +19,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Choose Personality for your Mascot:"
+            android:text="@string/choose_personality_for_your_mascot"
             android:textColor="#FDB91266"
             android:textSize="22sp" />
 
         <RadioButton
             android:id="@+id/radioButtonPersO"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
-            android:checked="true"
             android:onClick="checkButton"
-            android:text="Openness"
+            android:text="@string/openness"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Conscientiousness"
+            android:text="@string/conscientiousness"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Extraversion"
+            android:text="@string/extraversion"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Agreeableness"
+            android:text="@string/agreeableness"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonPersN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Neuroticism"
+            android:text="@string/neuroticism"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
@@ -81,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FDB91266"
-        android:text="Next"
+        android:text="@string/next"
         android:textColor="#ffffff" />
 
     <TextView

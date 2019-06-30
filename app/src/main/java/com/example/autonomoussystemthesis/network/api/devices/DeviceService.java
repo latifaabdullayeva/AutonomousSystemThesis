@@ -13,4 +13,5 @@ interface DeviceService {
 
     @GET("devices")
     Call<ApiDevicesResponse> getDevices();
+
 }

@@ -3,11 +3,14 @@ package com.example.autonomoussystemthesis.network.api.devices;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.autonomoussystemthesis.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,15 +20,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DeviceRepository extends AppCompatActivity {
-    private final Retrofit retrofit;
     private final DeviceService deviceService;
-    TextView textViewRes;
+
+    private ArrayList<String> resultList;
+    private ArrayAdapter<String> adapter;
 
     public DeviceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://34e18733.ngrok.io")
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://1155e220.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -36,6 +40,11 @@ public class DeviceRepository extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_distances);
+        ListView resultListView = findViewById(R.id.list_view_result);
+
+        this.resultList = new ArrayList<>();
+        this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.resultList);
+        resultListView.setAdapter(adapter);
     }
 
     public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, String devicePersonality) {
@@ -74,16 +83,26 @@ public class DeviceRepository extends AppCompatActivity {
                 }
                 ApiDevicesResponse devices = response.body();
 
-                for (Device device : devices.getContent()) {
-                    String content = device.getDeviceId();
 
+                for (Device device : Objects.requireNonNull(devices).getContent()) {
+                    String content = device.getDeviceId() + "\n";
+                    content += device.getBeaconUuid() + "\n";
+                    content += device.getDeviceName() + "\n";
+                    content += device.getDevicePersonality() + "\n";
 
-                    Log.d("DeviceRepository", "con " + content);
+                    Log.d("DeviceRepository", "con " + device.getDeviceId());
 
-                    textViewRes = findViewById(R.id.text_view_result);
-                    textViewRes.append(content);
-
+//                    if (!resultList.contains(device.getDeviceId())) {
+//                        resultList.add(device.getDeviceId());
+//                    }
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
             }
 
             @Override

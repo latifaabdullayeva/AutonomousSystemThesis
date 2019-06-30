@@ -78,16 +78,9 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                         // TODO: 2, should be real ID of a second device
 //                        distanceRepository.sendNetworkRequest(beaconUuidReq, 2, round(beacon.getDistance() * 100));
 
-//                        Log.d("ShowAllDistance", "" + round(beacon.getDistance() * 100));
                     }
 
                     deviceRepository.getNetworkRequest();
-
-//                    textViewResult = findViewById(R.id.text_view_result);
-//                    String textViewResultReq = getIntent().getStringExtra("CONTENT");
-////                    textViewResult.append(textViewResultReq);
-//                    Log.d("ShowAllDistance", "h " + textViewResultReq);
-
 
                 }
             }

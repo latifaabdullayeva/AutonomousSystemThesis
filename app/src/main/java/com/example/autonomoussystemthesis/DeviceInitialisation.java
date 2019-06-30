@@ -13,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class DeviceInitialisation extends AppCompatActivity {
 
     protected static final String TAG = "DeviceInitialisation";
@@ -32,7 +34,7 @@ public class DeviceInitialisation extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.IntroText);
 
-        getSupportActionBar().setTitle("Device Initialisation");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Device Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -55,22 +57,20 @@ public class DeviceInitialisation extends AppCompatActivity {
         String deviceValue = radioButton.getText().toString();
 
         if (radioButton.getText().toString().equals("Mascot")) {
-//            mascotText = findViewById(R.id.mascotText);
-//            mascotText.setText("Please come up with a Mascot Name: ");
+//          When user chooses the Mascot, then we show EditText, so he can name his mascot
             mascotNameEditText = findViewById(R.id.mascotNameEditText);
             mascotNameEditText.setVisibility(View.VISIBLE);
         } else {
-            Toast.makeText(DeviceInitialisation.this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+            Toast.makeText(DeviceInitialisation.this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
         }
 
         Button buttonSave = findViewById(R.id.buttonDeviceName);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (radioButton.getText().toString().equals("Mascot")) {
 //                    mascotNameEditText.setText("Mascot Name: \n" + getIntent().getStringExtra("DEVICENAME"));
-                    Toast.makeText(DeviceInitialisation.this, "Selected " + mascotNameEditText.getText(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(DeviceInitialisation.this, "Selected " + mascotNameEditText.getText(), Toast.LENGTH_SHORT).show();
                     String mascotValue = mascotNameEditText.getText().toString();
                     Intent myIntent = new Intent(DeviceInitialisation.this, PersonalityInitialisation.class);
 
@@ -84,7 +84,7 @@ public class DeviceInitialisation extends AppCompatActivity {
 
                     myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
                     myIntent.putExtra("DEVICETYPE", deviceValue);
-                    myIntent.putExtra("PERSONALITY", "empty");
+//                    myIntent.putExtra("PERSONALITY", "none");
 
                     startActivity(myIntent);
                 }

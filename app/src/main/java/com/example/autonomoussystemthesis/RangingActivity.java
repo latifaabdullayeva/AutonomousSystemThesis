@@ -25,7 +25,7 @@ import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Objects;
 
 import static java.lang.Math.round;
 
@@ -45,7 +45,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranging);
         Log.d(TAG, "RangingActivity started up");
-        getSupportActionBar().setTitle("Ranging Activity");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Ranging Activity");
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -104,8 +104,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
                     // Show the List of all beacons
                     beaconList.clear();
-                    for (Iterator<Beacon> iterator = beacons.iterator(); iterator.hasNext(); ) {
-                        Beacon beacon = iterator.next();
+                    for (Beacon beacon : beacons) {
                         if (!beaconList.contains(beacon.getId1().toString())) {
                             beaconList.add(beacon.getId1().toString()); // if you want to get ID of beacon -> .getId1();
                         }
@@ -125,10 +124,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                                                 int position, long id) {
 
                             Toast.makeText(RangingActivity.this, "Selected Beacon: " +
-                                    beaconList.get(position), Toast.LENGTH_LONG).show();
+                                    beaconList.get(position), Toast.LENGTH_SHORT).show();
 
                             // Action for Save button
                             Button buttonSave = findViewById(R.id.buttonBeaconSave);
+                            // TODO: write a logic, when this Beacon ID is already choosen by someone
+                            //  (get ID from table, if new == none of table, then choose, else show message)
                             buttonSave.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -223,7 +224,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (
-                RemoteException e) {
+                RemoteException ignored) {
         }
     }
 }

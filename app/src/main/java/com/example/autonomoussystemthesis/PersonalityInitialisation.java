@@ -57,7 +57,7 @@ public class PersonalityInitialisation extends AppCompatActivity {
     public void checkButton(View view) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Selected " + radioButton.getText(), Toast.LENGTH_SHORT).show();
 
         Button buttonSave = findViewById(R.id.buttonPersonality);
         buttonSave.setOnClickListener(new View.OnClickListener() {

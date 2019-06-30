@@ -26,6 +26,7 @@
         <activity
             android:name=".CompleteQuestionnare"
             android:parentActivityName=".PersonalityInitialisation" />
+        <activity android:name=".network.api.devices.DeviceRepository"/>
         <!--
          the singleInstance is important to keep two copies of our activity
         from getting launched on automatic startup

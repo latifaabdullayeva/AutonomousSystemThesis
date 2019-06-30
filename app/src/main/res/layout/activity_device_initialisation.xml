@@ -19,76 +19,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Choose a Type of your device:"
+            android:text="@string/choose_a_type_of_your_device"
             android:textColor="#FDB91266"
             android:textSize="22sp" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameTablet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
-            android:checked="true"
             android:onClick="checkButton"
-            android:text="Tablet"
+            android:text="@string/tablet"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameLamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Lamp"
+            android:text="@string/lamp"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameSpeakers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Speakers"
+            android:text="@string/speakers"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
         <RadioButton
             android:id="@+id/radioButtonDeviceNameMascot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:onClick="checkButton"
-            android:text="Mascot"
+            android:text="@string/mascot"
             android:textColor="#FDB91266"
             app:buttonTint="#FDB91266" />
 
     </RadioGroup>
 
     <!--<TextView-->
-        <!--android:id="@+id/mascotText"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:textColor="#FDB91266"-->
-        <!--android:textSize="18sp" />-->
+    <!--android:id="@+id/mascotText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:textColor="#FDB91266"-->
+    <!--android:textSize="18sp" />-->
 
     <EditText
         android:id="@+id/mascotNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Please give your Mascot a name ..."
         android:textColor="#FDB91266"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:hint="@string/please_give_your_mascot_a_name"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/buttonDeviceName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FDB91266"
-        android:text="Next"
+        android:text="@string/next"
         android:textColor="#ffffff" />
 
     <TextView
