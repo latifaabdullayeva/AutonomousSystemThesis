@@ -8,10 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
-import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
@@ -61,6 +61,25 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
 //         enables auto battery saving of about 60%
         backgroundPowerSaver = new BackgroundPowerSaver(this);
+
+
+
+// run app only once for the fist time
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (isFirstRun) {
+            //show start activity
+            startActivity(new Intent(AutonomousSystemApp.this, MainActivity.class));
+            Toast.makeText(AutonomousSystemApp.this, "First Run", Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            startActivity(new Intent(AutonomousSystemApp.this, CompleteQuestionnare.class));
+        }
+
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).commit();
+
     }
 
 //    public void disableMonitoring() {

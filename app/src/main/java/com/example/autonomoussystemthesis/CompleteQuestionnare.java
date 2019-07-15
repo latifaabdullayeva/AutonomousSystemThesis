@@ -1,6 +1,7 @@
 package com.example.autonomoussystemthesis;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,17 @@ import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 public class CompleteQuestionnare extends AppCompatActivity {
     final DeviceRepository deviceRepository = new DeviceRepository();
     TextView beaconUuid, deviceType, deviceName, devicePersonality;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String beacUUID = "BEACONUUID";
+    public static final String devType = "DEVICETYPE";
+    public static final String devName = "DEVICENAME";
+    public static final String devPersonality = "PERSONALITY";
+
+    private String bID;
+    private String dType;
+    private String dName;
+    private String dPer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +68,49 @@ public class CompleteQuestionnare extends AppCompatActivity {
 
                 Intent myIntent = new Intent(CompleteQuestionnare.this, ShowAllDistances.class);
 
+                myIntent.putExtra("DEVICEID", getIntent().getStringExtra("DEVICEID"));
+
                 myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
                 myIntent.putExtra("DEVICETYPE", getIntent().getStringExtra("DEVICETYPE"));
                 myIntent.putExtra("DEVICENAME", getIntent().getStringExtra("DEVICENAME"));
                 myIntent.putExtra("PERSONALITY", getIntent().getStringExtra("PERSONALITY"));
 
                 startActivity(myIntent);
+
+                saveData();
+
             }
         });
+        loadData();
+        updateViews();
+    }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(beacUUID, getIntent().getStringExtra("BEACONUUID"));
+        editor.putString(devType, getIntent().getStringExtra("DEVICETYPE"));
+        editor.putString(devName, getIntent().getStringExtra("DEVICENAME"));
+        editor.putString(devPersonality, getIntent().getStringExtra("PERSONALITY"));
+
+        editor.apply();
+        Toast.makeText(CompleteQuestionnare.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        bID = sharedPreferences.getString(beacUUID, "");
+        dType = sharedPreferences.getString(devType, "");
+        dName = sharedPreferences.getString(devName, "");
+        dPer = sharedPreferences.getString(devPersonality, "");
+    }
+
+    public void updateViews() {
+        beaconUuid.setText(bID);
+        deviceType.setText(dType);
+        deviceName.setText(dName);
+        devicePersonality.setText(dPer);
+
     }
 }

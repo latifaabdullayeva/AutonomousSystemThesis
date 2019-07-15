@@ -91,13 +91,13 @@
         android:text="@string/next"
         android:textColor="#ffffff" />
 
-    <TextView
-        android:id="@+id/passBeacon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textColor="#FDB91266"
-        android:textSize="18sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/passBeacon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:textColor="#FDB91266"-->
+        <!--android:textSize="18sp" />-->
 
     <!--<Button-->
     <!--android:id="@+id/vibtationButton"-->

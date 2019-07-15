@@ -39,7 +39,7 @@ public class DeviceInitialisation extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconUuid = findViewById(R.id.passBeacon);
-        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
+//        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
 
     }
 

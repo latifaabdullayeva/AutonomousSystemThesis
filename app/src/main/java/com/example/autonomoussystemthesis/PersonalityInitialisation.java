@@ -37,13 +37,13 @@ public class PersonalityInitialisation extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconUuid = findViewById(R.id.passBeacon);
-        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
+//        beaconUuid.setText("Beacon UUID: \n" + getIntent().getStringExtra("BEACONUUID"));
 
         deviceType = findViewById(R.id.passDeviceType);
-        deviceType.setText("Device Type: \n" + getIntent().getStringExtra("DEVICETYPE"));
+//        deviceType.setText("Device Type: \n" + getIntent().getStringExtra("DEVICETYPE"));
 
         mascotName = findViewById(R.id.passMascotName);
-        mascotName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
+//        mascotName.setText("Device Name: \n" + getIntent().getStringExtra("DEVICENAME"));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

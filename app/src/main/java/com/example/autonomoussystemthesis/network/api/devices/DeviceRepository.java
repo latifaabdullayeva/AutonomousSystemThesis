@@ -1,12 +1,15 @@
 package com.example.autonomoussystemthesis.network.api.devices;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.autonomoussystemthesis.CompleteQuestionnare;
 import com.example.autonomoussystemthesis.R;
+import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DeviceRepository extends AppCompatActivity {
     private final DeviceService deviceService;
+    final DistanceRepository distanceRepository = new DistanceRepository();
 
     private ArrayList<String> resultList;
     private ArrayAdapter<String> adapter;
@@ -29,7 +33,7 @@ public class DeviceRepository extends AppCompatActivity {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://1155e220.ngrok.io")
+                .baseUrl("http://07e82e36.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -77,6 +81,7 @@ public class DeviceRepository extends AppCompatActivity {
         deviceService.getDevices().enqueue(new Callback<ApiDevicesResponse>() {
             @Override
             public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                Log.d("DeviceRepository", "res: " + response);
                 if (!response.isSuccessful()) {
                     Log.d("DeviceRepository", "Code: " + response.code());
                     return;
@@ -92,16 +97,17 @@ public class DeviceRepository extends AppCompatActivity {
 
                     Log.d("DeviceRepository", "con " + device.getDeviceId());
 
-//                    if (!resultList.contains(device.getDeviceId())) {
-//                        resultList.add(device.getDeviceId());
-//                    }
+
+                    Intent myIntent = new Intent(DeviceRepository.this, CompleteQuestionnare.class);
+                    myIntent.putExtra("DEVICEID", device.getDeviceId());
+
+                    distanceRepository.sendNetworkRequest(device.getDeviceId(), device.getDeviceId(), 2147483649L);
+                    //Проблема тут. Тебе надо передать в intent список deviceId.
+                    // Вместо этого ты передаешь только одно значение которое перезаписывается в цикле.
+                    //
+                    //Тебе нужно в том цикле собрать все deviceId в список, и потом передать их через intent вне цикла.
+
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                    }
-                });
 
             }
 
