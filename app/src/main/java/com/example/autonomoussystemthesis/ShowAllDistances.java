@@ -26,14 +26,14 @@ public class ShowAllDistances extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconUuid = findViewById(R.id.passBeaconUUID);
-        beaconUuidReq = getIntent().getStringExtra("BEACONUUID");
+        beaconUuidReq = getIntent().getStringExtra("DEVICETYPE");
 
         Log.d("Test", "Show0 beaconUuidReq: " + beaconUuidReq);
         beaconUuid.setText(beaconUuidReq);
 
-        saveData();
-        loadData();
-        updateViews();
+//        saveData();
+//        loadData();
+//        updateViews();
 
         Log.d("Test", "Show1 beaconUuid: " + beaconUuidReq);
 

@@ -134,7 +134,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                                 @Override
                                 public void onClick(View v) {
                                     // deviceRepository.sendNetworkRequest("Nexus", beaconList.get(position), "intimate");
-                                    Intent myIntent = new Intent(RangingActivity.this, CompleteQuestionnare.class);
+                                    Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
 
                                     String deviceValue = beaconList.get(position);
                                     myIntent.putExtra("BEACONUUID", deviceValue);

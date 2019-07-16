@@ -72,7 +72,7 @@ public class DeviceInitialisation extends AppCompatActivity {
 //                    mascotNameEditText.setText("Mascot Name: \n" + getIntent().getStringExtra("DEVICENAME"));
                     Toast.makeText(DeviceInitialisation.this, "Selected " + mascotNameEditText.getText(), Toast.LENGTH_SHORT).show();
                     String mascotValue = mascotNameEditText.getText().toString();
-                    Intent myIntent = new Intent(DeviceInitialisation.this, CompleteQuestionnare.class);
+                    Intent myIntent = new Intent(DeviceInitialisation.this, PersonalityInitialisation.class);
 
                     myIntent.putExtra("BEACONUUID", getIntent().getStringExtra("BEACONUUID"));
                     myIntent.putExtra("DEVICETYPE", deviceValue);

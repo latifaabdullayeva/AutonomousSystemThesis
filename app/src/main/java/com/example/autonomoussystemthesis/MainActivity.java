@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, RangingActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, Initialisation.class);
                 startActivity(myIntent);
             }
         });

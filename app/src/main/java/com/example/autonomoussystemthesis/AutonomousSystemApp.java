@@ -64,11 +64,11 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
 
 //      When run first time -> MainActivity
-//      When second.. -> ShowSavedData
+//      When quit.. -> ShowAllDistances
 //      run app only once for the fist time
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
-
+// TODO: not only for fist time, but also, when you close the app
         if (isFirstRun) {
             //show start activity
             startActivity(new Intent(AutonomousSystemApp.this, MainActivity.class));
@@ -80,25 +80,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                 .putBoolean("isFirstRun", false).apply();
-
     }
-
-//    public void disableMonitoring() {
-//        if (regionBootstrap != null) {
-//            regionBootstrap.disable();
-//            regionBootstrap = null;
-//        }
-//    }
-
-//    public void enableMonitoring() {
-////        Region region = new Region("backgroundRegion",
-////                null, null, null);
-//        Region region = new Region("backgroundRegion",
-//                Identifier.parse("CE:3C:09:30:99:B0"),
-//                Identifier.parse("C8:CB:EC:A6:32:55"),
-//                Identifier.parse("F2:E4:35:BA:FB:D9"));
-//        regionBootstrap = new RegionBootstrap(this, region);
-//    }
 
 
     @Override
@@ -163,9 +145,5 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
     private void logToDisplay(String line) {
         cumulativeLog += (line + "\n");
     }
-
-//    public String getLog() {
-//        return cumulativeLog;
-//    }
 
 }
