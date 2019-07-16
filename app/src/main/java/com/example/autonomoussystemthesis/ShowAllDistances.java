@@ -1,89 +1,67 @@
 package com.example.autonomoussystemthesis;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
-import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
+public class ShowAllDistances extends AppCompatActivity {
+    private TextView beaconUuid; // beaconUuid -> textView
+    private String beaconUuidReq; // beaconUuidReq -> editText
 
-import org.altbeacon.beacon.Beacon;
-import org.altbeacon.beacon.BeaconConsumer;
-import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.RangeNotifier;
-import org.altbeacon.beacon.Region;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String BeacUUID = "beaconUUID"; // BeacUUID -> Text
 
-import java.util.Collection;
-
-public class ShowAllDistances extends AppCompatActivity implements BeaconConsumer {
-    final DeviceRepository deviceRepository = new DeviceRepository();
-    TextView beaconUuid, deviceType, deviceName, devicePersonality;
-    final DistanceRepository distanceRepository = new DistanceRepository();
-    private BeaconManager beaconManager;
-
-    TextView textViewResult;
+    private String beacon; //text
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_distances);
-        beaconManager = BeaconManager.getInstanceForApplication(this);
 
-        deviceType = findViewById(R.id.passDeviceType);
-        String deviceTypeReq = getIntent().getStringExtra("DEVICETYPE");
-        deviceName = findViewById(R.id.passMascotName);
-        String deviceNameReq = getIntent().getStringExtra("DEVICENAME");
-        devicePersonality = findViewById(R.id.passPersonality);
-        String devicePersonalityReq = getIntent().getStringExtra("PERSONALITY");
-        if (deviceTypeReq.equals("Mascot")) {
-            deviceType.setText("Device Type: \n" + deviceTypeReq);
-            deviceName.setText("Mascot Name: \n" + deviceNameReq);
-            devicePersonality.setText("Device Personality: \n" + devicePersonalityReq);
-        } else {
-            deviceName.setText("Device Type: \n" + deviceTypeReq);
-        }
+        getSupportActionBar().setTitle("All Distances");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        beaconUuid = findViewById(R.id.passBeaconUUID);
+        beaconUuidReq = getIntent().getStringExtra("BEACONUUID");
+
+        Log.d("Test", "Show0 beaconUuidReq: " + beaconUuidReq);
+        beaconUuid.setText(beaconUuidReq);
+
+        saveData();
+        loadData();
+        updateViews();
+
+        Log.d("Test", "Show1 beaconUuid: " + beaconUuidReq);
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        beaconManager.unbind(this);
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Log.d("Test", "Show2 beaconUuid: " + beaconUuidReq);
+
+        editor.putString(BeacUUID, beaconUuid.getText().toString());
+
+        editor.apply();
+        Toast.makeText(ShowAllDistances.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        beaconManager.unbind(this);
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        beacon = sharedPreferences.getString(BeacUUID, "");
+
+        Log.d("Test", "Show3 beaconUuid: " + beacon);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        beaconManager.bind(this);
-    }
+    public void updateViews() {
+        Log.d("Test", "Show4 beaconUuid: " + beaconUuidReq);
 
-    @Override
-    public void onBeaconServiceConnect() {
-        beaconManager.addRangeNotifier(new RangeNotifier() {
+        beaconUuid.setText(beacon);
 
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                if (beacons.size() > 0) {
-
-                    for (Beacon beacon : beacons) {
-                        String beaconUuidReq = getIntent().getStringExtra("BEACONUUID");
-                        // TODO: on ojidaet fromDevice = Id etoqo beaconUuid, a ne samomu beaconUuid
-                        // TODO: 2, should be real ID of a second device
-//                        distanceRepository.sendNetworkRequest(beaconUuidReq, 2, round(beacon.getDistance() * 100));
-
-                    }
-
-                    deviceRepository.getNetworkRequest();
-
-                }
-            }
-        });
     }
 }

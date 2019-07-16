@@ -31,7 +31,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
     private static final String TAG = "AutonomousSystemApp";
     private RegionBootstrap regionBootstrap;
 
-//             Auto Battery Saving
+    //             Auto Battery Saving
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MainActivity monitoringActivity = null;
@@ -63,9 +63,10 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
         backgroundPowerSaver = new BackgroundPowerSaver(this);
 
 
-
-// run app only once for the fist time
-        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+//      When run first time -> MainActivity
+//      When second.. -> ShowSavedData
+//      run app only once for the fist time
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
         if (isFirstRun) {
@@ -74,11 +75,11 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
             Toast.makeText(AutonomousSystemApp.this, "First Run", Toast.LENGTH_LONG)
                     .show();
         } else {
-            startActivity(new Intent(AutonomousSystemApp.this, CompleteQuestionnare.class));
+            startActivity(new Intent(AutonomousSystemApp.this, ShowAllDistances.class));
         }
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
+                .putBoolean("isFirstRun", false).apply();
 
     }
 
