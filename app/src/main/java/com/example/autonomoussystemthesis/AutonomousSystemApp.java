@@ -75,7 +75,7 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
             Toast.makeText(AutonomousSystemApp.this, "First Run", Toast.LENGTH_LONG)
                     .show();
         } else {
-            startActivity(new Intent(AutonomousSystemApp.this, ShowAllDistances.class));
+            startActivity(new Intent(AutonomousSystemApp.this, MainActivity.class));
         }
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()

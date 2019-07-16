@@ -31,7 +31,7 @@ public class ShowAllDistances extends AppCompatActivity {
         Log.d("Test", "Show0 beaconUuidReq: " + beaconUuidReq);
         beaconUuid.setText(beaconUuidReq);
 
-//        saveData();
+        saveData();
 //        loadData();
 //        updateViews();
 
