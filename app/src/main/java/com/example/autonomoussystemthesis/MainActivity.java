@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 
@@ -61,6 +62,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        deviceRepository.getNetworkRequest();
+
+
+//      When run first time -> MainActivity
+//      When quit.. -> ShowAllDistances
+//      run app only once for the fist time
+        String devType = getIntent().getStringExtra("DEVICETYPE");
+        String deviceTypeValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text", devType);
+        if (deviceTypeValue == null || deviceTypeValue.equals("")) {
+            Log.d("test", "MainAct if --> devType:" + devType + " ; deviceTypeValue" + deviceTypeValue);
+            startActivity(new Intent(MainActivity.this, Initialisation.class));
+            Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("test", "MainAct else --> deviceTypeValue: " + deviceTypeValue);
+            Intent myIntent = new Intent(MainActivity.this, ShowAllDistances.class);
+            myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+            startActivity(myIntent);
+        }
 
     }
 

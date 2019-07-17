@@ -3,6 +3,104 @@ package com.example.autonomoussystemthesis;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Objects;
+
+public class Initialisation extends AppCompatActivity {
+    protected static final String TAG = "InitialisationActivity";
+    RadioGroup radioGroupDevType;
+    RadioButton radioButtonDevType;
+    TextView textViewDevType;
+    private String deviceTypeValue;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_initialisation);
+        radioGroupDevType = findViewById(R.id.radioGroupDevType);
+        textViewDevType = findViewById(R.id.IntroTextDevType);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Initialisation");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void checkButton(View view) {
+        int radioIdType = radioGroupDevType.getCheckedRadioButtonId();
+        radioButtonDevType = findViewById(radioIdType);
+        deviceTypeValue = radioButtonDevType.getText().toString();
+        Button buttonSave = findViewById(R.id.saveButton);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Initialisation.this, MainActivity.class);
+                myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+//                startActivity(myIntent);
+                saveData();
+                loadData();
+            }
+        });
+    }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT, deviceTypeValue);
+        editor.apply();
+        Toast.makeText(Initialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        deviceTypeValue = sharedPreferences.getString(TEXT, "");
+    }
+}
+
+/*
+1) Тебе надо сохранять инфу о том выбрал ли пользователь deviceType уже или нет.
+Для этого, когда user выбирает его в первый раз, тебе надо сохранять deviceType в shared preferences
+
+2) В MainActivity, тебе надо считывать значение deviceType из shared preferences.
+Если оно существует, запускай AllDistances сразу. Если нет, тогда Initialisation
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+package com.example.autonomoussystemthesis;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -180,7 +278,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 //                            deviceRepository.getNetworkRequest();
 
                             // TODO: vibration
-                            // START: When you click on VIBRATE button, phone vibrates */
+                            // START: When you click on VIBRATE button, phone vibrates
 //                            Button vibrationButton = findViewById(R.id.vibtationButton);
 //                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 //                            vibrationButton.setOnClickListener(new View.OnClickListener() {
@@ -195,41 +293,41 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 //                            });
 
                         } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
-                            Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                            Log.d(TAG, "-");
-                            // TODO: tablet color
-                        } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
-                            Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                            Log.d(TAG, "-");
-                            // TODO: bench is here, lights
+                                Log.d(TAG, "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                Log.d(TAG, "-");
+                                // TODO: tablet color
+                                } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
+                                Log.d(TAG, "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                Log.d(TAG, "-");
+                                // TODO: bench is here, lights
 //                            hueRepository.updateBrightness(90);
-                        } else if (beacon.getDistance() > 3.70) { // public
-                            Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
-                            Log.d(TAG, "-");
-                            // TODO: speakers
-                        }
-                    }
-                    Log.d(TAG, "------------------------------------------------------------");
-                }
-            }
-        });
-        try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-        } catch (
-                RemoteException ignored) {
-        }
-    }
+                                } else if (beacon.getDistance() > 3.70) { // public
+                                Log.d(TAG, "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away."); // !!! a bilo String.format("%.2f", firstBeacon.getDistance())
+                                Log.d(TAG, "-");
+                                // TODO: speakers
+                                }
+                                }
+                                Log.d(TAG, "------------------------------------------------------------");
+                                }
+                                }
+                                });
+                                try {
+                                beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+                                } catch (
+                                RemoteException ignored) {
+                                }
+                                }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean onOptionsItemSelected(MenuItem item) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            this.finish();
+        this.finish();
         }
         return super.onOptionsItemSelected(item);
-    }
+        }
 
-    public void checkButton(View view) {
+public void checkButton(View view) {
         int radioIdType = radioGroupDevType.getCheckedRadioButtonId();
         radioButtonDevType = findViewById(radioIdType);
         deviceTypeValue = radioButtonDevType.getText().toString();
@@ -238,80 +336,67 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 
         if (radioButtonDevType.getText().toString().equals("Mascot")) {
 //          When user chooses the Mascot, then we show EditText, so he can name his mascot
-            mascotNameEditText.setVisibility(View.VISIBLE);
-            perLayout.setVisibility(View.VISIBLE);
+        mascotNameEditText.setVisibility(View.VISIBLE);
+        perLayout.setVisibility(View.VISIBLE);
 
 
-            int radioIdPer = radioGroupPer.getCheckedRadioButtonId();
-            radioButtonPer = findViewById(radioIdPer);
+        int radioIdPer = radioGroupPer.getCheckedRadioButtonId();
+        radioButtonPer = findViewById(radioIdPer);
 
         } else {
 //          When user chooses again other types, then we hide again EditText and Personality Layout
-            mascotNameEditText.setVisibility(View.INVISIBLE);
-            perLayout.setVisibility(View.INVISIBLE);
+        mascotNameEditText.setVisibility(View.INVISIBLE);
+        perLayout.setVisibility(View.INVISIBLE);
         }
 
         Button buttonSave = findViewById(R.id.saveButton);
         buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radioButtonDevType.getText().toString().equals("Mascot")) {
+@Override
+public void onClick(View v) {
+        // Bind onclick event handler
+        beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+public void onItemClick(AdapterView<?> parent, View view,
+        int position, long id) {
 
-                    String mascotValue = mascotNameEditText.getText().toString();
-                    String perValue = radioButtonPer.getText().toString();
+        Toast.makeText(Initialisation.this, "Selected Beacon: " +
+        beaconList.get(position), Toast.LENGTH_SHORT).show();
 
-                    Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+        if (radioButtonDevType.getText().toString().equals("Mascot")) {
 
-                    myIntent.putExtra("DEVICETYPE", deviceTypeValue);
-                    myIntent.putExtra("DEVICENAME", mascotValue);
-                    myIntent.putExtra("PERSONALITY", perValue);
+        String mascotValue = mascotNameEditText.getText().toString();
+        String perValue = radioButtonPer.getText().toString();
 
-                    // Bind onclick event handler
-                    beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View view,
-                                                int position, long id) {
+        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
 
-                            Toast.makeText(Initialisation.this, "Selected Beacon: " +
-                                    beaconList.get(position), Toast.LENGTH_SHORT).show();
+        String deviceValue = beaconList.get(position);
+        myIntent.putExtra("BEACONUUID", deviceValue);
+        myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+        myIntent.putExtra("DEVICENAME", mascotValue);
+        myIntent.putExtra("PERSONALITY", perValue);
 
-                            String deviceValue = beaconList.get(position);
-                            myIntent.putExtra("BEACONUUID", deviceValue);
-                        }
-                    });
+        startActivity(myIntent);
+        } else {
+        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
 
-                    startActivity(myIntent);
-                } else {
-                    Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+        String deviceValue = beaconList.get(position);
+        myIntent.putExtra("BEACONUUID", deviceValue);
+        myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+        myIntent.putExtra("DEVICENAME", "none");
+        myIntent.putExtra("PERSONALITY", "none");
+        startActivity(myIntent);
+        }
+        saveData();
+        Log.d("Test", "Init1 deviceTypeValue: " + deviceTypeValue);
 
-                    myIntent.putExtra("DEVICETYPE", deviceTypeValue);
-                    myIntent.putExtra("DEVICENAME", "none");
-                    myIntent.putExtra("PERSONALITY", "none");
-
-                    // Bind onclick event handler
-                    beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View view,
-                                                int position, long id) {
-
-                            Toast.makeText(Initialisation.this, "Selected Beacon: " +
-                                    beaconList.get(position), Toast.LENGTH_SHORT).show();
-
-                            String deviceValue = beaconList.get(position);
-                            myIntent.putExtra("BEACONUUID", deviceValue);
-                        }
-                    });
-
-                    startActivity(myIntent);
-                }
-                saveData();
-                Log.d("Test", "Init1 deviceTypeValue: " + deviceTypeValue);
-
-                loadData();
-                Log.d("Test", "Init2 deviceTypeValue: " + deviceTypeValue);
-            }
+        loadData();
+        Log.d("Test", "Init2 deviceTypeValue: " + deviceTypeValue);
+        }
         });
-    }
+        }
+        });
+        }
 
-    public void saveData() {
+public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -321,13 +406,15 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 
         editor.apply();
         Toast.makeText(Initialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
-    }
+        }
 
-    public void loadData() {
+public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         deviceTypeValue = sharedPreferences.getString(TEXT, "");
 
         Log.d("Test", "Init4 deviceTypeValue: " + deviceTypeValue);
-    }
+        }
 
-}
+        }
+
+ */

@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -19,36 +20,36 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/numbOfBeacons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:textColor="#FDB91266"
-                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/IntroTextBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:text="@string/choose_one_uuid_for_your_beacon"
                     android:textColor="#FDB91266"
                     android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/numbOfBeacons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FDB91266"
+                    android:textSize="22sp" />
+
 
                 <ListView
                     android:id="@+id/listViewBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:choiceMode="singleChoice" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <RadioGroup
@@ -60,7 +61,6 @@
                         android:id="@+id/IntroTextDevType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:text="@string/choose_a_type_of_your_device"
                         android:textColor="#FDB91266"
                         android:textSize="22sp" />
@@ -69,7 +69,6 @@
                         android:id="@+id/radioButtonDeviceNameTablet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/tablet"
                         android:textColor="#FDB91266"
@@ -79,7 +78,6 @@
                         android:id="@+id/radioButtonDeviceNameLamp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/lamp"
                         android:textColor="#FDB91266"
@@ -89,7 +87,6 @@
                         android:id="@+id/radioButtonDeviceNameSpeakers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/speakers"
                         android:textColor="#FDB91266"
@@ -99,7 +96,6 @@
                         android:id="@+id/radioButtonDeviceNameMascot"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/mascot"
                         android:textColor="#FDB91266"
@@ -111,7 +107,6 @@
                     android:id="@+id/mascotNameEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:hint="@string/please_give_your_mascot_a_name"
                     android:inputType="text"
                     android:textColor="#FDB91266"
@@ -123,6 +118,7 @@
                 android:id="@+id/perLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical"
                 android:visibility="invisible">
 
@@ -135,7 +131,6 @@
                         android:id="@+id/IntroTextPer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:text="@string/choose_personality_for_your_mascot"
                         android:textColor="#FDB91266"
                         android:textSize="22sp" />
@@ -144,7 +139,6 @@
                         android:id="@+id/radioButtonPersO"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/openness"
                         android:textColor="#FDB91266"
@@ -154,7 +148,6 @@
                         android:id="@+id/radioButtonPersC"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/conscientiousness"
                         android:textColor="#FDB91266"
@@ -164,7 +157,6 @@
                         android:id="@+id/radioButtonPersE"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/extraversion"
                         android:textColor="#FDB91266"
@@ -174,7 +166,6 @@
                         android:id="@+id/radioButtonPersA"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/agreeableness"
                         android:textColor="#FDB91266"
@@ -184,7 +175,6 @@
                         android:id="@+id/radioButtonPersN"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:onClick="checkButton"
                         android:text="@string/neuroticism"
                         android:textColor="#FDB91266"
@@ -204,7 +194,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>

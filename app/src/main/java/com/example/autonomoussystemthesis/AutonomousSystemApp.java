@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -62,24 +61,18 @@ public class AutonomousSystemApp extends Application implements BootstrapNotifie
 //         enables auto battery saving of about 60%
         backgroundPowerSaver = new BackgroundPowerSaver(this);
 
-
-//      When run first time -> MainActivity
-//      When quit.. -> ShowAllDistances
-//      run app only once for the fist time
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
-// TODO: not only for fist time, but also, when you close the app
-        if (isFirstRun) {
-            //show start activity
-            startActivity(new Intent(AutonomousSystemApp.this, MainActivity.class));
-            Toast.makeText(AutonomousSystemApp.this, "First Run", Toast.LENGTH_LONG)
-                    .show();
-        } else {
-            startActivity(new Intent(AutonomousSystemApp.this, MainActivity.class));
-        }
-
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).apply();
+//
+////      When run first time -> MainActivity
+////      When quit.. -> ShowAllDistances
+////      run app only once for the fist time
+//        String devType = getIntent().getStringExtra("DEVICETYPE");
+//        String deviceTypeValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text", devType);
+//        if (deviceTypeValue == null || deviceTypeValue.equals("")) {
+//            startActivity(new Intent(AutonomousSystemApp.this, Initialisation.class));
+//            Toast.makeText(AutonomousSystemApp.this, "First Run", Toast.LENGTH_LONG).show();
+//        } else {
+//            startActivity(new Intent(AutonomousSystemApp.this, ShowAllDistances.class));
+//        }
     }
 
 
