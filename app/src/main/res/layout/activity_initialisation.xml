@@ -69,7 +69,6 @@
                         android:id="@+id/radioButtonDeviceNameTablet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/tablet"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -78,7 +77,6 @@
                         android:id="@+id/radioButtonDeviceNameLamp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/lamp"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -87,7 +85,6 @@
                         android:id="@+id/radioButtonDeviceNameSpeakers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/speakers"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -96,7 +93,6 @@
                         android:id="@+id/radioButtonDeviceNameMascot"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/mascot"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -139,7 +135,6 @@
                         android:id="@+id/radioButtonPersO"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/openness"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -148,7 +143,6 @@
                         android:id="@+id/radioButtonPersC"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/conscientiousness"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -157,7 +151,6 @@
                         android:id="@+id/radioButtonPersE"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/extraversion"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -166,7 +159,6 @@
                         android:id="@+id/radioButtonPersA"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/agreeableness"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />
@@ -175,7 +167,6 @@
                         android:id="@+id/radioButtonPersN"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:onClick="checkButton"
                         android:text="@string/neuroticism"
                         android:textColor="#FDB91266"
                         app:buttonTint="#FDB91266" />

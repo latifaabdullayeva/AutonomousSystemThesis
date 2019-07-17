@@ -25,54 +25,49 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "MonitoringMainActivity started up");
-        setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Home");
+        Log.d("TestActivity", "MainAct");
 
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        verifyBluetooth();
-
-//         If targeting Android SDK 23+ (Marshmallow), in our case we have "targetSdkVersion: 28"
-//         the app must also request permission from the user to get location access.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//             Android M Permission check
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("This app needs location access");
-                builder.setMessage("Please grant location access so this app can detect beacons in the background.");
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                PERMISSION_REQUEST_COARSE_LOCATION);
-                    }
-                });
-                builder.show();
-            }
-        }
-        Button buttonSave = findViewById(R.id.gotoQuestionnare);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, Initialisation.class);
-                startActivity(myIntent);
-            }
-        });
-//        deviceRepository.getNetworkRequest();
-
-
-//      When run first time -> MainActivity
-//      When quit.. -> ShowAllDistances
-//      run app only once for the fist time
+//      When run first time -> MainActivity, When quit.. -> ShowAllDistances
         String devType = getIntent().getStringExtra("DEVICETYPE");
         String deviceTypeValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text", devType);
         if (deviceTypeValue == null || deviceTypeValue.equals("")) {
-            Log.d("test", "MainAct if --> devType:" + devType + " ; deviceTypeValue" + deviceTypeValue);
-            startActivity(new Intent(MainActivity.this, Initialisation.class));
-            Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_LONG).show();
+            Log.d("test", "MainAct if --> deviceTypeValue: " + deviceTypeValue);
+            Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_main);
+            getSupportActionBar().setTitle("Home");
+
+            beaconManager = BeaconManager.getInstanceForApplication(this);
+            verifyBluetooth();
+
+//         If targeting Android SDK 23+ (Marshmallow), in our case we have "targetSdkVersion: 28"
+//         the app must also request permission from the user to get location access.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//             Android M Permission check
+                if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("This app needs location access");
+                    builder.setMessage("Please grant location access so this app can detect beacons in the background.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    PERMISSION_REQUEST_COARSE_LOCATION);
+                        }
+                    });
+                    builder.show();
+                }
+            }
+            Button buttonSave = findViewById(R.id.gotoQuestionnare);
+            buttonSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, Initialisation.class));
+                }
+            });
+
+//        deviceRepository.getNetworkRequest();
         } else {
             Log.d("test", "MainAct else --> deviceTypeValue: " + deviceTypeValue);
             Intent myIntent = new Intent(MainActivity.this, ShowAllDistances.class);
@@ -83,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -105,18 +101,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        AutonomousSystemApp application = ((AutonomousSystemApp) this.getApplicationContext());
-        application.setMonitoringActivity(this);
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        AutonomousSystemApp application = ((AutonomousSystemApp) this.getApplicationContext());
+//        application.setMonitoringActivity(this);
+//    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        ((AutonomousSystemApp) this.getApplicationContext()).setMonitoringActivity(null);
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        ((AutonomousSystemApp) this.getApplicationContext()).setMonitoringActivity(null);
+//    }
 
     private void verifyBluetooth() {
 

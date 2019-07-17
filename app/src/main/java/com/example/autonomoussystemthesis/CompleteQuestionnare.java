@@ -20,6 +20,7 @@ public class CompleteQuestionnare extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("TestActivity", "CompQues");
         setContentView(R.layout.activity_complete_questionnare);
 
         getSupportActionBar().setTitle("Complete Quest");

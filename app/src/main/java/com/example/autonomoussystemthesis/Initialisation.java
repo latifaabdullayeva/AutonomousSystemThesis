@@ -4,61 +4,65 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
 
 public class Initialisation extends AppCompatActivity {
     protected static final String TAG = "InitialisationActivity";
-    RadioGroup radioGroupDevType;
-    RadioButton radioButtonDevType;
-    TextView textViewDevType;
     private String deviceTypeValue;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "text";
 
+    Button saveButton;
+    RadioGroup radioGroupDevType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("TestActivity", "Initialisation");
         setContentView(R.layout.activity_initialisation);
-        radioGroupDevType = findViewById(R.id.radioGroupDevType);
-        textViewDevType = findViewById(R.id.IntroTextDevType);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            this.finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+        saveButton = findViewById(R.id.saveButton);
+        radioGroupDevType = findViewById(R.id.radioGroupDevType);
 
-    public void checkButton(View view) {
-        int radioIdType = radioGroupDevType.getCheckedRadioButtonId();
-        radioButtonDevType = findViewById(radioIdType);
-        deviceTypeValue = radioButtonDevType.getText().toString();
-        Button buttonSave = findViewById(R.id.saveButton);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Initialisation.this, MainActivity.class);
-                myIntent.putExtra("DEVICETYPE", deviceTypeValue);
-//                startActivity(myIntent);
-                saveData();
-                loadData();
+                int selectedRadioTypeId = radioGroupDevType.getCheckedRadioButtonId();
+                if (selectedRadioTypeId == -1) {
+                    Toast.makeText(Initialisation.this, "No Type for Device selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    RadioButton radioButtonDevType = findViewById(selectedRadioTypeId);
+                    Toast.makeText(Initialisation.this, radioButtonDevType.getText(), Toast.LENGTH_SHORT).show();
+                    deviceTypeValue = radioButtonDevType.getText().toString();
+                    saveData();
+                    Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+                    myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+                    startActivity(myIntent);
+                }
             }
         });
+
     }
+
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            this.finish();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -73,26 +77,6 @@ public class Initialisation extends AppCompatActivity {
         deviceTypeValue = sharedPreferences.getString(TEXT, "");
     }
 }
-
-/*
-1) Тебе надо сохранять инфу о том выбрал ли пользователь deviceType уже или нет.
-Для этого, когда user выбирает его в первый раз, тебе надо сохранять deviceType в shared preferences
-
-2) В MainActivity, тебе надо считывать значение deviceType из shared preferences.
-Если оно существует, запускай AllDistances сразу. Если нет, тогда Initialisation
- */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*

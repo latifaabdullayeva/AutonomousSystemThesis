@@ -25,6 +25,7 @@ public class PersonalityInitialisation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("TestActivity", "Per");
         Log.d(TAG, "ChoosePerActivity started up");
 
         setContentView(R.layout.activity_personality_initialisation);

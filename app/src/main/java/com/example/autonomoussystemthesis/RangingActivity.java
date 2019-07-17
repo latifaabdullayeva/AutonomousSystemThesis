@@ -43,6 +43,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("TestActivity", "Rang");
         setContentView(R.layout.activity_ranging);
         Log.d(TAG, "RangingActivity started up");
         Objects.requireNonNull(getSupportActionBar()).setTitle("Ranging Activity");

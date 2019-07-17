@@ -27,7 +27,7 @@ public class DeviceInitialisation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "DeviceInitialisation started up");
+        Log.d("TestActivity", "DevInit");
 
         setContentView(R.layout.activity_device_initialisation);
 
