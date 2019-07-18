@@ -9,13 +9,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".AutonomousSystemApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Initialisation"/>
+        <activity android:name=".Initialisation" />
         <activity android:name=".ShowSavedData" />
         <activity android:name=".ShowAllDistances" />
         <activity
@@ -37,9 +38,8 @@
             android:label="@string/app_name"
             android:launchMode="singleInstance">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".RangingActivity" />

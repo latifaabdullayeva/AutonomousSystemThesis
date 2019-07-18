@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,11 @@ import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 
 import org.altbeacon.beacon.BeaconManager;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     protected static final String TAG = "MonitoringMainActivity";
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
-    private BeaconManager beaconManager;
     final DeviceRepository deviceRepository = new DeviceRepository();
 
     @Override
@@ -30,14 +32,24 @@ public class MainActivity extends AppCompatActivity {
 
 //      When run first time -> MainActivity, When quit.. -> ShowAllDistances
         String devType = getIntent().getStringExtra("DEVICETYPE");
-        String deviceTypeValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text", devType);
+        String devName = getIntent().getStringExtra("DEVICENAME");
+        String pers = getIntent().getStringExtra("PERSONALITY");
+
+        String deviceTypeValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text2", devType);
+        String devNameValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text3", devName);
+        String persValue = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("text4", pers);
+
+        // TODO: change to beacon not deviceTypeValue
         if (deviceTypeValue == null || deviceTypeValue.equals("")) {
             Log.d("test", "MainAct if --> deviceTypeValue: " + deviceTypeValue);
             Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_main);
-            getSupportActionBar().setTitle("Home");
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Home");
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            beaconManager = BeaconManager.getInstanceForApplication(this);
+
+            BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
             verifyBluetooth();
 
 //         If targeting Android SDK 23+ (Marshmallow), in our case we have "targetSdkVersion: 28"
@@ -78,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -96,23 +108,9 @@ public class MainActivity extends AppCompatActivity {
                     });
                     builder.show();
                 }
-                return;
             }
         }
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        AutonomousSystemApp application = ((AutonomousSystemApp) this.getApplicationContext());
-//        application.setMonitoringActivity(this);
-//    }
-
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        ((AutonomousSystemApp) this.getApplicationContext()).setMonitoringActivity(null);
-//    }
 
     private void verifyBluetooth() {
 

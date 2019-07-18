@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,33 +68,33 @@
                         android:id="@+id/radioButtonDeviceNameTablet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkDevButton"
                         android:text="@string/tablet"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonDeviceNameLamp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkDevButton"
                         android:text="@string/lamp"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonDeviceNameSpeakers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkDevButton"
                         android:text="@string/speakers"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonDeviceNameMascot"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkDevButton"
                         android:text="@string/mascot"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                 </RadioGroup>
 
@@ -135,41 +134,41 @@
                         android:id="@+id/radioButtonPersO"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkPerButton"
                         android:text="@string/openness"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonPersC"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkPerButton"
                         android:text="@string/conscientiousness"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonPersE"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkPerButton"
                         android:text="@string/extraversion"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonPersA"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkPerButton"
                         android:text="@string/agreeableness"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                     <RadioButton
                         android:id="@+id/radioButtonPersN"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:onClick="checkPerButton"
                         android:text="@string/neuroticism"
-                        android:textColor="#FDB91266"
-                        app:buttonTint="#FDB91266" />
+                        android:textColor="#FDB91266" />
 
                 </RadioGroup>
 
@@ -185,6 +184,4 @@
         </LinearLayout>
 
     </ScrollView>
-
-
 </LinearLayout>
