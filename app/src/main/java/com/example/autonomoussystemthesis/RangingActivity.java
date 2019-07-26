@@ -1,6 +1,5 @@
 package com.example.autonomoussystemthesis;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
@@ -135,12 +134,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
                                 @Override
                                 public void onClick(View v) {
                                     // deviceRepository.sendNetworkRequest("Nexus", beaconList.get(position), "intimate");
-                                    Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
+//                                    Intent myIntent = new Intent(RangingActivity.this, DeviceInitialisation.class);
 
-                                    String deviceValue = beaconList.get(position);
-                                    myIntent.putExtra("BEACONUUID", deviceValue);
-
-                                    startActivity(myIntent);
+//                                    String deviceValue = beaconList.get(position);
+//                                    myIntent.putExtra("BEACONUUID", deviceValue);
+//
+//                                    startActivity(myIntent);
                                 }
                             });
 

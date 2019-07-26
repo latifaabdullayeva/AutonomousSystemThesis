@@ -17,17 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Initialisation" />
-        <activity android:name=".ShowSavedData" />
         <activity android:name=".ShowAllDistances" />
-        <activity
-            android:name=".DeviceInitialisation"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".PersonalityInitialisation"
-            android:parentActivityName=".DeviceInitialisation" />
-        <activity
-            android:name=".CompleteQuestionnare"
-            android:parentActivityName=".PersonalityInitialisation" />
         <activity android:name=".network.api.devices.DeviceRepository" />
         <!--
          the singleInstance is important to keep two copies of our activity

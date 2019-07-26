@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.autonomoussystemthesis.CompleteQuestionnare;
 import com.example.autonomoussystemthesis.R;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 
@@ -33,7 +32,7 @@ public class DeviceRepository extends AppCompatActivity {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://36c387e7.ngrok.io")
+                .baseUrl("http://8d9c1cde.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
