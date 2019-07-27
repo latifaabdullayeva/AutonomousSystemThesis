@@ -1,6 +1,5 @@
 package com.example.autonomoussystemthesis.network.api.devices;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +11,6 @@ import com.example.autonomoussystemthesis.network.api.distance.DistanceRepositor
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,7 +30,7 @@ public class DeviceRepository extends AppCompatActivity {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://8d9c1cde.ngrok.io")
+                .baseUrl("http://f8bac2cd.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -76,45 +74,7 @@ public class DeviceRepository extends AppCompatActivity {
     }
 
     // TODO: get request does not return anything :(
-    public void getNetworkRequest() {
-        deviceService.getDevices().enqueue(new Callback<ApiDevicesResponse>() {
-            @Override
-            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
-                Log.d("DeviceRepository", "res: " + response);
-                if (!response.isSuccessful()) {
-                    Log.d("DeviceRepository", "Code: " + response.code());
-                    return;
-                }
-                ApiDevicesResponse devices = response.body();
-
-
-                for (Device device : Objects.requireNonNull(devices).getContent()) {
-                    String content = device.getDeviceId() + "\n";
-                    content += device.getBeaconUuid() + "\n";
-                    content += device.getDeviceName() + "\n";
-                    content += device.getDevicePersonality() + "\n";
-
-                    Log.d("DeviceRepository", "con " + device.getDeviceId());
-
-
-                    Intent myIntent = new Intent(DeviceRepository.this, CompleteQuestionnare.class);
-                    myIntent.putExtra("DEVICEID", device.getDeviceId());
-
-                    distanceRepository.sendNetworkRequest(device.getDeviceId(), device.getDeviceId(), 2147483649L);
-                    //Проблема тут. Тебе надо передать в intent список deviceId.
-                    // Вместо этого ты передаешь только одно значение которое перезаписывается в цикле.
-                    //
-                    //Тебе нужно в том цикле собрать все deviceId в список, и потом передать их через intent вне цикла.
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
-                Log.d("DeviceRepository", "error loading from API");
-                Log.d("DeviceRepository", t.getMessage());
-            }
-        });
+    public void getNetworkRequest(Callback<ApiDevicesResponse> callback) {
+        deviceService.getDevices().enqueue(callback);
     }
 }
