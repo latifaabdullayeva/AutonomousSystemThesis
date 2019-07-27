@@ -67,12 +67,12 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
+
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
         this.beaconListView = findViewById(R.id.listViewBeacon);
         this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.beaconList);
         this.beaconListView.setAdapter(adapter);
-
 
         saveButton = findViewById(R.id.saveButton);
         radioGroupDevType = findViewById(R.id.radioGroupDevType);
@@ -82,7 +82,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         textViewPersonality = findViewById(R.id.IntroTextPer);
 
         saveButtonListener();
-
     }
 
     @Override
