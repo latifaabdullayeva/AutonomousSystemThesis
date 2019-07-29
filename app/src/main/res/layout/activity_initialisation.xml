@@ -46,10 +46,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/devTypeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <RadioGroup
                     android:id="@+id/radioGroupDevType"

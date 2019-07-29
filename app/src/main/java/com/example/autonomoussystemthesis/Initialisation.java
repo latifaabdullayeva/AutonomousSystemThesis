@@ -35,8 +35,11 @@ import java.util.Objects;
 public class Initialisation extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "InitialisationActivity";
 
+    final DistanceRepository distanceRepository = new DistanceRepository();
+    final DeviceRepository deviceRepository = new DeviceRepository();
+
     private TextView textView;
-    private String deviceTypeValue, devicePersonalityValue, mascotValue;
+    LinearLayout devTypeLayout, personalityLayout;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT1 = "text1";
     public static final String TEXT2 = "text2";
@@ -54,7 +57,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
     RadioGroup radioGroupDevType, radioGroupPersonality;
     TextView beaconUuid, textViewDevType, textViewPersonality, numbOfBeacons;
     EditText mascotNameEditText;
-    LinearLayout personalityLayout;
+    private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 
     @Override
     public void onBeaconServiceConnect() {
+        // TODO: HueRepository should be discovered in ShowAllDistances Activity
 //         in order to discover the IpAdress of the bridge, we used https://discovery.meethue.com/
 //         Once we have the address load the test app by visiting https://<bridge ip address>/debug/clip.html
 //         We need to use the randomly generated username that the bridge creates for you.
@@ -117,9 +121,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
                 "192.168.0.100",
                 "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
         );
-        final DistanceRepository distanceRepository = new DistanceRepository();
-        final DeviceRepository deviceRepository = new DeviceRepository();
-
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
 
@@ -144,17 +145,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
                     numbOfBeacons = findViewById(R.id.numbOfBeacons);
                     numbOfBeacons.setText("Number of Beacon devices: " + beacons.size());
 
-                    // Bind onclick event handler
-                    beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
-
-                            Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
-                            String deviceValue = beaconList.get(position);
-                            myIntent.putExtra("BEACONUUID", deviceValue);
-                            Log.d("qwerty", "q " + deviceValue);
-                        }
-                    });
+                    checkBeaconButton();
                 }
             }
         });
@@ -163,6 +154,20 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         } catch (
                 RemoteException ignored) {
         }
+    }
+
+    public void checkBeaconButton() {
+        // Bind onclick event handler
+        beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                devTypeLayout = findViewById(R.id.devTypeLayout);
+                Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+
+                Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+                beaconValue = beaconList.get(position);
+                devTypeLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void checkDevButton(View view) {
@@ -184,7 +189,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
             mascotNameEditText.setVisibility(View.INVISIBLE);
             personalityLayout.setVisibility(View.INVISIBLE);
         }
-        saveButtonListener();
     }
 
     public void checkPerButton(View view) {
@@ -194,6 +198,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         mascotValue = mascotNameEditText.getText().toString();
         devicePersonalityValue = radioButtonPersonality.getText().toString();
         Toast.makeText(Initialisation.this, "2" + devicePersonalityValue, Toast.LENGTH_SHORT).show();
+        saveButtonListener();
     }
 
     public void saveButtonListener() {
@@ -209,6 +214,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
                     Toast.makeText(Initialisation.this, "1" + radioButtonDevType.getText(), Toast.LENGTH_SHORT).show();
                     deviceTypeValue = radioButtonDevType.getText().toString();
                     Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+                    myIntent.putExtra("BEACONUUID", beaconValue);
+                    Log.d("test", "q " + beaconValue);
                     myIntent.putExtra("DEVICETYPE", deviceTypeValue);
                     if (deviceTypeValue.equals("Mascot")) {
                         int selectedRadioPersId = radioGroupPersonality.getCheckedRadioButtonId();
@@ -221,6 +228,11 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
                         }
                     }
                     saveData();
+                    if (deviceTypeValue.equals("Mascot")) {
+                        deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, devicePersonalityValue);
+                    } else {
+                        deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, devicePersonalityValue);
+                    }
                     startActivity(myIntent);
                 }
             }
@@ -230,10 +242,10 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString(TEXT1, deviceValue);
-        editor.putString(TEXT2, deviceTypeValue + "\n" + mascotValue + "\n" + devicePersonalityValue);
+        editor.putString(TEXT1, beaconValue);
+        editor.putString(TEXT2, deviceTypeValue);
         editor.putString(TEXT3, mascotValue);
-        editor.putString(TEXT4, devicePersonalityValue + deviceTypeValue);
+        editor.putString(TEXT4, devicePersonalityValue);
         editor.apply();
         Toast.makeText(Initialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }

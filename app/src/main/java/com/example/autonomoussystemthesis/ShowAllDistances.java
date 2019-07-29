@@ -33,18 +33,22 @@ public class ShowAllDistances extends AppCompatActivity {
         TextView beaconTag = findViewById(R.id.passBeaconUUID);
         String beaconTagValue = getIntent().getStringExtra("BEACONUUID");
         beaconTag.setText(beaconTagValue);
+        Log.d("TestActivity", "beaconTagValue " + beaconTagValue);
 
         TextView deviceType = findViewById(R.id.passDeviceType);
         String deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
         deviceType.setText(deviceTypeValue);
+        Log.d("TestActivity", "deviceTypeValue " + deviceTypeValue);
 
         TextView mascotName = findViewById(R.id.passMascotName);
         String mascotNameValue = getIntent().getStringExtra("DEVICENAME");
         mascotName.setText(mascotNameValue);
+        Log.d("TestActivity", "mascotNameValue " + mascotNameValue);
 
         TextView devicePers = findViewById(R.id.passPersonality);
         String devicePersValue = getIntent().getStringExtra("PERSONALITY");
         devicePers.setText(devicePersValue);
+        Log.d("TestActivity", "devicePersValue " + devicePersValue);
 
         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
             @Override
@@ -66,9 +70,9 @@ public class ShowAllDistances extends AppCompatActivity {
 
                 if (myDevice != null) {
                     for (Device device : Objects.requireNonNull(devices).getContent()) {
-                        Log.d("DeviceRepository", "con " + device.getDeviceId());
-
-                        distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), 2147483649L);
+                        distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), 2L);
+                        Log.d("DeviceRepository", "myDevice " + myDevice.getDeviceId());
+                        Log.d("DeviceRepository", "device " + device.getDeviceId());
 
                         // distanceRepository.sendNetworkRequest(1, deviceRepository.getNetworkRequest(), round(beacon.getDistance() * 100));
                         //Проблема тут. Тебе надо передать в intent список deviceId.
