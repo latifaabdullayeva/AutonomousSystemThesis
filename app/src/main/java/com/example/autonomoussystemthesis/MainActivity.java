@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 import org.altbeacon.beacon.BeaconManager;
 
@@ -28,27 +27,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("TestActivity", "MainActivity");
 
         setupActionBar();
         setupQuestionnaireButton();
 
         SharedPreferences preferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
+        String beaconValue = preferences.getString("text1", "");
         String deviceTypeValue = preferences.getString("text2", "");
         String devNameValue = preferences.getString("text3", "");
         String persValue = preferences.getString("text4", "");
 
         // TODO: change to beacon not deviceTypeValue
         if (TextUtils.isEmpty(deviceTypeValue)) {
-            Log.d("test", "MainAct if --> deviceTypeValue: " + deviceTypeValue);
-            Toast.makeText(this, "First Run", Toast.LENGTH_SHORT).show();
-
+            Log.d("test", "MainAct if --> " + "deviceTypeValue: " + deviceTypeValue +
+                    "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
             verifyBluetooth();
             askPermission();
         } else {
-            Log.d("test", "MainAct else --> deviceTypeValue: " + deviceTypeValue);
+            Log.d("test", "MainAct else -->" + "deviceTypeValue: " + deviceTypeValue +
+                    "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
             Intent myIntent = new Intent(MainActivity.this, ShowAllDistances.class);
+            myIntent.putExtra("BEACONUUID", beaconValue);
             myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+            myIntent.putExtra("DEVICENAME", devNameValue);
+            myIntent.putExtra("PERSONALITY", persValue);
             startActivity(myIntent);
         }
     }
