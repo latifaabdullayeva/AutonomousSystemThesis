@@ -1,6 +1,7 @@
 package com.example.autonomoussystemthesis;
 
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -10,15 +11,28 @@ import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
 import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowAllDistances extends AppCompatActivity {
+import static java.lang.Math.round;
+
+public class ShowAllDistances extends AppCompatActivity implements BeaconConsumer {
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
+    Device myDevice;
+    String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
+
+    private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,68 +44,109 @@ public class ShowAllDistances extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+
         TextView beaconTag = findViewById(R.id.passBeaconUUID);
-        String beaconTagValue = getIntent().getStringExtra("BEACONUUID");
+        beaconTagValue = getIntent().getStringExtra("BEACONUUID");
         beaconTag.setText(beaconTagValue);
         Log.d("TestActivity", "beaconTagValue " + beaconTagValue);
 
         TextView deviceType = findViewById(R.id.passDeviceType);
-        String deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
+        deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
         deviceType.setText(deviceTypeValue);
         Log.d("TestActivity", "deviceTypeValue " + deviceTypeValue);
 
         TextView mascotName = findViewById(R.id.passMascotName);
-        String mascotNameValue = getIntent().getStringExtra("DEVICENAME");
+        mascotNameValue = getIntent().getStringExtra("DEVICENAME");
         mascotName.setText(mascotNameValue);
         Log.d("TestActivity", "mascotNameValue " + mascotNameValue);
 
         TextView devicePers = findViewById(R.id.passPersonality);
-        String devicePersValue = getIntent().getStringExtra("PERSONALITY");
+        devicePersValue = getIntent().getStringExtra("PERSONALITY");
         devicePers.setText(devicePersValue);
         Log.d("TestActivity", "devicePersValue " + devicePersValue);
+    }
 
-        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+    }
+
+    @Override
+    public void onBeaconServiceConnect() {
+        beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
-            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
-                Log.d("DeviceRepository", "res: " + response);
-                if (!response.isSuccessful()) {
-                    Log.d("DeviceRepository", "Code: " + response.code());
-                    return;
-                }
-                ApiDevicesResponse devices = response.body();
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
-                // find my own phone (device id)
-                Device myDevice = null;
-                for (Device device : devices.getContent()) {
-                    if (device.getBeaconUuid().equals(beaconTagValue)) {
-                        myDevice = device;
+                if (beacons.size() > 0) {
+                    for (Beacon beacon : beacons) {
+                        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+                            @Override
+                            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                                Log.d("DeviceRepository", "res: " + response);
+                                if (!response.isSuccessful()) {
+                                    Log.d("DeviceRepository", "Code: " + response.code());
+                                    return;
+                                }
+                                ApiDevicesResponse devices = response.body();
+
+                                // find my own phone (device id)
+                                myDevice = null;
+                                if (devices != null) {
+                                    for (Device device : devices.getContent()) {
+                                        if (device.getBeaconUuid().equals(beaconTagValue)) {
+                                            myDevice = device;
+                                            Log.d("DeviceRepository", "" + myDevice.getDeviceId() + " " + device.getDeviceId());
+                                        }
+                                    }
+                                }
+
+                                if (myDevice != null) {
+                                    for (Device device : Objects.requireNonNull(devices).getContent()) {
+                                        if (!myDevice.equals(device.getDeviceId())) {
+                                            Log.d("DeviceRepository", "IF: myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
+                                            distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), round(beacon.getDistance() * 100));
+                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne ponimaet kakoy imenno eto beacon
+                                        } else {
+                                            Log.d("DeviceRepository", "ELSE: EQUALS myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
+                                        }
+                                        // TODO: if there is beacon in DB, but our app is not able to find it, do not post distance
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
+                                Log.d("DeviceRepository", "error loading from API");
+                                Log.d("DeviceRepository", t.getMessage());
+                            }
+                        });
+
+                        // TODO:
+                        // Here the app starts measuring a distance to all other devices in the system
+
                     }
                 }
-
-                if (myDevice != null) {
-                    for (Device device : Objects.requireNonNull(devices).getContent()) {
-                        distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), 2L);
-                        Log.d("DeviceRepository", "myDevice " + myDevice.getDeviceId());
-                        Log.d("DeviceRepository", "device " + device.getDeviceId());
-
-                        // distanceRepository.sendNetworkRequest(1, deviceRepository.getNetworkRequest(), round(beacon.getDistance() * 100));
-                        //Проблема тут. Тебе надо передать в intent список deviceId.
-                        // Вместо этого ты передаешь только одно значение которое перезаписывается в цикле.
-                        //
-                        //Тебе нужно в том цикле собрать все deviceId в список, и потом передать их через intent вне цикла.
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
-                Log.d("DeviceRepository", "error loading from API");
-                Log.d("DeviceRepository", t.getMessage());
             }
         });
-
-        // TODO:
-        // Here the app starts measuring a distance to all other devices in the system
-
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+        } catch (
+                RemoteException ignored) {
+        }
     }
+
 }
