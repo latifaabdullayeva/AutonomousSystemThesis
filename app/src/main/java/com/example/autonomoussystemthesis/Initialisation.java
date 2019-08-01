@@ -5,14 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,32 +31,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class Initialisation extends AppCompatActivity implements BeaconConsumer {
+public class Initialisation extends AppCompatActivity implements BeaconConsumer, RecyclerViewAdapter.ItemClickListener {
     protected static final String TAG = "InitialisationActivity";
 
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
 
-    private TextView textView;
     LinearLayout devTypeLayout, personalityLayout;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT1 = "text1";
     public static final String TEXT2 = "text2";
     public static final String TEXT3 = "text3";
     public static final String TEXT4 = "text4";
-    private String text;
 
     private BeaconManager beaconManager;
     private ArrayList<String> beaconList;
-    private ListView beaconListView;
-    private ArrayAdapter<String> adapter;
-
+    private RecyclerView beaconListView;
+    private RecyclerViewAdapter adapter;
 
     Button saveButton;
     RadioGroup radioGroupDevType, radioGroupPersonality;
-    TextView beaconUuid, textViewDevType, textViewPersonality, numbOfBeacons;
+    TextView beaconUuid, textViewDevType, textViewPersonality, numbOfBeacons, textView;
     EditText mascotNameEditText;
-    private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue;
+    private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue, text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +70,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
         this.beaconListView = findViewById(R.id.listViewBeacon);
-        this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.beaconList);
+        this.adapter = new RecyclerViewAdapter(this, this.beaconList);
         this.beaconListView.setAdapter(adapter);
 
         saveButton = findViewById(R.id.saveButton);
@@ -85,6 +81,12 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         textViewPersonality = findViewById(R.id.IntroTextPer);
 
         saveButtonListener();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position)
+                + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -158,17 +160,26 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
 
     public void checkBeaconButton() {
         // Bind onclick event handler
-        beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                devTypeLayout = findViewById(R.id.devTypeLayout);
-                Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+//        beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                devTypeLayout = findViewById(R.id.radioGroupDevType);
+//                Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+//
+//                Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+//                beaconValue = beaconList.get(position);
+//                devTypeLayout.setVisibility(View.VISIBLE);
+//
+//            }
+//        });
 
-                Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
-                beaconValue = beaconList.get(position);
-                devTypeLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.listViewBeacon);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecyclerViewAdapter(this, beaconList);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
+
 
     public void checkDevButton(View view) {
         int selectedRadioDevTypeId = radioGroupDevType.getCheckedRadioButtonId();
@@ -178,7 +189,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer 
         Toast.makeText(Initialisation.this, "3" + deviceTypeValue, Toast.LENGTH_SHORT).show();
 
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
-        personalityLayout = findViewById(R.id.perLayout);
+        personalityLayout = findViewById(R.id.radioGroupPer);
 
         if (deviceTypeValue.equals("Mascot")) {
 //          When user chooses the Mascot, then we show EditText, so he can name his mascot
