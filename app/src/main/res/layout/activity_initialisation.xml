@@ -1,104 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     tools:context=".Initialisation">
 
-    <ScrollView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="16dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/IntroTextBeacon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:text="@string/choose_one_uuid_for_your_beacon"
+                android:textColor="#FDB91266"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/numbOfBeacons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FDB91266"
+                android:textSize="22sp" />
+            
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listViewBeacon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:orientation="vertical" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <RadioGroup
+                android:id="@+id/radioGroupDevType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/IntroTextBeacon"
+                    android:id="@+id/IntroTextDevType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/choose_one_uuid_for_your_beacon"
+                    android:text="@string/choose_a_type_of_your_device"
                     android:textColor="#FDB91266"
                     android:textSize="22sp" />
 
-                <TextView
-                    android:id="@+id/numbOfBeacons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FDB91266"
-                    android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/radioButtonDeviceNameTablet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkDevButton"
+                    android:text="@string/tablet"
+                    android:textColor="#FDB91266" />
 
+                <RadioButton
+                    android:id="@+id/radioButtonDeviceNameLamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkDevButton"
+                    android:text="@string/lamp"
+                    android:textColor="#FDB91266" />
 
-                <ListView
-                    android:id="@+id/listViewBeacon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:choiceMode="singleChoice" />
-            </LinearLayout>
+                <RadioButton
+                    android:id="@+id/radioButtonDeviceNameSpeakers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkDevButton"
+                    android:text="@string/speakers"
+                    android:textColor="#FDB91266" />
 
-            <LinearLayout
-                android:id="@+id/devTypeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical"
-                android:visibility="invisible">
-
-                <RadioGroup
-                    android:id="@+id/radioGroupDevType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/IntroTextDevType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/choose_a_type_of_your_device"
-                        android:textColor="#FDB91266"
-                        android:textSize="22sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonDeviceNameTablet"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkDevButton"
-                        android:text="@string/tablet"
-                        android:textColor="#FDB91266" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonDeviceNameLamp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkDevButton"
-                        android:text="@string/lamp"
-                        android:textColor="#FDB91266" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonDeviceNameSpeakers"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkDevButton"
-                        android:text="@string/speakers"
-                        android:textColor="#FDB91266" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonDeviceNameMascot"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkDevButton"
-                        android:text="@string/mascot"
-                        android:textColor="#FDB91266" />
-
-                </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radioButtonDeviceNameMascot"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkDevButton"
+                    android:text="@string/mascot"
+                    android:textColor="#FDB91266" />
 
                 <EditText
                     android:id="@+id/mascotNameEditText"
@@ -106,84 +96,80 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/please_give_your_mascot_a_name"
                     android:inputType="text"
-                    android:textColor="#FDB91266"
-                    android:visibility="invisible" />
+                    android:textColor="#FDB91266" />
+            </RadioGroup>
+        </android.support.v7.widget.CardView>
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/perLayout"
+        <android.support.v7.widget.CardView
+            android:id="@+id/c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/b"
+            android:layout_margin="16dp">
+
+            <RadioGroup
+                android:id="@+id/radioGroupPer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical"
-                android:visibility="invisible">
+                android:layout_height="wrap_content">
 
-                <RadioGroup
-                    android:id="@+id/radioGroupPer"
+                <TextView
+                    android:id="@+id/IntroTextPer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_personality_for_your_mascot"
+                    android:textColor="#FDB91266"
+                    android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/IntroTextPer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/choose_personality_for_your_mascot"
-                        android:textColor="#FDB91266"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/radioButtonPersO"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkPerButton"
+                    android:text="@string/openness"
+                    android:textColor="#FDB91266" />
 
-                    <RadioButton
-                        android:id="@+id/radioButtonPersO"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkPerButton"
-                        android:text="@string/openness"
-                        android:textColor="#FDB91266" />
+                <RadioButton
+                    android:id="@+id/radioButtonPersC"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkPerButton"
+                    android:text="@string/conscientiousness"
+                    android:textColor="#FDB91266" />
 
-                    <RadioButton
-                        android:id="@+id/radioButtonPersC"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkPerButton"
-                        android:text="@string/conscientiousness"
-                        android:textColor="#FDB91266" />
+                <RadioButton
+                    android:id="@+id/radioButtonPersE"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkPerButton"
+                    android:text="@string/extraversion"
+                    android:textColor="#FDB91266" />
 
-                    <RadioButton
-                        android:id="@+id/radioButtonPersE"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkPerButton"
-                        android:text="@string/extraversion"
-                        android:textColor="#FDB91266" />
+                <RadioButton
+                    android:id="@+id/radioButtonPersA"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkPerButton"
+                    android:text="@string/agreeableness"
+                    android:textColor="#FDB91266" />
 
-                    <RadioButton
-                        android:id="@+id/radioButtonPersA"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkPerButton"
-                        android:text="@string/agreeableness"
-                        android:textColor="#FDB91266" />
+                <RadioButton
+                    android:id="@+id/radioButtonPersN"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="checkPerButton"
+                    android:text="@string/neuroticism"
+                    android:textColor="#FDB91266" />
+            </RadioGroup>
+        </android.support.v7.widget.CardView>
 
-                    <RadioButton
-                        android:id="@+id/radioButtonPersN"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:onClick="checkPerButton"
-                        android:text="@string/neuroticism"
-                        android:textColor="#FDB91266" />
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FDB91266"
+            android:text="@string/next"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FDB91266"
-                android:text="@string/next"
-                android:textColor="#ffffff" />
-        </LinearLayout>
-
-    </ScrollView>
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
