@@ -46,7 +46,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     private BeaconManager beaconManager;
     private ArrayList<String> beaconList;
-    private RecyclerView beaconListView;
     private RecyclerViewAdapter adapter;
 
     Button saveButton;
@@ -69,9 +68,9 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
-        this.beaconListView = findViewById(R.id.listViewBeacon);
+        RecyclerView beaconListView = findViewById(R.id.listViewBeacon);
         this.adapter = new RecyclerViewAdapter(this, this.beaconList);
-        this.beaconListView.setAdapter(adapter);
+        beaconListView.setAdapter(adapter);
 
         saveButton = findViewById(R.id.saveButton);
         radioGroupDevType = findViewById(R.id.radioGroupDevType);
@@ -85,8 +84,20 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position)
-                + " on row number " + position, Toast.LENGTH_SHORT).show();
+        devTypeLayout = findViewById(R.id.radioGroupDevType);
+        Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
+
+        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+        beaconValue = beaconList.get(position);
+    }
+
+    public void checkBeaconButton() {
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.listViewBeacon);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecyclerViewAdapter(this, beaconList);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -158,29 +169,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         }
     }
 
-    public void checkBeaconButton() {
-        // Bind onclick event handler
-//        beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                devTypeLayout = findViewById(R.id.radioGroupDevType);
-//                Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
-//
-//                Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
-//                beaconValue = beaconList.get(position);
-//                devTypeLayout.setVisibility(View.VISIBLE);
-//
-//            }
-//        });
-
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.listViewBeacon);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerViewAdapter(this, beaconList);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-    }
-
-
     public void checkDevButton(View view) {
         int selectedRadioDevTypeId = radioGroupDevType.getCheckedRadioButtonId();
         RadioButton radioButtonDevType;
@@ -190,16 +178,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
         personalityLayout = findViewById(R.id.radioGroupPer);
-
-        if (deviceTypeValue.equals("Mascot")) {
-//          When user chooses the Mascot, then we show EditText, so he can name his mascot
-            mascotNameEditText.setVisibility(View.VISIBLE);
-            personalityLayout.setVisibility(View.VISIBLE);
-        } else {
-//          When user chooses again other types, then we hide again EditText and Personality Layout
-            mascotNameEditText.setVisibility(View.INVISIBLE);
-            personalityLayout.setVisibility(View.INVISIBLE);
-        }
     }
 
     public void checkPerButton(View view) {
