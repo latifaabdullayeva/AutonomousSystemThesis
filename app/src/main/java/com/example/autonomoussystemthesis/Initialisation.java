@@ -84,11 +84,25 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onItemClick(View view, int position) {
-        devTypeLayout = findViewById(R.id.radioGroupDevType);
-        Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconList.get(position), Toast.LENGTH_SHORT).show();
-
-        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+//        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
+        Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
+
+//        CheckedTextView checkedTextView;
+//        checkedTextView = view.findViewById(R.id.checkedTextView);
+//        checkedTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkedTextView.isChecked()) {
+//                    checkedTextView.setChecked(false);
+//                } else {
+//                    checkedTextView.setChecked(true);
+//                }
+//            }
+//        });
+
+        TextView textView = findViewById(R.id.showSelectedBeacon);
+        textView.setText(getString(R.string.selectedBeacon, beaconValue));
     }
 
     public void checkBeaconButton() {
@@ -238,13 +252,13 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         editor.apply();
         Toast.makeText(Initialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }
-
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        deviceTypeValue = sharedPreferences.getString(TEXT2, "");
-        mascotValue = sharedPreferences.getString(TEXT3, "");
-        devicePersonalityValue = sharedPreferences.getString(TEXT4, "");
-    }
+//
+//    public void loadData() {
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+//        deviceTypeValue = sharedPreferences.getString(TEXT2, "");
+//        mascotValue = sharedPreferences.getString(TEXT3, "");
+//        devicePersonalityValue = sharedPreferences.getString(TEXT4, "");
+//    }
 }
 
 //package com.example.autonomoussystemthesis;

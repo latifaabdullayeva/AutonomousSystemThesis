@@ -54,6 +54,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+//            CheckedTextView checkedTextView;
+//            checkedTextView = view.findViewById(R.id.checkedTextView);
+//            checkedTextView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (checkedTextView.isChecked()) {
+//                        checkedTextView.setChecked(false);
+//                    } else {
+//                        checkedTextView.setChecked(true);
+//                    }
+//                }
+//            });
         }
     }
 

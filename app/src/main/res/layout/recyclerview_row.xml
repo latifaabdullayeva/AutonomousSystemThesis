@@ -5,21 +5,17 @@
     android:orientation="vertical">
 
     <CheckedTextView
-        android:id="@android:id/text1"
+        android:id="@+id/checkedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checkMark="@null"
-        android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-        android:gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="#FDB91266" />
+        android:checkMark="?android:attr/listChoiceIndicatorSingle" />
 
     <TextView
         android:id="@+id/beaconItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@android:id/text1"
+        android:layout_toEndOf="@+id/checkedTextView"
         android:textColor="#FDB91266" />
 
 </RelativeLayout>
