@@ -1,5 +1,6 @@
 package com.example.autonomoussystemthesis.network.hue;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.IOException;
@@ -12,13 +13,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HueRepository {
-    private final Retrofit retrofit;
     private final HueService hueService;
     private final String username;
 
     public HueRepository(String ipAddress, String user) {
 //         The Retrofit class generates an implementation of the HueService interface.
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + ipAddress + "/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -37,17 +37,19 @@ public class HueRepository {
         hueService.updateHueLamp(username, 1, request)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                         Log.d("HueRepository", "success!");
                         try {
-                            Log.d("HueRepository", response.body().string());
+                            if (response.body() != null) {
+                                Log.d("HueRepository", response.body().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                         Log.e("HueRepository", "failure :(", t);
                     }
                 });

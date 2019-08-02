@@ -4,7 +4,7 @@ public class HueRequest {
     private final boolean on;
     private final int bri;
 
-    public HueRequest(boolean on, int bri) {
+    HueRequest(boolean on, int bri) {
         this.on = on;
         this.bri = bri;
     }

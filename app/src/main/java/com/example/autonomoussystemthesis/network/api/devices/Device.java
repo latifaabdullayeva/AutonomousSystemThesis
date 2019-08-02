@@ -7,7 +7,7 @@ public class Device {
     private final String beaconUuid;
     private final String devicePersonality;
 
-    public Device(Integer deviceId, String deviceName, String beaconUuid, String devicePersonality) {
+    Device(Integer deviceId, String deviceName, String beaconUuid, String devicePersonality) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.beaconUuid = beaconUuid;

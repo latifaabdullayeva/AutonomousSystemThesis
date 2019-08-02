@@ -2,6 +2,7 @@ package com.example.autonomoussystemthesis;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -95,10 +96,12 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                     for (Beacon beacon : beacons) {
                         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
                             @Override
-                            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                            public void onResponse(@NonNull Call<ApiDevicesResponse> call,
+                                                   @NonNull Response<ApiDevicesResponse> response) {
                                 Log.d("DeviceRepository", "res: " + response);
                                 if (!response.isSuccessful()) {
-                                    Log.d("DeviceRepository", "Code: " + response.code());
+                                    Log.d("DeviceRepository", "Code: " +
+                                            response.code());
                                     return;
                                 }
                                 ApiDevicesResponse devices = response.body();
@@ -109,41 +112,60 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                     for (Device device : devices.getContent()) {
                                         if (device.getBeaconUuid().equals(beaconTagValue)) {
                                             myDevice = device;
-                                            Log.d("DeviceRepository", "" + myDevice.getDeviceId() + " " + device.getDeviceId());
+                                            Log.d("DeviceRepository", "" +
+                                                    myDevice.getDeviceId() + " " +
+                                                    device.getDeviceId());
                                         }
                                     }
                                 }
 
                                 if (myDevice != null) {
-                                    for (Device device : Objects.requireNonNull(devices).getContent()) {
+                                    for (Device device :
+                                            Objects.requireNonNull(devices).getContent()) {
                                         if (!myDevice.equals(device.getDeviceId())) {
-                                            Log.d("DeviceRepository", "IF: myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
-                                            distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), round(beacon.getDistance() * 100));
-                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne ponimaet kakoy imenno eto beacon
+                                            Log.d("DeviceRepository", "IF: myDevice " +
+                                                    myDevice.getDeviceId() + " " +
+                                                    device.getDeviceId() + " " +
+                                                    round(beacon.getDistance() * 100));
+                                            distanceRepository.sendNetworkRequest(
+                                                    myDevice.getDeviceId(),
+                                                    device.getDeviceId(),
+                                                    round(beacon.getDistance() * 100)
+                                            );
+                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne
+                                            //  ponimaet kakoy imenno eto beacon
                                         } else {
-                                            Log.d("DeviceRepository", "ELSE: EQUALS myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
+                                            Log.d("DeviceRepository",
+                                                    "ELSE: EQUALS myDevice " +
+                                                            myDevice.getDeviceId() + " " +
+                                                            device.getDeviceId() + " " +
+                                                            round(beacon.getDistance() * 100));
                                         }
-                                        // TODO: if there is beacon in DB, but our app is not able to find it, do not post distance
+                                        // TODO: if there is beacon in DB, but our app is not able
+                                        //  to find it, do not post distance
                                     }
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
+                            public void onFailure(@NonNull Call<ApiDevicesResponse> call,
+                                                  @NonNull Throwable t) {
                                 Log.d("DeviceRepository", "error loading from API");
                                 Log.d("DeviceRepository", t.getMessage());
                             }
                         });
 
                         // TODO:
-                        // Here the app starts measuring a distance to all other devices in the system
+                        // Here the app starts measuring a distance to all other
+                        // devices in the system
 
                     }
                 }
             }
         });
         try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId",
+                    null, null, null));
         } catch (
                 RemoteException ignored) {
         }

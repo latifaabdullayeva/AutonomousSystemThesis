@@ -18,4 +18,5 @@
     <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
     <string name="next">Next</string>
     <string name="selectedBeacon">Your selection: %1$s</string>
+    <string name="beaconSize">Number of Beacon devices: %1$d</string>
 </resources>

@@ -31,27 +31,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class Initialisation extends AppCompatActivity implements BeaconConsumer, RecyclerViewAdapter.ItemClickListener {
-    protected static final String TAG = "InitialisationActivity";
-
-    final DistanceRepository distanceRepository = new DistanceRepository();
-    final DeviceRepository deviceRepository = new DeviceRepository();
-
-    LinearLayout devTypeLayout, personalityLayout;
+public class Initialisation extends AppCompatActivity
+        implements BeaconConsumer, RecyclerViewAdapter.ItemClickListener {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT1 = "text1";
     public static final String TEXT2 = "text2";
     public static final String TEXT3 = "text3";
     public static final String TEXT4 = "text4";
-
-    private BeaconManager beaconManager;
-    private ArrayList<String> beaconList;
-    private RecyclerViewAdapter adapter;
-
+    protected static final String TAG = "InitialisationActivity";
+    final DistanceRepository distanceRepository = new DistanceRepository();
+    final DeviceRepository deviceRepository = new DeviceRepository();
+    LinearLayout devTypeLayout, personalityLayout;
     Button saveButton;
     RadioGroup radioGroupDevType, radioGroupPersonality;
     TextView beaconUuid, textViewDevType, textViewPersonality, numbOfBeacons, textView;
     EditText mascotNameEditText;
+    private BeaconManager beaconManager;
+    private ArrayList<String> beaconList;
+    private RecyclerViewAdapter adapter;
     private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue, text;
 
     @Override
@@ -86,7 +83,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     public void onItemClick(View view, int position) {
 //        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
-        Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Initialisation.this, "Selected Beacon: " +
+                beaconValue, Toast.LENGTH_SHORT).show();
 
 //        CheckedTextView checkedTextView;
 //        checkedTextView = view.findViewById(R.id.checkedTextView);
@@ -160,7 +158,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     beaconList.clear();
                     for (Beacon beacon : beacons) {
                         if (!beaconList.contains(beacon.getId1().toString())) {
-                            beaconList.add(beacon.getId1().toString()); // if you want to get ID of beacon -> .getId1();
+                            beaconList.add(beacon.getId1().toString());
+                            // if you want to get ID of beacon -> .getId1();
                         }
                     }
                     runOnUiThread(new Runnable() {
@@ -170,14 +169,15 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                         }
                     });
                     numbOfBeacons = findViewById(R.id.numbOfBeacons);
-                    numbOfBeacons.setText("Number of Beacon devices: " + beacons.size());
+                    numbOfBeacons.setText(getString(R.string.beaconSize, beacons.size()));
 
                     checkBeaconButton();
                 }
             }
         });
         try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId",
+                    null, null, null));
         } catch (
                 RemoteException ignored) {
         }
@@ -188,7 +188,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         RadioButton radioButtonDevType;
         radioButtonDevType = findViewById(selectedRadioDevTypeId);
         deviceTypeValue = radioButtonDevType.getText().toString();
-        Toast.makeText(Initialisation.this, "3" + deviceTypeValue, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Initialisation.this, "3" + deviceTypeValue,
+                Toast.LENGTH_SHORT).show();
 
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
         personalityLayout = findViewById(R.id.radioGroupPer);
@@ -200,7 +201,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         radioButtonPersonality = findViewById(selectedRadioPersId);
         mascotValue = mascotNameEditText.getText().toString();
         devicePersonalityValue = radioButtonPersonality.getText().toString();
-        Toast.makeText(Initialisation.this, "2" + devicePersonalityValue, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Initialisation.this, "2" + devicePersonalityValue,
+                Toast.LENGTH_SHORT).show();
         saveButtonListener();
     }
 
@@ -210,11 +212,15 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
             public void onClick(View v) {
                 int selectedRadioDevTypeId = radioGroupDevType.getCheckedRadioButtonId();
                 if (selectedRadioDevTypeId == -1) {
-                    Toast.makeText(Initialisation.this, "No Type for Device selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Initialisation.this,
+                            "No Type for Device selected",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     RadioButton radioButtonDevType;
                     radioButtonDevType = findViewById(selectedRadioDevTypeId);
-                    Toast.makeText(Initialisation.this, "1" + radioButtonDevType.getText(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Initialisation.this,
+                            "1" + radioButtonDevType.getText(),
+                            Toast.LENGTH_SHORT).show();
                     deviceTypeValue = radioButtonDevType.getText().toString();
                     Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
                     myIntent.putExtra("BEACONUUID", beaconValue);
@@ -223,7 +229,9 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     if (deviceTypeValue.equals("Mascot")) {
                         int selectedRadioPersId = radioGroupPersonality.getCheckedRadioButtonId();
                         if (selectedRadioPersId == -1) {
-                            Toast.makeText(Initialisation.this, "No Personality for Device selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Initialisation.this,
+                                    "No Personality for Device selected",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             saveData();
                             myIntent.putExtra("DEVICENAME", mascotValue);
@@ -232,9 +240,11 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     }
                     saveData();
                     if (deviceTypeValue.equals("Mascot")) {
-                        deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, devicePersonalityValue);
+                        deviceRepository.sendNetworkRequest(null, mascotValue,
+                                beaconValue, devicePersonalityValue);
                     } else {
-                        deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, devicePersonalityValue);
+                        deviceRepository.sendNetworkRequest(null, deviceTypeValue,
+                                beaconValue, devicePersonalityValue);
                     }
                     startActivity(myIntent);
                 }

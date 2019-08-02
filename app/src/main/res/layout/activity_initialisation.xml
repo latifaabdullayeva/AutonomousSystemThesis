@@ -47,7 +47,7 @@
                     android:id="@+id/showSelectedBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/selectedBeacon"/>
+                    android:text="@string/selectedBeacon" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -106,9 +106,11 @@
                     android:id="@+id/mascotNameEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autofillHints="my Mascot's name"
                     android:hint="@string/please_give_your_mascot_a_name"
                     android:inputType="text"
-                    android:textColor="#FDB91266" />
+                    android:textColor="#FDB91266"
+                    tools:targetApi="o" />
             </RadioGroup>
         </android.support.v7.widget.CardView>
 

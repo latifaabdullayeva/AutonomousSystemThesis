@@ -5,7 +5,7 @@ public class Distance {
     private final Integer toDevice;
     private final Long distance;
 
-    public Distance(Integer fromDevice, Integer toDevice, Long distance) {
+    Distance(Integer fromDevice, Integer toDevice, Long distance) {
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;
         this.distance = distance;

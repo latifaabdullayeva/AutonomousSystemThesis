@@ -1,6 +1,7 @@
 package com.example.autonomoussystemthesis.network.api.devices;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -20,17 +21,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DeviceRepository extends AppCompatActivity {
-    private final DeviceService deviceService;
     final DistanceRepository distanceRepository = new DistanceRepository();
-
-    private ArrayList<String> resultList;
-    private ArrayAdapter<String> adapter;
+    private final DeviceService deviceService;
 
     public DeviceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://1361c57f.ngrok.io")
+        Retrofit retrofit;
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://0b20548d.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -43,8 +42,8 @@ public class DeviceRepository extends AppCompatActivity {
         setContentView(R.layout.activity_show_all_distances);
         ListView resultListView = findViewById(R.id.list_view_result);
 
-        this.resultList = new ArrayList<>();
-        this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.resultList);
+        ArrayList<String> resultList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, resultList);
         resultListView.setAdapter(adapter);
     }
 
@@ -55,7 +54,7 @@ public class DeviceRepository extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
 
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                         Log.d("DeviceRepository", "Response: " + response.body());
                         try {
                             if (response.body() != null) {
@@ -67,7 +66,7 @@ public class DeviceRepository extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                         Log.e("DeviceRepository", "failure :(", t);
                     }
                 });
