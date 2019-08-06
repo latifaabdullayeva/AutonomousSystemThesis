@@ -12,5 +12,4 @@ public interface DevicesRepository extends JpaRepository<Devices, Integer>, Crud
 
     @Query("select dev from Devices dev where beaconUuid=:beaconUuid")
     Devices findByBeacon(String beaconUuid);
-
 }
