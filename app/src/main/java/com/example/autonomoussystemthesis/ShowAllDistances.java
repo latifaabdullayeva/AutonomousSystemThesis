@@ -11,6 +11,7 @@ import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
+import com.example.autonomoussystemthesis.network.hue.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -42,8 +43,8 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         setContentView(R.layout.activity_show_all_distances);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("All Distances");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -68,6 +69,11 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         Log.d("TestActivity", "devicePersValue " + devicePersValue);
     }
 
+    // Disabled back button, so in this Activity user will not allowed to change anything
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -88,12 +94,23 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
     @Override
     public void onBeaconServiceConnect() {
+        final HueRepository hueRepository = new HueRepository(
+                "192.168.0.100",
+                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
+        );
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
                 if (beacons.size() > 0) {
                     for (Beacon beacon : beacons) {
+
+                        int brightness = (int) beacon.getDistance() * 80;
+                        if (brightness > 255) {
+                            brightness = 255;
+                        }
+                        hueRepository.updateBrightness(brightness);
+
                         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
                             @Override
                             public void onResponse(@NonNull Call<ApiDevicesResponse> call,
@@ -122,7 +139,13 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                 if (myDevice != null) {
                                     for (Device device :
                                             Objects.requireNonNull(devices).getContent()) {
-                                        if (!myDevice.equals(device.getDeviceId())) {
+                                        if (myDevice.toString() == device.getDeviceId().toString()) {
+                                            Log.d("DeviceRepository",
+                                                    "ELSE: EQUALS myDevice " +
+                                                            myDevice.getDeviceId() + " " +
+                                                            device.getDeviceId() + " " +
+                                                            round(beacon.getDistance() * 100));
+                                        } else {
                                             Log.d("DeviceRepository", "IF: myDevice " +
                                                     myDevice.getDeviceId() + " " +
                                                     device.getDeviceId() + " " +
@@ -134,16 +157,31 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                             );
                                             // TODO: ERROR!!!! takoe oshusheniya kak budto on ne
                                             //  ponimaet kakoy imenno eto beacon
-                                        } else {
-                                            Log.d("DeviceRepository",
-                                                    "ELSE: EQUALS myDevice " +
-                                                            myDevice.getDeviceId() + " " +
-                                                            device.getDeviceId() + " " +
-                                                            round(beacon.getDistance() * 100));
+                                            // Ya pishu chto esli ID ravni, to pust ne delaet POST
+                                            // request, a on vse ravno delaet
                                         }
                                         // TODO: if there is beacon in DB, but our app is not able
                                         //  to find it, do not post distance
                                     }
+                                }
+                                if (beacon.getDistance() <= 0.45) { // intimate
+                                    Log.d("DeviceRepository", "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                    Log.d("DeviceRepository", "-");
+//                          TODO: it should send the distance to all mascots to the DATABASE
+//                            deviceRepository.getNetworkRequest();
+                                } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
+                                    Log.d("DeviceRepository", "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                    Log.d("DeviceRepository", "-");
+                                    // TODO: tablet color
+                                } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
+                                    Log.d("DeviceRepository", "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                    Log.d("DeviceRepository", "-");
+                                    // TODO: bench is here, lights
+                                    hueRepository.updateBrightness(90);
+                                } else if (beacon.getDistance() > 3.70) { // public
+                                    Log.d("DeviceRepository", "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+                                    Log.d("DeviceRepository", "-");
+                                    // TODO: speakers
                                 }
                             }
 
