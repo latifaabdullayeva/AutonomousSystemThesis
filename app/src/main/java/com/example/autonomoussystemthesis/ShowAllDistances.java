@@ -43,8 +43,8 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         setContentView(R.layout.activity_show_all_distances);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("All Distances");
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -109,16 +109,14 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                         if (brightness > 255) {
                             brightness = 255;
                         }
-                        hueRepository.updateBrightness(brightness);
+//                        hueRepository.updateBrightness(brightness);
 
                         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
                             @Override
-                            public void onResponse(@NonNull Call<ApiDevicesResponse> call,
-                                                   @NonNull Response<ApiDevicesResponse> response) {
+                            public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
                                 Log.d("DeviceRepository", "res: " + response);
                                 if (!response.isSuccessful()) {
-                                    Log.d("DeviceRepository", "Code: " +
-                                            response.code());
+                                    Log.d("DeviceRepository", "Code: " + response.code());
                                     return;
                                 }
                                 ApiDevicesResponse devices = response.body();
@@ -126,63 +124,62 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                 // find my own phone (device id)
                                 myDevice = null;
                                 if (devices != null) {
-                                    for (Device device : devices.getContent()) {
-                                        if (device.getBeaconUuid().equals(beaconTagValue)) {
-                                            myDevice = device;
-                                            Log.d("DeviceRepository", "" +
-                                                    myDevice.getDeviceId() + " " +
-                                                    device.getDeviceId());
-                                        }
-                                    }
-                                }
-
-                                if (myDevice != null) {
-                                    for (Device device :
-                                            Objects.requireNonNull(devices).getContent()) {
-                                        if (myDevice.toString() == device.getDeviceId().toString()) {
-                                            Log.d("DeviceRepository",
-                                                    "ELSE: EQUALS myDevice " +
-                                                            myDevice.getDeviceId() + " " +
-                                                            device.getDeviceId() + " " +
-                                                            round(beacon.getDistance() * 100));
+                                    for (Device findMyDevice : devices.getContent()) {
+                                        Log.d("DeviceRepository", "= device: " + findMyDevice);
+                                        if (findMyDevice.getBeaconUuid().equals(beaconTagValue)) {
+                                            Log.d("DeviceRepository", "Your Beacon exists in DB");
+                                            myDevice = findMyDevice;
+                                            for (Device device : devices.getContent()) {
+                                                if (myDevice.getDeviceId().toString().equals(device.getDeviceId().toString())) {
+                                                    Log.d("DeviceRepository", "= myDevice (" + myDevice.getDeviceId().toString() + "); device (" + device.getDeviceId().toString() + ") = same");
+                                                } else {
+                                                    Log.d("DeviceRepository", "!= myDevice (" + myDevice.getDeviceId() + "); device (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
+                                                    // To store in DB
+                                                    // distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), round(beacon.getDistance() * 100));
+                                                }
+                                            }
                                         } else {
-                                            Log.d("DeviceRepository", "IF: myDevice " +
-                                                    myDevice.getDeviceId() + " " +
-                                                    device.getDeviceId() + " " +
-                                                    round(beacon.getDistance() * 100));
-                                            distanceRepository.sendNetworkRequest(
-                                                    myDevice.getDeviceId(),
-                                                    device.getDeviceId(),
-                                                    round(beacon.getDistance() * 100)
-                                            );
-                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne
-                                            //  ponimaet kakoy imenno eto beacon
-                                            // Ya pishu chto esli ID ravni, to pust ne delaet POST
-                                            // request, a on vse ravno delaet
+                                            Log.d("DeviceRepository", "Your Beacon DOES NOT exists in DB");
                                         }
-                                        // TODO: if there is beacon in DB, but our app is not able
-                                        //  to find it, do not post distance
                                     }
                                 }
-                                if (beacon.getDistance() <= 0.45) { // intimate
-                                    Log.d("DeviceRepository", "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                                    Log.d("DeviceRepository", "-");
-//                          TODO: it should send the distance to all mascots to the DATABASE
-//                            deviceRepository.getNetworkRequest();
-                                } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
-                                    Log.d("DeviceRepository", "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                                    Log.d("DeviceRepository", "-");
-                                    // TODO: tablet color
-                                } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
-                                    Log.d("DeviceRepository", "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                                    Log.d("DeviceRepository", "-");
-                                    // TODO: bench is here, lights
-                                    hueRepository.updateBrightness(90);
-                                } else if (beacon.getDistance() > 3.70) { // public
-                                    Log.d("DeviceRepository", "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-                                    Log.d("DeviceRepository", "-");
-                                    // TODO: speakers
-                                }
+//                                if (myDevice != null) {
+//                                    for (Device device : Objects.requireNonNull(devices).getContent()) {
+//                                        if (myDevice.toString() == device.getDeviceId().toString()) {
+//                                            Log.d("DeviceRepository", "EQUALS myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
+//                                        } else {
+//                                            Log.d("DeviceRepository", "!EQUALS: myDevice (" + myDevice.getDeviceId() + "); device (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
+//                                            // To store in DB
+////                                            distanceRepository.sendNetworkRequest(myDevice.getDeviceId(),device.getDeviceId(),round(beacon.getDistance() * 100));
+//                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne
+//                                            //  ponimaet kakoy imenno eto beacon
+//                                            // Ya pishu chto esli ID ravni, to pust ne delaet POST
+//                                            // request, a on vse ravno delaet
+//                                        }
+//                                        // TODO: if there is beacon in DB, but our app is not able
+//                                        //  to find it, do not post distance
+//                                    }
+//                                }
+//                                if (beacon.getDistance() <= 0.45) { // intimate
+//                                    Log.d("DeviceRepository", "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+//                                    Log.d("DeviceRepository", "-");
+//                                    // TODO: it should send the distance to all mascots to the DATABASE
+//                                    // deviceRepository.getNetworkRequest();
+//                                } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
+//                                    Log.d("DeviceRepository", "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+//                                    Log.d("DeviceRepository", "-");
+//                                    // TODO: tablet color
+//                                } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
+//                                    Log.d("DeviceRepository", "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+//                                    Log.d("DeviceRepository", "-");
+//                                    // TODO: bench is here, lights
+//                                    // this is to turn on the light
+//                                    // hueRepository.updateBrightness(90);
+//                                } else if (beacon.getDistance() > 3.70) { // public
+//                                    Log.d("DeviceRepository", "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
+//                                    Log.d("DeviceRepository", "-");
+//                                    // TODO: speakers
+//                                }
                             }
 
                             @Override
@@ -202,11 +199,32 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
             }
         });
         try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId",
-                    null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (
                 RemoteException ignored) {
         }
     }
 
 }
+
+/*
+ "content":[
+                                {
+                                    "deviceId":12235,
+                                        "deviceName":"Lamp",
+                                        "beaconUuid":"b0702880-a295-a8ab-f734-031a98a512de",
+                                        "devicePersonality":null
+                                },
+                                {
+                                    "deviceId":12304,
+                                        "deviceName":"MascotNexus",
+                                        "beaconUuid":"88cf77ce-bc91-241a-b8eb-4d041f74acdf",
+                                        "devicePersonality":"Openness"
+                                },
+                                {
+                                    "deviceId":12514,
+                                        "deviceName":"MascT",
+                                        "beaconUuid":"c08b6bb5-40b7-d552-1db6-a8822ec11ed9",
+                                        "devicePersonality":"Extraversion"
+                                }]
+ */
