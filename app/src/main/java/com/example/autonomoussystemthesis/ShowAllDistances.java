@@ -31,7 +31,6 @@ import static java.lang.Math.round;
 public class ShowAllDistances extends AppCompatActivity implements BeaconConsumer {
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
-    Device myDevice;
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
 
     private BeaconManager beaconManager;
@@ -101,101 +100,63 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-
-                if (beacons.size() > 0) {
-                    for (Beacon beacon : beacons) {
-
-                        int brightness = (int) beacon.getDistance() * 80;
-                        if (brightness > 255) {
-                            brightness = 255;
+                deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+                        if (!response.isSuccessful()) {
+                            Log.d("DeviceRepository", "Code: " + response.code());
+                            return;
                         }
-//                        hueRepository.updateBrightness(brightness);
+                        ApiDevicesResponse devices = response.body();
 
-                        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
-                            @Override
-                            public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
-                                Log.d("DeviceRepository", "res: " + response);
-                                if (!response.isSuccessful()) {
-                                    Log.d("DeviceRepository", "Code: " + response.code());
-                                    return;
+                        // find my own phone (device id)
+                        Integer myDeviceID = null;
+                        if (devices != null) {
+                            boolean myBeaconIsInDB = false;
+                            for (int i = 0; i < devices.getContent().size(); i++) {
+                                if (devices.getContent().get(i).getBeaconUuid().contains(beaconTagValue)) {
+                                    myBeaconIsInDB = true;
+                                    Log.d("DeviceRepository", "-- DB contains my beacon: " + myBeaconIsInDB);
+                                    myDeviceID = devices.getContent().get(i).getDeviceId();
+                                    Log.d("DeviceRepository", "-- CONTAINS: " + myBeaconIsInDB + "; ID: " + myDeviceID);
                                 }
-                                ApiDevicesResponse devices = response.body();
+                            }
+                            if (myBeaconIsInDB) {
+                                if (beacons.size() > 0) {
+                                    for (Beacon beacon : beacons) {
+//                                        int brightness = (int) beacon.getDistance() * 80;
+//                                        if (brightness > 255) {
+//                                            brightness = 255;
+//                                        }
+//                                        hueRepository.updateBrightness(brightness);
 
-                                // find my own phone (device id)
-                                myDevice = null;
-                                if (devices != null) {
-                                    for (Device findMyDevice : devices.getContent()) {
-                                        Log.d("DeviceRepository", "= device: " + findMyDevice);
-                                        if (findMyDevice.getBeaconUuid().equals(beaconTagValue)) {
-                                            Log.d("DeviceRepository", "Your Beacon exists in DB");
-                                            myDevice = findMyDevice;
+                                        Log.d("DeviceRepository", "1.DISTANCE: " + round(beacon.getDistance() * 100) + "; BEACON: " + beacon.getId1());
+                                        if (!beaconTagValue.equals(beacon.getId1().toString())) {
                                             for (Device device : devices.getContent()) {
-                                                if (myDevice.getDeviceId().toString().equals(device.getDeviceId().toString())) {
-                                                    Log.d("DeviceRepository", "= myDevice (" + myDevice.getDeviceId().toString() + "); device (" + device.getDeviceId().toString() + ") = same");
-                                                } else {
-                                                    Log.d("DeviceRepository", "!= myDevice (" + myDevice.getDeviceId() + "); device (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
-                                                    // To store in DB
-                                                    // distanceRepository.sendNetworkRequest(myDevice.getDeviceId(), device.getDeviceId(), round(beacon.getDistance() * 100));
+                                                if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
+                                                    Log.d("DeviceRepository", "!= myDevID (" + myDeviceID + "); deviceID (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
+                                                    distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
+
                                                 }
                                             }
                                         } else {
-                                            Log.d("DeviceRepository", "Your Beacon DOES NOT exists in DB");
+                                            Log.d("DeviceRepository", "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
                                         }
                                     }
                                 }
-//                                if (myDevice != null) {
-//                                    for (Device device : Objects.requireNonNull(devices).getContent()) {
-//                                        if (myDevice.toString() == device.getDeviceId().toString()) {
-//                                            Log.d("DeviceRepository", "EQUALS myDevice " + myDevice.getDeviceId() + " " + device.getDeviceId() + " " + round(beacon.getDistance() * 100));
-//                                        } else {
-//                                            Log.d("DeviceRepository", "!EQUALS: myDevice (" + myDevice.getDeviceId() + "); device (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
-//                                            // To store in DB
-////                                            distanceRepository.sendNetworkRequest(myDevice.getDeviceId(),device.getDeviceId(),round(beacon.getDistance() * 100));
-//                                            // TODO: ERROR!!!! takoe oshusheniya kak budto on ne
-//                                            //  ponimaet kakoy imenno eto beacon
-//                                            // Ya pishu chto esli ID ravni, to pust ne delaet POST
-//                                            // request, a on vse ravno delaet
-//                                        }
-//                                        // TODO: if there is beacon in DB, but our app is not able
-//                                        //  to find it, do not post distance
-//                                    }
-//                                }
-//                                if (beacon.getDistance() <= 0.45) { // intimate
-//                                    Log.d("DeviceRepository", "Intimate Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-//                                    Log.d("DeviceRepository", "-");
-//                                    // TODO: it should send the distance to all mascots to the DATABASE
-//                                    // deviceRepository.getNetworkRequest();
-//                                } else if (beacon.getDistance() >= 0.46 && beacon.getDistance() <= 1.21) { // personal
-//                                    Log.d("DeviceRepository", "Personal Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-//                                    Log.d("DeviceRepository", "-");
-//                                    // TODO: tablet color
-//                                } else if (beacon.getDistance() >= 1.22 && beacon.getDistance() <= 3.70) { // social
-//                                    Log.d("DeviceRepository", "Social Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-//                                    Log.d("DeviceRepository", "-");
-//                                    // TODO: bench is here, lights
-//                                    // this is to turn on the light
-//                                    // hueRepository.updateBrightness(90);
-//                                } else if (beacon.getDistance() > 3.70) { // public
-//                                    Log.d("DeviceRepository", "Public Zone!!!! " + round(beacon.getDistance() * 100) + " cm away.");
-//                                    Log.d("DeviceRepository", "-");
-//                                    // TODO: speakers
-//                                }
+                            } else {
+                                Log.d("DeviceRepository", "Your Beacon DOES NOT exists in DB");
                             }
-
-                            @Override
-                            public void onFailure(@NonNull Call<ApiDevicesResponse> call,
-                                                  @NonNull Throwable t) {
-                                Log.d("DeviceRepository", "error loading from API");
-                                Log.d("DeviceRepository", t.getMessage());
-                            }
-                        });
-
-                        // TODO:
-                        // Here the app starts measuring a distance to all other
-                        // devices in the system
-
+                        }
                     }
-                }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ApiDevicesResponse> call,
+                                          @NonNull Throwable t) {
+                        Log.d("DeviceRepository", "error loading from API");
+                        Log.d("DeviceRepository", t.getMessage());
+                    }
+                });
             }
         });
         try {
@@ -204,7 +165,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                 RemoteException ignored) {
         }
     }
-
 }
 
 /*
@@ -228,3 +188,55 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                         "devicePersonality":"Extraversion"
                                 }]
  */
+//
+//{
+//        "content":
+//        [
+//                {
+//                    "deviceId":12235,
+//                    "deviceName":"Lamp",
+//                    "beaconUuid":"b0702880-a295-a8ab-f734-031a98a512de",
+//                    "devicePersonality":null
+//                },
+//                {
+//                    "deviceId":12304,
+//                    "deviceName":"MascotNexus",
+//                    "beaconUuid":"88cf77ce-bc91-241a-b8eb-4d041f74acdf",
+//                    "devicePersonality":"Openness"
+//                },
+//                {
+//                    "deviceId":12514,
+//                    "deviceName":"MascT",
+//                    "beaconUuid":"c08b6bb5-40b7-d552-1db6-a8822ec11ed9",
+//                    "devicePersonality":"Extraversion"
+//                }
+//        ],
+//        "pageable":
+//                {
+//                    "sort":
+//                        {
+//                            "sorted":false,
+//                            "unsorted":true,
+//                            "empty":true
+//                        },
+//                    "offset":0,
+//                    "pageSize":20,
+//                    "pageNumber":0,
+//                    "paged":true,
+//                    "unpaged":false
+//                },
+//        "totalPages":1,
+//        "totalElements":3,
+//        "last":true,
+//        "size":20,
+//        "number":0,
+//        "first":true,
+//        "numberOfElements":3,
+//        "sort":
+//                {
+//                    "sorted":false,
+//                    "unsorted":true,
+//                    "empty":true
+//                },
+//        "empty":false
+//}
