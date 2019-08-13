@@ -29,7 +29,7 @@ public class DeviceRepository extends AppCompatActivity {
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://8a64c65a.ngrok.io")
+                .baseUrl("https://9ea11b0e.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -43,22 +43,26 @@ public class DeviceRepository extends AppCompatActivity {
         ListView resultListView = findViewById(R.id.list_view_result);
 
         ArrayList<String> resultList = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, resultList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.my_listview_radiobutton_layout, resultList);
         resultListView.setAdapter(adapter);
     }
 
-    public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, String devicePersonality) {
+    public void sendNetworkRequest(Integer deviceId, String deviceName,
+                                   String beaconUuid, String devicePersonality) {
         Device deviceRequest = new Device(null, deviceName, beaconUuid, devicePersonality);
 
         deviceService.createDevice(deviceRequest)
                 .enqueue(new Callback<ResponseBody>() {
 
                     @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    public void onResponse(@NonNull Call<ResponseBody> call,
+                                           @NonNull Response<ResponseBody> response) {
                         Log.d("DeviceRepository", "Response: " + response.body());
                         try {
                             if (response.body() != null) {
-                                Log.d("DeviceRepository", "success! \n" + response.body().string());
+                                Log.d("DeviceRepository", "success! \n"
+                                        + response.body().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -72,7 +76,6 @@ public class DeviceRepository extends AppCompatActivity {
                 });
     }
 
-    // TODO: get request does not return anything :(
     public void getNetworkRequest(Callback<ApiDevicesResponse> callback) {
         deviceService.getDevices().enqueue(callback);
     }

@@ -21,7 +21,7 @@ public class DistanceRepository {
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://8a64c65a.ngrok.io")
+                .baseUrl("https://9ea11b0e.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
