@@ -124,11 +124,11 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                             if (myBeaconIsInDB) {
                                 if (beacons.size() > 0) {
                                     for (Beacon beacon : beacons) {
-//                                        int brightness = (int) beacon.getDistance() * 80;
-//                                        if (brightness > 255) {
-//                                            brightness = 255;
-//                                        }
-//                                        hueRepository.updateBrightness(brightness);
+                                        int brightness = (int) beacon.getDistance() * 80;
+                                        if (brightness > 255) {
+                                            brightness = 255;
+                                        }
+                                        hueRepository.updateBrightness(brightness);
 
                                         Log.d("DeviceRepository", "1.DISTANCE: " + round(beacon.getDistance() * 100) + "; BEACON: " + beacon.getId1());
                                         if (!beaconTagValue.equals(beacon.getId1().toString())) {
@@ -166,77 +166,3 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         }
     }
 }
-
-/*
- "content":[
-                                {
-                                    "deviceId":12235,
-                                        "deviceName":"Lamp",
-                                        "beaconUuid":"b0702880-a295-a8ab-f734-031a98a512de",
-                                        "devicePersonality":null
-                                },
-                                {
-                                    "deviceId":12304,
-                                        "deviceName":"MascotNexus",
-                                        "beaconUuid":"88cf77ce-bc91-241a-b8eb-4d041f74acdf",
-                                        "devicePersonality":"Openness"
-                                },
-                                {
-                                    "deviceId":12514,
-                                        "deviceName":"MascT",
-                                        "beaconUuid":"c08b6bb5-40b7-d552-1db6-a8822ec11ed9",
-                                        "devicePersonality":"Extraversion"
-                                }]
- */
-//
-//{
-//        "content":
-//        [
-//                {
-//                    "deviceId":12235,
-//                    "deviceName":"Lamp",
-//                    "beaconUuid":"b0702880-a295-a8ab-f734-031a98a512de",
-//                    "devicePersonality":null
-//                },
-//                {
-//                    "deviceId":12304,
-//                    "deviceName":"MascotNexus",
-//                    "beaconUuid":"88cf77ce-bc91-241a-b8eb-4d041f74acdf",
-//                    "devicePersonality":"Openness"
-//                },
-//                {
-//                    "deviceId":12514,
-//                    "deviceName":"MascT",
-//                    "beaconUuid":"c08b6bb5-40b7-d552-1db6-a8822ec11ed9",
-//                    "devicePersonality":"Extraversion"
-//                }
-//        ],
-//        "pageable":
-//                {
-//                    "sort":
-//                        {
-//                            "sorted":false,
-//                            "unsorted":true,
-//                            "empty":true
-//                        },
-//                    "offset":0,
-//                    "pageSize":20,
-//                    "pageNumber":0,
-//                    "paged":true,
-//                    "unpaged":false
-//                },
-//        "totalPages":1,
-//        "totalElements":3,
-//        "last":true,
-//        "size":20,
-//        "number":0,
-//        "first":true,
-//        "numberOfElements":3,
-//        "sort":
-//                {
-//                    "sorted":false,
-//                    "unsorted":true,
-//                    "empty":true
-//                },
-//        "empty":false
-//}
