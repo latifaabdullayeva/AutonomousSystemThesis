@@ -3,24 +3,14 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.*;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import sun.rmi.runtime.Log;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 // GET --> POST
 @RestController
@@ -34,11 +24,13 @@ public class DevicesController {
     // for @RequestMapping(method = RequestMethod.GET).
     @GetMapping("/devices")
     public Page<Devices> getDevices(Pageable pageable) {
+        System.out.println("Backend: " + "DeviceController -> GET getDevices()");
         return devicesRepository.findAll(pageable);
     }
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
+        System.out.println("Backend: " + "DevicesController -> POST createDevice()");
 
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
@@ -52,11 +44,8 @@ public class DevicesController {
             newDevice.setDevicePersonality(deviceDto.getDevicePersonality());
 
             devicesRepository.save(newDevice);
+            System.out.println("Backend: " + "DevicesController -> POST newDevice: " + newDevice);
             return ResponseEntity.ok(newDevice);
         }
-
-        // TODO: problem to solve
-        // query all hue lamps from database
-        // send request to all hue lamps to turn light on
     }
 }

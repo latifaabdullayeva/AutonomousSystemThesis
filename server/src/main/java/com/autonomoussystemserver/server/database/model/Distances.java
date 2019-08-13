@@ -34,34 +34,42 @@ public class Distances {
     private Integer distance;
 
     public Integer getDistanceId() {
+        System.out.println("Backend: " + "Distances getDistanceId");
         return distanceId;
     }
 
     public void setDistanceId(Integer distanceId) {
+        System.out.println("Backend: " + "Distances setDistanceId");
         this.distanceId = distanceId;
     }
 
     public Devices getFromDevice() {
+        System.out.println("Backend: " + "Distances getFromDevice");
         return fromDevice;
     }
 
     public void setFromDevice(Devices fromDevice) {
+        System.out.println("Backend: " + "Distances setFromDevice");
         this.fromDevice = fromDevice;
     }
 
     public Devices getToDevice() {
+        System.out.println("Backend: " + "Distances getToDevice");
         return toDevice;
     }
 
     public void setToDevice(Devices toDevice) {
+        System.out.println("Backend: " + "Distances setToDevice");
         this.toDevice = toDevice;
     }
 
     public Integer getDistance() {
+        System.out.println("Backend: " + "Distances getDistance");
         return distance;
     }
 
     public void setDistance(Integer distance) {
+        System.out.println("Backend: " + "Distances setDistance");
         this.distance = distance;
     }
 }

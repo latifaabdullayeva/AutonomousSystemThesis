@@ -11,11 +11,6 @@ since in our study only phones has personalities (TYPE: String)
 name -> cannot be NULL, but personality can be, because our devices like Bench and Tablet do not have personality
 */
 
-import org.springframework.data.repository.query.QueryByExampleExecutor;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Table(name = "devices")
@@ -36,34 +31,42 @@ public class Devices {
     private String devicePersonality;
 
     public Integer getDeviceId() {
+        System.out.println("Backend: " + "Devices getDeviceId");
         return deviceId;
     }
 
     public void setDeviceId(Integer deviceId) {
+        System.out.println("Backend: " + "Devices setDeviceId");
         this.deviceId = deviceId;
     }
 
     public String getDeviceName() {
+        System.out.println("Backend: " + "Devices getDeviceName");
         return deviceName;
     }
 
     public void setDeviceName(String deviceName) {
+        System.out.println("Backend: " + "Devices setDeviceName");
         this.deviceName = deviceName;
     }
 
     public String getBeaconUuid() {
+        System.out.println("Backend: " + "Devices getBeaconUuid");
         return beaconUuid;
     }
 
     public void setBeaconUuid(String beaconUuid) {
+        System.out.println("Backend: " + "Devices setBeaconUuid");
         this.beaconUuid = beaconUuid;
     }
 
     public String getDevicePersonality() {
+        System.out.println("Backend: " + "Devices getDevicePersonality");
         return devicePersonality;
     }
 
     public void setDevicePersonality(String devicePersonality) {
+        System.out.println("Backend: " + "Devices setDevicePersonality");
         this.devicePersonality = devicePersonality;
     }
 }

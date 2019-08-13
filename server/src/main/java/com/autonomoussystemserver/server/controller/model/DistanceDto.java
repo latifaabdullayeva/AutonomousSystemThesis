@@ -9,17 +9,21 @@ public class DistanceDto {
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;
         this.distance = distance;
+        System.out.println("Backend: " + "DistanceDto constructor");
     }
 
     public Integer getFromDevice() {
+        System.out.println("Backend: " + "DistanceDto getFromDevice");
         return fromDevice;
     }
 
     public Integer getToDevice() {
+        System.out.println("Backend: " + "DistanceDto getToDevice");
         return toDevice;
     }
 
     public Integer getDistance() {
+        System.out.println("Backend: " + "DistanceDto getDistance");
         return distance;
     }
 }
