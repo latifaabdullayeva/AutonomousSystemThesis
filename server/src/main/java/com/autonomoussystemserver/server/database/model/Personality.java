@@ -10,8 +10,20 @@ public class Personality {
     @Column(name = "personality_id", unique = true, nullable = false, updatable = false)
     private Integer id;
 
+    @Column(name = "personality_name", nullable = false, updatable = false)
+    private String personality_name;
+
     @Column(name = "hue_color", nullable = false, updatable = false)
     private String hue_color;
+
+    @Column(name = "hue_bri", nullable = false, updatable = false)
+    private String bri;
+
+    @Column(name = "hue_hue", nullable = false, updatable = false)
+    private String hue;
+
+    @Column(name = "hue_sat", nullable = false, updatable = false)
+    private String sat;
 
     @Column(name = "screen_color", nullable = false, updatable = false)
     private String screen_color;
@@ -30,12 +42,44 @@ public class Personality {
         this.id = id;
     }
 
+    public String getPersonality_name() {
+        return personality_name;
+    }
+
+    public void setPersonality_name(String personality_name) {
+        this.personality_name = personality_name;
+    }
+
     public String getHue_color() {
         return hue_color;
     }
 
     public void setHue_color(String hue_color) {
         this.hue_color = hue_color;
+    }
+
+    public String getBri() {
+        return bri;
+    }
+
+    public void setBri(String bri) {
+        this.bri = bri;
+    }
+
+    public String getHue() {
+        return hue;
+    }
+
+    public void setHue(String hue) {
+        this.hue = hue;
+    }
+
+    public String getSat() {
+        return sat;
+    }
+
+    public void setSat(String sat) {
+        this.sat = sat;
     }
 
     public String getScreen_color() {
