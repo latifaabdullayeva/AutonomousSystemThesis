@@ -74,13 +74,11 @@ public class DistancesController {
                 .findById(distanceDto.getToDevice())
                 .orElse(null);
 
-//        System.out.println("Backend: " + "Hue fromDevice: DEVDTO: " + deviceDto.getDeviceName());
-//        devName.setDeviceName(deviceDto.getDeviceName());
-        System.out.println("Backend: " + "Hue fromDevice: " + devName.toString());
+        System.out.println("Backend: " + "Hue fromDevice: " + devName.getDeviceName());
 
         if (devName.getDeviceName().equals("Lamp")) {
-            if (distances.getDistance() <= 45) {
-                int brightness = distances.getDistance() * 80;
+            if (distances.getDistance() >=120 && distances.getDistance() <= 370) {
+                int brightness = distances.getDistance() * 80; // TODO: get color based on personality from DB
                 if (brightness > 255) {
                     brightness = 255;
                 }
@@ -90,7 +88,5 @@ public class DistancesController {
             }
         }
         return distances;
-        // eshe tut nado opisat logiku o tom chtobi distanciya 45 bila imenno mejdu telefonom i Lampy, to est beacon Lampi
-        // prover distanciya prinadlejit li Lampe ili net
     }
 }

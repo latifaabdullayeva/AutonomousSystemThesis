@@ -11,7 +11,6 @@ import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
-import com.example.autonomoussystemthesis.network.hue.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -93,10 +92,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
     @Override
     public void onBeaconServiceConnect() {
-        final HueRepository hueRepository = new HueRepository(
-                "192.168.0.100",
-                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
-        );
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
@@ -111,9 +106,12 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
                         // find my own phone (device id)
                         Integer myDeviceID = null;
+                        Log.d("DeviceRepository", "devices: " + devices);
                         if (devices != null) {
                             boolean myBeaconIsInDB = false;
+                            Log.d("DeviceRepository", "devices.getContent().size(): " + devices.getContent().size());
                             for (int i = 0; i < devices.getContent().size(); i++) {
+                                Log.d("DeviceRepository", "i = " + i + "; getBeaconUuid = " + devices.getContent().get(i).getBeaconUuid());
                                 if (devices.getContent().get(i).getBeaconUuid().contains(beaconTagValue)) {
                                     myBeaconIsInDB = true;
                                     Log.d("DeviceRepository", "-- DB contains my beacon: " + myBeaconIsInDB);
@@ -121,14 +119,14 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                     Log.d("DeviceRepository", "-- CONTAINS: " + myBeaconIsInDB + "; ID: " + myDeviceID);
                                 }
                             }
-                            if (myBeaconIsInDB) {
+                            Log.d("DeviceRepository", "myBeaconIsInDB = " + myBeaconIsInDB);
+
+                            if (myBeaconIsInDB) { // eto uslovie ne proveray v sluchae s lampoy i planshetom, tolko v sluchae s mascotom(vibraciya)
+                                Log.d("DeviceRepository", "myBeaconIsInDB 2 = " + myBeaconIsInDB + "; beacons.size() = " + beacons.size());
                                 if (beacons.size() > 0) {
+                                    Log.d("DeviceRepository", "beacons.size() = " + beacons.size());
                                     for (Beacon beacon : beacons) {
-                                        int brightness = (int) beacon.getDistance() * 80;
-                                        if (brightness > 255) {
-                                            brightness = 255;
-                                        }
-                                        hueRepository.updateBrightness(brightness);
+                                        Log.d("DeviceRepository", "beacon = " + beacon);
 
                                         Log.d("DeviceRepository", "1.DISTANCE: " + round(beacon.getDistance() * 100) + "; BEACON: " + beacon.getId1());
                                         if (!beaconTagValue.equals(beacon.getId1().toString())) {
@@ -142,6 +140,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                         } else {
                                             Log.d("DeviceRepository", "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
                                         }
+
                                     }
                                 }
                             } else {
