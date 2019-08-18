@@ -1,8 +1,10 @@
 package com.autonomoussystemserver.server.controller;
 
+import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.controller.model.DistanceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Distances;
+import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.HueRepository;
 import org.slf4j.Logger;
@@ -20,6 +22,9 @@ public class DistancesController {
 
     @Autowired
     private DistancesRepository distancesRepository;
+
+    @Autowired
+    private DevicesRepository devicesRepository;
 
     private static final Logger LOGGER =
             LoggerFactory.getLogger(DistancesController.class);
@@ -65,14 +70,24 @@ public class DistancesController {
         System.out.println("Backend: " + "Hue hueRepository: " + hueRepository);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
-        if (distances.getDistance() <= 45) {
-            int brightness = distances.getDistance() * 80;
-            if (brightness > 255) {
-                brightness = 255;
+        Devices devName = devicesRepository
+                .findById(distanceDto.getToDevice())
+                .orElse(null);
+
+//        System.out.println("Backend: " + "Hue fromDevice: DEVDTO: " + deviceDto.getDeviceName());
+//        devName.setDeviceName(deviceDto.getDeviceName());
+        System.out.println("Backend: " + "Hue fromDevice: " + devName.toString());
+
+        if (devName.getDeviceName().equals("Lamp")) {
+            if (distances.getDistance() <= 45) {
+                int brightness = distances.getDistance() * 80;
+                if (brightness > 255) {
+                    brightness = 255;
+                }
+                // TODO: add here color:
+                hueRepository.updateBrightness(brightness);
+                System.out.println("Backend: " + "Hue hueRepository.updateBrightness(brightness)= [" + brightness + "]");
             }
-            // TODO: add here color:
-            hueRepository.updateBrightness(brightness);
-            System.out.println("Backend: " + "Hue hueRepository.updateBrightness(brightness): " + brightness);
         }
         return distances;
         // eshe tut nado opisat logiku o tom chtobi distanciya 45 bila imenno mejdu telefonom i Lampy, to est beacon Lampi
