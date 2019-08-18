@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
-import com.example.autonomoussystemthesis.network.hue.HueRepository;
+//import com.example.autonomoussystemthesis.network.hue.HueRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -142,10 +142,10 @@ public class Initialisation extends AppCompatActivity
 //         Method	POST
 //         the Command Response will show you a username
 //         The documentation of Hue Api is "https://developers.meethue.com/develop/get-started-2/"
-        final HueRepository hueRepository = new HueRepository(
-                "192.168.0.100",
-                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
-        );
+//        final HueRepository hueRepository = new HueRepository(
+//                "192.168.0.100",
+//                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91"
+//        );
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
 
