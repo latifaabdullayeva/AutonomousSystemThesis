@@ -1,6 +1,4 @@
-package com.example.autonomoussystemthesis.network.api.devices;
-
-import com.example.autonomoussystemthesis.network.api.personality.Personality;
+package com.example.autonomoussystemthesis.network.api.personality;
 
 import java.util.List;
 
