@@ -17,92 +17,110 @@ public class Personality {
     private String hue_color;
 
     @Column(name = "hue_bri", nullable = false, updatable = false)
-    private String bri;
+    private Integer bri;
 
     @Column(name = "hue_hue", nullable = false, updatable = false)
-    private String hue;
+    private Integer hue;
 
     @Column(name = "hue_sat", nullable = false, updatable = false)
-    private String sat;
+    private Integer sat;
 
     @Column(name = "screen_color", nullable = false, updatable = false)
     private String screen_color;
 
     @Column(name = "vibration_level", nullable = false, updatable = false)
-    private String vibration_level;
+    private Integer vibration_level;
 
     @Column(name = "music_genre", nullable = false, updatable = false)
     private String music_genre;
 
     public Integer getId() {
+        System.out.println("Backend: " + "Personality getId() = " + id);
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+        System.out.println("Backend: " + "Personality setId() = " + id);
     }
 
     public String getPersonality_name() {
+        System.out.println("Backend: " + "Personality getPersonality_name() = " + personality_name);
         return personality_name;
     }
 
     public void setPersonality_name(String personality_name) {
         this.personality_name = personality_name;
+        System.out.println("Backend: " + "Personality setPersonality_name() = " + personality_name);
     }
 
     public String getHue_color() {
+        System.out.println("Backend: " + "Personality getHue_color() = " + hue_color);
         return hue_color;
     }
 
     public void setHue_color(String hue_color) {
         this.hue_color = hue_color;
+        System.out.println("Backend: " + "Personality setHue_color() = " + hue_color);
     }
 
-    public String getBri() {
+    public Integer getBri() {
+        System.out.println("Backend: " + "Personality getBri() = " + bri);
         return bri;
     }
 
-    public void setBri(String bri) {
+    public void setBri(Integer bri) {
         this.bri = bri;
+        System.out.println("Backend: " + "Personality setBri() = " + bri);
     }
 
-    public String getHue() {
+    public Integer getHue() {
+        System.out.println("Backend: " + "Personality getHue() = " + hue);
         return hue;
     }
 
-    public void setHue(String hue) {
+    public void setHue(Integer hue) {
         this.hue = hue;
+        System.out.println("Backend: " + "Personality setHue() = " + hue);
     }
 
-    public String getSat() {
+    public Integer getSat() {
+        System.out.println("Backend: " + "Personality getSat() = " + sat);
         return sat;
     }
 
-    public void setSat(String sat) {
+    public void setSat(Integer sat) {
         this.sat = sat;
+        System.out.println("Backend: " + "Personality setSat() = " + sat);
     }
 
     public String getScreen_color() {
+        System.out.println("Backend: " + "Personality getScreen_color() = " + screen_color);
         return screen_color;
     }
 
     public void setScreen_color(String screen_color) {
         this.screen_color = screen_color;
+        System.out.println("Backend: " + "Personality setScreen_color() = " + screen_color);
     }
 
-    public String getVibration_level() {
+    public Integer getVibration_level() {
+        System.out.println("Backend: " + "Personality getVibration_level() = " + vibration_level);
         return vibration_level;
     }
 
-    public void setVibration_level(String vibration_level) {
+    public void setVibration_level(Integer vibration_level) {
         this.vibration_level = vibration_level;
+        System.out.println("Backend: " + "Personality setVibration_level() = " + vibration_level);
     }
 
     public String getMusic_genre() {
+        System.out.println("Backend: " + "Personality getMusic_genre() = " + music_genre);
         return music_genre;
     }
 
     public void setMusic_genre(String music_genre) {
         this.music_genre = music_genre;
+        System.out.println("Backend: " + "Personality setMusic_genre() = " + music_genre);
     }
 }
