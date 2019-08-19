@@ -1,12 +1,14 @@
 package com.autonomoussystemserver.server.controller.model;
 
+import com.autonomoussystemserver.server.database.model.Personality;
+
 public class DeviceDto {
 
     private String deviceName;
     private String beaconUuid;
-    private String devicePersonality;
+    private Integer devicePersonality;
 
-    public DeviceDto(String deviceName, String beaconUuid, String devicePersonality) {
+    public DeviceDto(String deviceName, String beaconUuid, Integer devicePersonality) {
         System.out.println("Backend: " + "DeviceDTO constructor");
         this.deviceName = deviceName;
         this.beaconUuid = beaconUuid;
@@ -23,7 +25,7 @@ public class DeviceDto {
         return beaconUuid;
     }
 
-    public String getDevicePersonality() {
+    public Integer getDevicePersonality() {
         System.out.println("Backend: " + "DeviceDTO getDevicePersonality");
         return devicePersonality;
     }

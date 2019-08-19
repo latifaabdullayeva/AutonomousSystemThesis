@@ -10,6 +10,9 @@ public class PersonalityDto {
     private Integer vibration_level;
     private String music_genre;
 
+    // for deserialisation
+    public PersonalityDto() {}
+
     public PersonalityDto(String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
         this.personality_name = personality_name;
         this.hue_color = hue_color;

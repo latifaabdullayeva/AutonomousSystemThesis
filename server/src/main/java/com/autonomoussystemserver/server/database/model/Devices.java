@@ -27,8 +27,9 @@ public class Devices {
     @Column(name = "beaconUuid", updatable = false)
     private String beaconUuid;
 
-    @Column(name = "devicePersonality", updatable = false)
-    private String devicePersonality;
+    @ManyToOne
+    @JoinColumn(name = "devicePersonality", updatable = false) // // Foreign key for personality.personality_id
+    private Personality devicePersonality;
 
     public Integer getDeviceId() {
         System.out.println("Backend: " + "Devices getDeviceId");
@@ -60,12 +61,12 @@ public class Devices {
         this.beaconUuid = beaconUuid;
     }
 
-    public String getDevicePersonality() {
+    public Personality getDevicePersonality() {
         System.out.println("Backend: " + "Devices getDevicePersonality");
         return devicePersonality;
     }
 
-    public void setDevicePersonality(String devicePersonality) {
+    public void setDevicePersonality(Personality devicePersonality) {
         System.out.println("Backend: " + "Devices setDevicePersonality");
         this.devicePersonality = devicePersonality;
     }

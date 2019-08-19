@@ -2,6 +2,7 @@ package com.autonomoussystemserver.server.controller;
 
 import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
+import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,10 +39,16 @@ public class DevicesController {
             return ResponseEntity.badRequest()
                     .body(null);
         } else {
+            Personality personality= new Personality();
+            personality.setId(deviceDto.getDevicePersonality());
+
             Devices newDevice = new Devices();
+            System.out.println("Backend: " + "DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName());
             newDevice.setDeviceName(deviceDto.getDeviceName());
+            System.out.println("Backend: " + "DevicesController -> POST deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
-            newDevice.setDevicePersonality(deviceDto.getDevicePersonality());
+            System.out.println("Backend: " + "DevicesController -> POST personality = " + personality);
+            newDevice.setDevicePersonality(personality);
 
             devicesRepository.save(newDevice);
             System.out.println("Backend: " + "DevicesController -> POST newDevice: " + newDevice);
