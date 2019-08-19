@@ -27,9 +27,9 @@ public class HueRepository {
         username = user;
     }
 
-    public void updateBrightness(int brightness) {
+    public void updateBrightness(int brightness, int hue, int saturation) {
         System.out.println("Backend: " + "HueRepository updateBrightness");
-        HueRequest request = new HueRequest(true, brightness);
+        HueRequest request = new HueRequest(true, brightness, hue, saturation);
 
         hueService.updateHueLamp(username, 1, request)
                 .enqueue(new Callback<okhttp3.ResponseBody>() {

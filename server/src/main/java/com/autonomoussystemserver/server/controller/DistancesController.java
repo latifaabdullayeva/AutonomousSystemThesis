@@ -108,16 +108,12 @@ public class DistancesController {
                 int saturation = personality.getSat();
 //              if (brightness > 255) {brightness = 255;}
 
+                hueRepository.updateBrightness(brightness, hue, saturation);
+
                 // TODO: add here color:
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(brightness)= [" + brightness + "]");
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(hue)= [" + hue + "]");
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(saturation)= [" + saturation + "]");
-
-                hueRepository.updateBrightness(brightness, hue, saturation);
-
-                System.out.println("Backend: " + "Hue 2 hueRepository.updateBrightness(brightness)= [" + brightness + "]");
-                System.out.println("Backend: " + "Hue 2 hueRepository.updateBrightness(hue)= [" + hue + "]");
-                System.out.println("Backend: " + "Hue 2 hueRepository.updateBrightness(saturation)= [" + saturation + "]");
             }
         }
         return distances;
