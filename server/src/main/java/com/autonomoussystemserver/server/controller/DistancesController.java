@@ -94,10 +94,6 @@ public class DistancesController {
         if (devNameTo.getDeviceName().equals("Lamp")) {
             if (distances.getDistance() <= 45) { // >= 120 && distances.getDistance() <= 370
 
-                // TODO: get color based on personality from DB
-                // !!!!! ERROR NULL -> potomu chto on v IF cikl zaxodit tolko esli device = Lamp, a u lamp net lichnosti :(
-                // tebe nado lichnost ne ToDevice, a FromDevice
-
                 String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
                 System.out.println("Backend: " + "DistanceController Personality personalityNameofDev = " + personalityNameofDev);
                 Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
@@ -110,7 +106,6 @@ public class DistancesController {
 
                 hueRepository.updateBrightness(brightness, hue, saturation);
 
-                // TODO: add here color:
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(brightness)= [" + brightness + "]");
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(hue)= [" + hue + "]");
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness(saturation)= [" + saturation + "]");
