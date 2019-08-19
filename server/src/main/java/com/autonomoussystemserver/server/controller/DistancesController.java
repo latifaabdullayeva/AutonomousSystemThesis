@@ -96,7 +96,7 @@ public class DistancesController {
 
                 // TODO: get color based on personality from DB
                 // !!!!! ERROR NULL -> potomu chto on v IF cikl zaxodit tolko esli device = Lamp, a u lamp net lichnosti :(
-                // tebe nado lichnost ne ToDevice, a FromDEvice
+                // tebe nado lichnost ne ToDevice, a FromDevice
 
                 String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
                 System.out.println("Backend: " + "DistanceController Personality personalityNameofDev = " + personalityNameofDev);
