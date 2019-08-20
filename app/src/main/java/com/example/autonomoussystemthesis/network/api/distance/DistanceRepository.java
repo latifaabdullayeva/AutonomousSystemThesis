@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DistanceRepository {
+    protected static final String TAG = "DistanceRepository";
     private final DistanceService distanceService;
 
     public DistanceRepository() {
@@ -21,7 +22,7 @@ public class DistanceRepository {
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://9ea11b0e.ngrok.io")
+                .baseUrl("https://3d8850fb.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -36,10 +37,10 @@ public class DistanceRepository {
 
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                        Log.d("DistanceRepository", "Response: " + response.body());
+                        Log.d(TAG, "Response: " + response.body());
                         try {
                             if (response.body() != null) {
-                                Log.d("DistanceRepository", "success! \n" + response.body().string());
+                                Log.d(TAG, "success! \n" + response.body().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -48,7 +49,7 @@ public class DistanceRepository {
 
                     @Override
                     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e("DistanceRepository", "failure :(", t);
+                        Log.e(TAG, "failure :(", t);
                     }
                 });
     }

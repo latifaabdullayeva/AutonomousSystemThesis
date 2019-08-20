@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.autonomoussystemthesis.R;
-import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DeviceRepository extends AppCompatActivity {
-    final DistanceRepository distanceRepository = new DistanceRepository();
+    protected static final String TAG = "DeviceRepository";
     private final DeviceService deviceService;
 
     public DeviceRepository() {
@@ -29,7 +28,7 @@ public class DeviceRepository extends AppCompatActivity {
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://9ea11b0e.ngrok.io")
+                .baseUrl("https://3d8850fb.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -48,8 +47,7 @@ public class DeviceRepository extends AppCompatActivity {
         resultListView.setAdapter(adapter);
     }
 
-    public void sendNetworkRequest(Integer deviceId, String deviceName,
-                                   String beaconUuid, String devicePersonality) {
+    public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, Integer devicePersonality) {
         Device deviceRequest = new Device(null, deviceName, beaconUuid, devicePersonality);
 
         deviceService.createDevice(deviceRequest)
@@ -58,10 +56,10 @@ public class DeviceRepository extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call,
                                            @NonNull Response<ResponseBody> response) {
-                        Log.d("DeviceRepository", "Response: " + response.body());
+                        Log.d(TAG, "Response: " + response.body());
                         try {
                             if (response.body() != null) {
-                                Log.d("DeviceRepository", "success! \n"
+                                Log.d(TAG, "success! \n"
                                         + response.body().string());
                             }
                         } catch (IOException e) {
@@ -71,7 +69,7 @@ public class DeviceRepository extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e("DeviceRepository", "failure :(", t);
+                        Log.e(TAG, "failure :(", t);
                     }
                 });
     }

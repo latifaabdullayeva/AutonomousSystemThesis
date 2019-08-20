@@ -43,56 +43,45 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     public static final String TEXT2 = "text2";
     public static final String TEXT3 = "text3";
     public static final String TEXT4 = "text4";
+
     protected static final String TAG = "InitialisationActivity";
+
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
-    LinearLayout devTypeLayout, personalityLayout;
+    final PersonalityRepository personalityRepository = new PersonalityRepository();
+
+    LinearLayout personalityLayout;
     Button saveButton;
     RadioGroup radioGroupDevType, radioGroupPersonality;
-    TextView beaconUuid, textViewDevType, textViewPersonality, numbOfBeacons, textView;
+    TextView textViewDevType, textViewPersonality, numbOfBeacons;
     EditText mascotNameEditText;
+
     private BeaconManager beaconManager;
-    private ArrayList<String> beaconList, persList;
+    private ArrayList<String> beaconList;
     private RecyclerViewAdapter adapter;
     private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue;
-    final PersonalityRepository personalityRepository = new PersonalityRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Initialisation started");
         setContentView(R.layout.activity_initialisation);
-
         Objects.requireNonNull(getSupportActionBar()).setTitle("Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
-        Log.d(TAG, "beaconManager = " + beaconManager);
 
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
         RecyclerView beaconListView = findViewById(R.id.listViewBeacon);
         this.adapter = new RecyclerViewAdapter(this, this.beaconList);
         beaconListView.setAdapter(adapter);
-        Log.d(TAG, "this.beaconList = " + this.beaconList);
-        Log.d(TAG, "beaconListView = " + beaconListView);
-        Log.d(TAG, "this.adapter = " + this.adapter);
-
-        // Choose the Personality for Mascot out of list from DB
-        this.persList = new ArrayList<>();
-        RecyclerView persListView = findViewById(R.id.listViewPers);
-        this.adapter = new RecyclerViewAdapter(this, this.persList);
-        persListView.setAdapter(adapter);
-        Log.d(TAG, "this.persList = " + this.persList);
-        Log.d(TAG, "persListView = " + persListView);
-        Log.d(TAG, "this.adapter = " + this.adapter);
 
         saveButton = findViewById(R.id.saveButton);
         radioGroupDevType = findViewById(R.id.radioGroupDevType);
         textViewDevType = findViewById(R.id.IntroTextDevType);
 
-//        radioGroupPersonality = findViewById(R.id.radioGroupPer);
+        radioGroupPersonality = findViewById(R.id.radioGroupPersonality);
         textViewPersonality = findViewById(R.id.IntroTextPer);
 
         saveButtonListener();
@@ -100,49 +89,21 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onItemClick(View view, int position) {
-        Log.d(TAG, "onItemClick()");
 //        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
         Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
         TextView textView = findViewById(R.id.showSelectedBeacon);
         textView.setText(getString(R.string.selectedBeacon, beaconValue));
-        Log.d(TAG, "beaconValue = " + beaconValue);
-        Log.d(TAG, "textView = " + textView);
-
-
-        devicePersonalityValue = persList.get(position);
-        Toast.makeText(Initialisation.this, "Selected Personality: " + devicePersonalityValue, Toast.LENGTH_SHORT).show();
-        TextView textViewPer = findViewById(R.id.showSelectedPers);
-        textViewPer.setText(getString(R.string.selectedPer, devicePersonalityValue));
-        Log.d(TAG, "devicePersonalityValue = " + devicePersonalityValue);
-        Log.d(TAG, "textViewPer = " + textViewPer);
     }
 
     public void checkBeaconButton() {
-        Log.d(TAG, "checkBeaconButton()");
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.listViewBeacon);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapter(this, beaconList);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-        Log.d(TAG, "recyclerView = " + recyclerView);
-        Log.d(TAG, "adapter = " + adapter);
     }
-
-    public void checkPersButton() {
-        Log.d(TAG, "checkPersButton()");
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.listViewPers);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerViewAdapter(this, persList);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        mascotValue = mascotNameEditText.getText().toString();
-        Log.d(TAG, "recyclerView = " + recyclerView);
-        Log.d(TAG, "adapter = " + adapter);
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -164,15 +125,11 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onBeaconServiceConnect() {
-        // TODO: HueRepository should be discovered in ShowAllDistances Activity
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
 
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-
-                Log.d(TAG, "didRangeBeaconsInRegion()");
-
                 if (beacons.size() > 0) {
 
                     // Show the List of all beacons
@@ -181,7 +138,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                         if (!beaconList.contains(beacon.getId1().toString())) {
                             beaconList.add(beacon.getId1().toString());
                             // if you want to get ID of beacon -> .getId1();
-                            Log.d(TAG, "beaconList = " + beaconList);
+                            // TODO: do not show this beacon if it is already in the database
+                            // TODO: Get list of beacons that are in DB
                         }
                     }
                     runOnUiThread(new Runnable() {
@@ -198,8 +156,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
             }
         });
         try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId",
-                    null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (
                 RemoteException ignored) {
         }
@@ -213,35 +170,17 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         Toast.makeText(Initialisation.this, "3" + deviceTypeValue, Toast.LENGTH_SHORT).show();
 
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
+        personalityLayout = findViewById(R.id.radioGroupPersonality);
+    }
 
-        personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
-            @Override
-            public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "Code = " + response.body());
-                    Log.d("PersonalityRepository", "Code: " + response.code());
-                    return;
-                }
-                ApiPersonalityResponse personalities = response.body();
-
-                for (Personality personality : personalities.getContent()) {
-                    Log.d(TAG, "personality.getPer_id() = " + personality.getPer_id());
-                    Log.d("PersonalityRepository", "personality.getPer_id() = " + personality.getPer_id());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
-                Log.d(TAG, "error loading from API = " + t.getMessage());
-                Log.d("PersonalityRepository", "error loading from API");
-                Log.d("PersonalityRepository", t.getMessage());
-            }
-        });
-        beaconList.clear();
-
-
-        checkPersButton();
-//        personalityLayout = findViewById(R.id.radioGroupPer);
+    public void checkPerButton(View view) {
+        int selectedRadioPersId = radioGroupPersonality.getCheckedRadioButtonId();
+        RadioButton radioButtonPersonality;
+        radioButtonPersonality = findViewById(selectedRadioPersId);
+        mascotValue = mascotNameEditText.getText().toString();
+        devicePersonalityValue = radioButtonPersonality.getText().toString();
+        Toast.makeText(Initialisation.this, "2" + devicePersonalityValue, Toast.LENGTH_SHORT).show();
+        saveButtonListener();
     }
 
     public void saveButtonListener() {
@@ -270,11 +209,41 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                         }
                     }
                     saveData();
-
                     if (deviceTypeValue.equals("Mascot")) {
-//                        deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personality.getPer_id());
+                        personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
+                            @Override
+                            public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                if (!response.isSuccessful()) {
+                                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
+                                    return;
+                                }
+                                ApiPersonalityResponse personalities = response.body();
+
+                                if (personalities != null) {
+                                    for (Personality personality : personalities.getContent()) {
+                                        Log.d(TAG, "personality = " + personality);
+                                        Log.d(TAG, "Chosen devicePersonalityValue = " + devicePersonalityValue);
+                                        Log.d(TAG, "personality.getPersonality_name() = " + personality.getPersonality_name());
+                                        Log.d(TAG, "personality.getPer_id() = " + personality.getId());
+                                        Log.d(TAG, "personality.getHue_color() = " + personality.getHue_color());
+
+                                        if (personality.getPersonality_name().equals(devicePersonalityValue)) {
+                                            Log.d(TAG, "personality.getPer_id() = " + personality.getId());
+                                            int personalityId = personality.getId();
+                                            deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personalityId);
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
+                                Log.d(TAG, "error loading from API: " + t.getMessage());
+                            }
+                        });
                     } else {
-//                        deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, personality.getPer_id());
+                        deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, null);
+                        Toast.makeText(Initialisation.this, "Other than Mascot no one can have Personality", Toast.LENGTH_SHORT).show();
                     }
                     startActivity(myIntent);
                 }

@@ -1,8 +1,11 @@
 package com.example.autonomoussystemthesis.network.api.personality;
 
-public class Personality {
+import android.util.Log;
 
-    private final Integer per_id;
+public class Personality {
+    protected static final String TAG = "Personality";
+
+    private final Integer id;
     private final String personality_name;
     private final String hue_color;
     private final Integer bri;
@@ -12,8 +15,8 @@ public class Personality {
     private final Integer vibration_level;
     private final String music_genre;
 
-    Personality(Integer per_id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
-        this.per_id = per_id;
+    Personality(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
+        this.id = id;
         this.personality_name = personality_name;
         this.hue_color = hue_color;
         this.bri = bri;
@@ -22,10 +25,13 @@ public class Personality {
         this.screen_color = screen_color;
         this.vibration_level = vibration_level;
         this.music_genre = music_genre;
+        Log.d(TAG, "Personality");
+        Log.d(TAG, "Personality constructor() per_id= " + id);
     }
 
-    public Integer getPer_id() {
-        return per_id;
+    public Integer getId() {
+        Log.d(TAG, "getPer_id() per_id = " + id);
+        return id;
     }
 
     public String getPersonality_name() {

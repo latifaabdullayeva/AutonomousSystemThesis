@@ -13,21 +13,24 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PersonalityRepository {
+    protected static final String TAG = "PersonalityRepository";
 
     private final PersonalityService personalityService;
 
     public PersonalityRepository() {
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://d8a27c3f.ngrok.io")
+                .baseUrl("https://3d8850fb.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         personalityService = retrofit.create(PersonalityService.class);
+        Log.d(TAG, "PersonalityRepo");
     }
 
-    public void sendNetworkRequestPers(Integer per_id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
+    public void sendNetworkRequestPers(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
         Personality personalityRequest = new Personality(null, personality_name, hue_color, bri, hue, sat, screen_color, vibration_level, music_genre);
+        Log.d(TAG, "Personality sendNetReq");
 
         personalityService.createPersonality(personalityRequest)
                 .enqueue(new Callback<ResponseBody>() {
@@ -35,10 +38,10 @@ public class PersonalityRepository {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call,
                                            @NonNull Response<ResponseBody> response) {
-                        Log.d("PersonalityRepository", "Response: " + response.body());
+                        Log.d(TAG, "Response: " + response.body());
                         try {
                             if (response.body() != null) {
-                                Log.d("PersonalityRepository", "success! \n"
+                                Log.d(TAG, "success! \n"
                                         + response.body().string());
                             }
                         } catch (IOException e) {
@@ -48,12 +51,13 @@ public class PersonalityRepository {
 
                     @Override
                     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e("PersonalityRepository", "failure :(", t);
+                        Log.e(TAG, "failure :(", t);
                     }
                 });
     }
 
     public void getNetworkRequest(Callback<ApiPersonalityResponse> callback) {
+        Log.d(TAG, "Personality getNetReq");
         personalityService.getPersonality().enqueue(callback);
     }
 }

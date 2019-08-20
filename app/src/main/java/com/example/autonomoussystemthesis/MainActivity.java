@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("TestActivity", "MainActivity");
+        Log.d(TAG, "MainActivity");
 
         setupActionBar();
         setupQuestionnaireButton();
@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: change to beacon not deviceTypeValue
         if (TextUtils.isEmpty(deviceTypeValue)) {
-            Log.d("test", "MainAct if --> " + "deviceTypeValue: " + deviceTypeValue +
+            Log.d(TAG, "MainAct if --> " + "deviceTypeValue: " + deviceTypeValue +
                     "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
             verifyBluetooth();
             askPermission();
         } else {
-            Log.d("test", "MainAct else -->" + "deviceTypeValue: " + deviceTypeValue +
+            Log.d(TAG, "MainAct else -->" + "deviceTypeValue: " + deviceTypeValue +
                     "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
             Intent myIntent = new Intent(MainActivity.this, ShowAllDistances.class);
             myIntent.putExtra("BEACONUUID", beaconValue);

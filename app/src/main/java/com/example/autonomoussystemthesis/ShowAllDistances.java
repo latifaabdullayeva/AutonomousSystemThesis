@@ -28,6 +28,8 @@ import retrofit2.Response;
 import static java.lang.Math.round;
 
 public class ShowAllDistances extends AppCompatActivity implements BeaconConsumer {
+    protected static final String TAG = "ShowAllDistances";
+
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
@@ -37,7 +39,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TestActivity", "ShowALlDist");
+        Log.d(TAG, "ShowAllDistances onCreate()");
         setContentView(R.layout.activity_show_all_distances);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("All Distances");
@@ -49,45 +51,22 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         TextView beaconTag = findViewById(R.id.passBeaconUUID);
         beaconTagValue = getIntent().getStringExtra("BEACONUUID");
         beaconTag.setText(beaconTagValue);
-        Log.d("TestActivity", "beaconTagValue " + beaconTagValue);
+        Log.d(TAG, "beaconTagValue = " + beaconTagValue);
 
         TextView deviceType = findViewById(R.id.passDeviceType);
         deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
         deviceType.setText(deviceTypeValue);
-        Log.d("TestActivity", "deviceTypeValue " + deviceTypeValue);
+        Log.d(TAG, "deviceTypeValue = " + deviceTypeValue);
 
         TextView mascotName = findViewById(R.id.passMascotName);
         mascotNameValue = getIntent().getStringExtra("DEVICENAME");
         mascotName.setText(mascotNameValue);
-        Log.d("TestActivity", "mascotNameValue " + mascotNameValue);
+        Log.d(TAG, "mascotNameValue = " + mascotNameValue);
 
         TextView devicePers = findViewById(R.id.passPersonality);
         devicePersValue = getIntent().getStringExtra("PERSONALITY");
         devicePers.setText(devicePersValue);
-        Log.d("TestActivity", "devicePersValue " + devicePersValue);
-    }
-
-    // Disabled back button, so in this Activity user will not allowed to change anything
-    @Override
-    public void onBackPressed() {
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        beaconManager.unbind(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        beaconManager.unbind(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        beaconManager.bind(this);
+        Log.d(TAG, "devicePersValue = " + devicePersValue);
     }
 
     @Override
@@ -95,56 +74,58 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                Log.d(TAG, "didRangeBeaconsInRegion()");
                 deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+                        Log.d(TAG, "onResponse()");
                         if (!response.isSuccessful()) {
-                            Log.d("DeviceRepository", "Code: " + response.code());
+                            Log.d(TAG, "Code: " + response.code());
                             return;
                         }
                         ApiDevicesResponse devices = response.body();
+                        Log.d(TAG, "devices = " + devices);
 
                         // find my own phone (device id)
                         Integer myDeviceID = null;
-                        Log.d("DeviceRepository", "devices: " + devices);
+                        Log.d(TAG, "devices: " + devices + "; myDeviceID = " + myDeviceID);
                         if (devices != null) {
                             boolean myBeaconIsInDB = false;
-                            Log.d("DeviceRepository", "devices.getContent().size(): " + devices.getContent().size());
+                            Log.d(TAG, "devices.getContent().size(): " + devices.getContent().size());
                             for (int i = 0; i < devices.getContent().size(); i++) {
-                                Log.d("DeviceRepository", "i = " + i + "; getBeaconUuid = " + devices.getContent().get(i).getBeaconUuid());
+                                Log.d(TAG, "i = " + i + "; getBeaconUuid = " + devices.getContent().get(i).getBeaconUuid());
                                 if (devices.getContent().get(i).getBeaconUuid().contains(beaconTagValue)) {
                                     myBeaconIsInDB = true;
-                                    Log.d("DeviceRepository", "-- DB contains my beacon: " + myBeaconIsInDB);
+                                    Log.d(TAG, "-- DB contains my beacon: " + myBeaconIsInDB);
                                     myDeviceID = devices.getContent().get(i).getDeviceId();
-                                    Log.d("DeviceRepository", "-- CONTAINS: " + myBeaconIsInDB + "; ID: " + myDeviceID);
+                                    Log.d(TAG, "-- CONTAINS: " + myBeaconIsInDB + "; ID: " + myDeviceID);
                                 }
                             }
-                            Log.d("DeviceRepository", "myBeaconIsInDB = " + myBeaconIsInDB);
+                            Log.d(TAG, "myBeaconIsInDB = " + myBeaconIsInDB);
 
                             if (myBeaconIsInDB) { // eto uslovie ne proveray v sluchae s lampoy i planshetom, tolko v sluchae s mascotom(vibraciya)
-                                Log.d("DeviceRepository", "myBeaconIsInDB 2 = " + myBeaconIsInDB + "; beacons.size() = " + beacons.size());
+                                Log.d(TAG, "myBeaconIsInDB 2 = " + myBeaconIsInDB + "; beacons.size() = " + beacons.size());
                                 if (beacons.size() > 0) {
-                                    Log.d("DeviceRepository", "beacons.size() = " + beacons.size());
+                                    Log.d(TAG, "beacons.size() = " + beacons.size());
                                     for (Beacon beacon : beacons) {
-                                        Log.d("DeviceRepository", "beacon = " + beacon);
+                                        Log.d(TAG, "beacon = " + beacon);
 
-                                        Log.d("DeviceRepository", "1.DISTANCE: " + round(beacon.getDistance() * 100) + "; BEACON: " + beacon.getId1());
+                                        Log.d(TAG, "1.DISTANCE: " + round(beacon.getDistance() * 100) + "; BEACON: " + beacon.getId1());
                                         if (!beaconTagValue.equals(beacon.getId1().toString())) {
                                             for (Device device : devices.getContent()) {
                                                 if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
-                                                    Log.d("DeviceRepository", "!= myDevID (" + myDeviceID + "); deviceID (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
+                                                    Log.d(TAG, "!= myDevID (" + myDeviceID + "); deviceID (" + device.getDeviceId() + ") = " + round(beacon.getDistance() * 100));
                                                     distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
-
                                                 }
                                             }
                                         } else {
-                                            Log.d("DeviceRepository", "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
+                                            Log.d(TAG, "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
                                         }
 
                                     }
                                 }
                             } else {
-                                Log.d("DeviceRepository", "Your Beacon DOES NOT exists in DB");
+                                Log.d(TAG, "Your Beacon DOES NOT exists in DB");
                             }
                         }
                     }
@@ -152,8 +133,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                     @Override
                     public void onFailure(@NonNull Call<ApiDevicesResponse> call,
                                           @NonNull Throwable t) {
-                        Log.d("DeviceRepository", "error loading from API");
-                        Log.d("DeviceRepository", t.getMessage());
+                        Log.d(TAG, "error loading from API... " + t.getMessage());
                     }
                 });
             }
@@ -164,4 +144,32 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                 RemoteException ignored) {
         }
     }
+
+    // Disabled back button, so in this Activity user will not allowed to change anything
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
+        Log.d(TAG, "onDestroy() beaconManager = " + beaconManager + "; Consumer = " + this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
+        Log.d(TAG, "onPause() beaconManager = " + beaconManager + "; Consumer = " + this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+        Log.d(TAG, "onResume() beaconManager = " + beaconManager + "; Consumer = " + this);
+    }
+
 }

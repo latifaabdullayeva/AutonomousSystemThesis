@@ -12,11 +12,12 @@
     <string name="choose_personality_for_your_mascot">Choose Personality for your Mascot:</string>
     <string name="openness">Openness</string>
     <string name="conscientiousness">Conscientiousness</string>
-    <string name="extraversion">Extraversion</string>
+    <string name="extraversion">Extroversion</string>
     <string name="agreeableness">Agreeableness</string>
     <string name="neuroticism">Neuroticism</string>
     <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
     <string name="next">Next</string>
     <string name="selectedBeacon">Your selection: %1$s</string>
+    <string name="selectedPer">Your selection: %1$s</string>
     <string name="beaconSize">Number of Beacon devices: %1$d</string>
 </resources>

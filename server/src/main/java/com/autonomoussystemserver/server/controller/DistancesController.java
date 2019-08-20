@@ -68,21 +68,14 @@ public class DistancesController {
 
         distancesRepository.save(distances);
         System.out.println("Backend: " + "DistanceController -> POST distances: " + distances);
-
-        // TODO: get Hue data from DB
-        HueRepository hueRepository = new HueRepository(
-                "192.168.0.100",
-                "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
-        System.out.println("Backend: " + "Hue hueRepository: " + hueRepository);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
-        Devices devNameTo = devicesRepository
-                .findById(distanceDto.getToDevice())
-                .orElse(null);
+        // TODO: get Hue data from DB
+        HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
+        System.out.println("Backend: " + "Hue hueRepository: " + hueRepository);
 
-        Devices devNameFrom = devicesRepository
-                .findById(distanceDto.getFromDevice())
-                .orElse(null);
+        Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
+        Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
 
         System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + devNameTo.getDeviceId());
         System.out.println("Backend: " + "DistanceController Personality devNameFrom.getDeviceId() = " + devNameFrom.getDeviceId());
@@ -91,8 +84,19 @@ public class DistancesController {
         System.out.println("Backend: " + "DistanceController Personality devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality());
         System.out.println("Backend: " + "DistanceController Personality devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
 
+        if (!devNameTo.getDeviceName().equals("Lamp") && !devNameTo.getDeviceName().equals("Speakers") && !devNameTo.getDeviceName().equals("Tablet")) {
+            if (distances.getDistance() <= 45) {
+
+                // TODO: vibrate the phone (this specific phone)
+
+                // TODO: vibrate according Personality
+//                String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
+//                Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
+            }
+        }
+
         if (devNameTo.getDeviceName().equals("Lamp")) {
-            if (distances.getDistance() <= 45) { // >= 120 && distances.getDistance() <= 370
+            if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
 
                 String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
                 System.out.println("Backend: " + "DistanceController Personality personalityNameofDev = " + personalityNameofDev);
