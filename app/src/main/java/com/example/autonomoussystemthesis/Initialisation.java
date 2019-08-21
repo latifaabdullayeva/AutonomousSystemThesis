@@ -137,56 +137,50 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     Log.d(TAG, "Code: " + response.code());
                     return;
                 }
+
                 ApiDevicesResponse devices = response.body();
                 for (Device device : devices.getContent()) {
                     deviceList.add(device.getBeaconUuid());
                     Log.d(TAG, "deviceList = " + deviceList);
                 }
+
                 beaconManager.addRangeNotifier(new RangeNotifier() {
                     @Override
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                        beaconList.clear();
+
                         if (beacons.size() > 0) {
                             for (Beacon beacon : beacons) {
                                 Log.d(TAG, "beacons = " + beacons.toString());
                                 Log.d(TAG, "beacon = " + beacon.getId1().toString());
+
                                 if (!tempBeaconList.contains(beacon.getId1().toString())) {
                                     tempBeaconList.add(beacon.getId1().toString());
                                     // if you want to get ID of beacon -> .getId1();
                                     // TODO: do not show this beacon if it is already in the database
                                     // TODO: Get list of beacons that are in DB
                                 }
-                                for (int i = 0; i < tempBeaconList.size(); i++) {
-                                    if (deviceList.contains(tempBeaconList.get(i))) {
-                                        tempBeaconList.remove(tempBeaconList.get(i));
-                                        Log.d(TAG, "tempBeaconList = " + tempBeaconList);
-                                    }
-                                    if (!tempBeaconList.isEmpty() && !beaconList.contains(tempBeaconList.get(i))) {
-                                        Log.d(TAG, "tempBeaconList.get(i) = " + tempBeaconList.get(i));
-                                        beaconList.add(tempBeaconList.get(i));
-                                        Log.d(TAG, "beaconList = " + beaconList);
-                                    } else {
-                                        if (beaconList.isEmpty()) {
-                                            textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
-                                        }
-                                    }
-
-                                }
                             }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
 
+                            for (String device : deviceList) {
+                                tempBeaconList.remove(device);
+                            }
+
+                            beaconList.addAll(tempBeaconList);
+
+                            if (beaconList.isEmpty()) {
+                                textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
+                            }
+
+                            runOnUiThread(() -> adapter.notifyDataSetChanged());
                             checkBeaconButton();
                         }
                     }
                 });
+
                 try {
                     beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-                } catch (
-                        RemoteException ignored) {
+                } catch (RemoteException ignored) {
                 }
 
             }
@@ -194,7 +188,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
             @Override
             public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
                 Log.d(TAG, "error loading from API... " + t.getMessage());
-
             }
         });
     }
