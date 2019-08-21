@@ -28,7 +28,7 @@ public class DeviceRepository extends AppCompatActivity {
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://3d8850fb.ngrok.io")
+                .baseUrl("http://192.168.0.102:8080/devices/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -37,6 +37,7 @@ public class DeviceRepository extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "DeviceRepository");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_distances);
         ListView resultListView = findViewById(R.id.list_view_result);
@@ -59,8 +60,7 @@ public class DeviceRepository extends AppCompatActivity {
                         Log.d(TAG, "Response: " + response.body());
                         try {
                             if (response.body() != null) {
-                                Log.d(TAG, "success! \n"
-                                        + response.body().string());
+                                Log.d(TAG, "success! \n" + response.body().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

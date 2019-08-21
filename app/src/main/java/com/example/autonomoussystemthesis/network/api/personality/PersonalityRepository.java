@@ -20,7 +20,7 @@ public class PersonalityRepository {
     public PersonalityRepository() {
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://3d8850fb.ngrok.io")
+                .baseUrl("http://192.168.0.102:8080/personality/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
