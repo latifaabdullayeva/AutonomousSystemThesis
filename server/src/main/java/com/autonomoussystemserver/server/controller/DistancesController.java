@@ -1,16 +1,14 @@
 package com.autonomoussystemserver.server.controller;
 
-import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.controller.model.DistanceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Distances;
+import com.autonomoussystemserver.server.database.model.Hue;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.HueRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +29,8 @@ public class DistancesController {
     @Autowired
     private PersonalityRepository personalityRepository;
 
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(DistancesController.class);
-//  Show logs in the terminal ->
-//  LOGGER.info("here-2");
+//    @Autowired
+//    private HueRepository hueRepository;
 
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
@@ -64,31 +60,27 @@ public class DistancesController {
         distances.setDistance(distanceDto.getDistance());
 
         // Proxemics Theory
-        // if distance in DB is less than 45cm, then turn the light on
 
         distancesRepository.save(distances);
         System.out.println("Backend: " + "DistanceController -> POST distances: " + distances);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
         // TODO: get Hue data from DB
+//        Hue hueData = hueRepository.updateBrightness();
+//        hueData.setIpAddress(hueData.getIpAddress());
+//        hueData.setUserName(hueData.getUserName());
+//        System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
+//        HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
         HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
-        System.out.println("Backend: " + "Hue hueRepository: " + hueRepository);
 
         Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
 
-        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + devNameTo.getDeviceId());
-        System.out.println("Backend: " + "DistanceController Personality devNameFrom.getDeviceId() = " + devNameFrom.getDeviceId());
-        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceName() = " + devNameTo.getDeviceName());
-        System.out.println("Backend: " + "DistanceController Personality devNameFrom.getDeviceName() = " + devNameFrom.getDeviceName());
-        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality());
-        System.out.println("Backend: " + "DistanceController Personality devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
+        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + devNameTo.getDeviceId() + "devNameFrom.getDeviceId() = " + devNameFrom.getDeviceId() + "devNameTo.getDeviceName() = " + devNameTo.getDeviceName() + "devNameFrom.getDeviceName() = " + devNameFrom.getDeviceName() + "devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality() + "devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
 
         if (!devNameTo.getDeviceName().equals("Lamp") && !devNameTo.getDeviceName().equals("Speakers") && !devNameTo.getDeviceName().equals("Tablet")) {
             if (distances.getDistance() <= 45) {
-
                 // TODO: vibrate the phone (this specific phone)
-
                 // TODO: vibrate according Personality
 //                String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
 //                Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
@@ -99,9 +91,8 @@ public class DistancesController {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
 
                 String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
-                System.out.println("Backend: " + "DistanceController Personality personalityNameofDev = " + personalityNameofDev);
                 Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
-                System.out.println("Backend: " + "DistanceController Personality personality = " + personality);
+                System.out.println("Backend: " + "DistanceController Personality personality = " + personality + "; personalityNameofDev = " + personalityNameofDev);
 
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
@@ -110,9 +101,7 @@ public class DistancesController {
 
                 hueRepository.updateBrightness(brightness, hue, saturation);
 
-                System.out.println("Backend: " + "Hue hueRepository.updateBrightness(brightness)= [" + brightness + "]");
-                System.out.println("Backend: " + "Hue hueRepository.updateBrightness(hue)= [" + hue + "]");
-                System.out.println("Backend: " + "Hue hueRepository.updateBrightness(saturation)= [" + saturation + "]");
+                System.out.println("Backend: " + "Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             }
         }
         return distances;
@@ -120,7 +109,6 @@ public class DistancesController {
 }
 
 /*
-
 12958	"88cf77ce-bc91-241a-b8eb-4d041f74acdf"	"Pixel One"	"Conscientiousness"
 13137	"c08b6bb5-40b7-d552-1db6-a8822ec11ed9"	"Nexus 6P"	"Agreeableness"
 12235	"b0702880-a295-a8ab-f734-031a98a512de"	"Lamp"
@@ -135,5 +123,4 @@ public class DistancesController {
 13888	254	57805	"pink"	"rock"	"Extroversion"	198	"green"	4
 13889	254	47110	"blue"	"rock"	"Agreeableness"	253	"green"	4
 13890	254	12828	"yellow"	"rock"	"Neuroticism"	52	"green"	4
-
  */

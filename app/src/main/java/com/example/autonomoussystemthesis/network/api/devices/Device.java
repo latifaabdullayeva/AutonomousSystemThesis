@@ -1,13 +1,15 @@
 package com.example.autonomoussystemthesis.network.api.devices;
 
+import com.example.autonomoussystemthesis.network.api.personality.Personality;
+
 public class Device {
 
     private final Integer deviceId;
     private final String deviceName;
     private final String beaconUuid;
-    private final Integer devicePersonality;
+    private final Personality devicePersonality;
 
-    Device(Integer deviceId, String deviceName, String beaconUuid, Integer devicePersonality) {
+    Device(Integer deviceId, String deviceName, String beaconUuid, Personality devicePersonality) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.beaconUuid = beaconUuid;
@@ -26,7 +28,7 @@ public class Device {
         return beaconUuid;
     }
 
-    public Integer getDevicePersonality() {
+    public Personality getDevicePersonality() {
         return devicePersonality;
     }
 }

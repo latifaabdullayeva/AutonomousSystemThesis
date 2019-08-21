@@ -17,10 +17,11 @@ public class PersonalityRepository {
 
     private final PersonalityService personalityService;
 
+    // "http://192.168.0.102:8080/personality/"
     public PersonalityRepository() {
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:8080/personality/")
+                .baseUrl("https://1cc33072.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

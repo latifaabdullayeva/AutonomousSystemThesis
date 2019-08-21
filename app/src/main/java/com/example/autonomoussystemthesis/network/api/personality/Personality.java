@@ -15,7 +15,20 @@ public class Personality {
     private final Integer vibration_level;
     private final String music_genre;
 
-    Personality(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
+    public Personality(Integer id) {
+        this(
+                id,
+                null,
+                null,
+                null,
+                null, null,
+                null,
+                null,
+                null
+        );
+    }
+
+    public Personality(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
         this.id = id;
         this.personality_name = personality_name;
         this.hue_color = hue_color;
