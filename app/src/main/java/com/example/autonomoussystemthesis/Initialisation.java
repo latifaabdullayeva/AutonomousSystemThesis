@@ -17,6 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse;
+import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.api.personality.ApiPersonalityResponse;
@@ -31,6 +33,7 @@ import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -53,11 +56,11 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     LinearLayout personalityLayout;
     Button saveButton;
     RadioGroup radioGroupDevType, radioGroupPersonality;
-    TextView textViewDevType, textViewPersonality, numbOfBeacons;
+    TextView textViewDevType, textViewPersonality, textViewSelectedBeacon;
     EditText mascotNameEditText;
 
     private BeaconManager beaconManager;
-    private ArrayList<String> beaconList;
+    private ArrayList<String> beaconList, deviceList, tempBeaconList;
     private RecyclerViewAdapter adapter;
     private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue;
 
@@ -68,6 +71,10 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         Objects.requireNonNull(getSupportActionBar()).setTitle("Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        this.deviceList = new ArrayList<>();
+        this.tempBeaconList = new ArrayList<>();
+        textViewSelectedBeacon = findViewById(R.id.showSelectedBeacon);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -92,8 +99,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 //        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
         Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
-        TextView textView = findViewById(R.id.showSelectedBeacon);
-        textView.setText(getString(R.string.selectedBeacon, beaconValue));
+        textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, beaconValue));
     }
 
     public void checkBeaconButton() {
@@ -125,41 +131,76 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onBeaconServiceConnect() {
-
-        beaconManager.addRangeNotifier(new RangeNotifier() {
-
+        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
             @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                if (beacons.size() > 0) {
+            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                Log.d("NOW", "onResponse()");
+                if (!response.isSuccessful()) {
+                    Log.d("NOW", "Code: " + response.code());
+                    return;
+                }
+                ApiDevicesResponse devices = response.body();
+                for (Device device : devices.getContent()) {
+                    deviceList.add(device.getBeaconUuid());
+                    Log.d("NOW", "deviceList = " + deviceList);
+                    Log.d("NOW", "tempBeaconList = " + tempBeaconList);
+                }
+                beaconManager.addRangeNotifier(new RangeNotifier() {
+                    @Override
+                    public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                        if (beacons.size() > 0) {
+                            for (Beacon beacon : beacons) {
+                                Log.d("NOW", "beacons = " + beacons.toString());
+                                Log.d("NOW", "beacon = " + beacon.getId1().toString());
+                                if (!tempBeaconList.contains(beacon.getId1().toString())) {
+                                    tempBeaconList.add(beacon.getId1().toString());
+                                    Log.d("NOW", "tempBeaconList2 = " + tempBeaconList);
+                                    // if you want to get ID of beacon -> .getId1();
+                                    // TODO: do not show this beacon if it is already in the database
+                                    // TODO: Get list of beacons that are in DB
+                                }
+                                Log.d("NOW", "----------------------------------------");
+                                for (int i = 0; i < tempBeaconList.size(); i++) {
+                                    if (deviceList.contains(tempBeaconList.get(i))) {
+                                        tempBeaconList.remove(tempBeaconList.get(i));
+                                        Log.d("NOW", "tempBeaconList3 = " + tempBeaconList);
+                                    }
+                                    if (!tempBeaconList.isEmpty()) {
+                                        Log.d("NOW", "tempBeaconList.get(i) = " + tempBeaconList.get(i));
+                                        beaconList.add(tempBeaconList.get(i));
+                                        Log.d("NOW", "beaconList = " + beaconList);
+                                    } else {
+                                        textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
+                                    }
 
-                    // Show the List of all beacons
-                    beaconList.clear();
-                    for (Beacon beacon : beacons) {
-                        if (!beaconList.contains(beacon.getId1().toString())) {
-                            beaconList.add(beacon.getId1().toString());
-                            // if you want to get ID of beacon -> .getId1();
-                            // TODO: do not show this beacon if it is already in the database
-                            // TODO: Get list of beacons that are in DB
+                                }
+                                Log.d("NOW", "-----------------------------------------------------------------------------------------------------------------------------------------------");
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+
+                            checkBeaconButton();
                         }
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-                    numbOfBeacons = findViewById(R.id.numbOfBeacons);
-                    numbOfBeacons.setText(getString(R.string.beaconSize, beacons.size()));
-
-                    checkBeaconButton();
+                });
+                try {
+                    beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+                } catch (
+                        RemoteException ignored) {
                 }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
+                Log.d("NOW", "error loading from API... " + t.getMessage());
+
             }
         });
-        try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-        } catch (
-                RemoteException ignored) {
-        }
     }
 
     public void checkDevButton(View view) {
@@ -229,7 +270,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                                         if (personality.getPersonality_name().equals(devicePersonalityValue)) {
                                             Log.d(TAG, "personality.getPer_id() = " + personality.getId());
-                                            int personalityId = personality.getId();
+                                            HashMap personalityId = personality.getId();
                                             deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personalityId);
                                         }
                                     }

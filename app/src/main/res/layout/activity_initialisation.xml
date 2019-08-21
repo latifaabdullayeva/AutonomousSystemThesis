@@ -28,13 +28,6 @@
                     android:textColor="#FDB91266"
                     android:textSize="22sp" />
 
-                <TextView
-                    android:id="@+id/numbOfBeacons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FDB91266"
-                    android:textSize="22sp" />
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/listViewBeacon"
                     android:layout_width="wrap_content"
