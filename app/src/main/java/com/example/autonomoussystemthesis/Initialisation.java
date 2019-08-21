@@ -33,7 +33,6 @@ import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -134,47 +133,44 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
             @Override
             public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
-                Log.d("NOW", "onResponse()");
                 if (!response.isSuccessful()) {
-                    Log.d("NOW", "Code: " + response.code());
+                    Log.d(TAG, "Code: " + response.code());
                     return;
                 }
                 ApiDevicesResponse devices = response.body();
                 for (Device device : devices.getContent()) {
                     deviceList.add(device.getBeaconUuid());
-                    Log.d("NOW", "deviceList = " + deviceList);
-                    Log.d("NOW", "tempBeaconList = " + tempBeaconList);
+                    Log.d(TAG, "deviceList = " + deviceList);
                 }
                 beaconManager.addRangeNotifier(new RangeNotifier() {
                     @Override
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                         if (beacons.size() > 0) {
                             for (Beacon beacon : beacons) {
-                                Log.d("NOW", "beacons = " + beacons.toString());
-                                Log.d("NOW", "beacon = " + beacon.getId1().toString());
+                                Log.d(TAG, "beacons = " + beacons.toString());
+                                Log.d(TAG, "beacon = " + beacon.getId1().toString());
                                 if (!tempBeaconList.contains(beacon.getId1().toString())) {
                                     tempBeaconList.add(beacon.getId1().toString());
-                                    Log.d("NOW", "tempBeaconList2 = " + tempBeaconList);
                                     // if you want to get ID of beacon -> .getId1();
                                     // TODO: do not show this beacon if it is already in the database
                                     // TODO: Get list of beacons that are in DB
                                 }
-                                Log.d("NOW", "----------------------------------------");
                                 for (int i = 0; i < tempBeaconList.size(); i++) {
                                     if (deviceList.contains(tempBeaconList.get(i))) {
                                         tempBeaconList.remove(tempBeaconList.get(i));
-                                        Log.d("NOW", "tempBeaconList3 = " + tempBeaconList);
+                                        Log.d(TAG, "tempBeaconList = " + tempBeaconList);
                                     }
-                                    if (!tempBeaconList.isEmpty()) {
-                                        Log.d("NOW", "tempBeaconList.get(i) = " + tempBeaconList.get(i));
+                                    if (!tempBeaconList.isEmpty() && !beaconList.contains(tempBeaconList.get(i))) {
+                                        Log.d(TAG, "tempBeaconList.get(i) = " + tempBeaconList.get(i));
                                         beaconList.add(tempBeaconList.get(i));
-                                        Log.d("NOW", "beaconList = " + beaconList);
+                                        Log.d(TAG, "beaconList = " + beaconList);
                                     } else {
-                                        textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
+                                        if (beaconList.isEmpty()) {
+                                            textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
+                                        }
                                     }
 
                                 }
-                                Log.d("NOW", "-----------------------------------------------------------------------------------------------------------------------------------------------");
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -197,7 +193,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
             @Override
             public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
-                Log.d("NOW", "error loading from API... " + t.getMessage());
+                Log.d(TAG, "error loading from API... " + t.getMessage());
 
             }
         });
@@ -270,8 +266,12 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                                         if (personality.getPersonality_name().equals(devicePersonalityValue)) {
                                             Log.d(TAG, "personality.getPer_id() = " + personality.getId());
-                                            HashMap personalityId = personality.getId();
+                                            Integer personalityId = personality.getId();
+                                            Log.d(TAG, "mascotValue = " + mascotValue);
+                                            Log.d(TAG, "beaconValue = " + beaconValue);
+                                            Log.d(TAG, "personalityId = " + personalityId);
                                             deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personalityId);
+                                            Log.d(TAG, "personalityId = " + personalityId);
                                         }
                                     }
                                 }
