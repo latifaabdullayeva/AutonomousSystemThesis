@@ -7,7 +7,6 @@ import com.autonomoussystemserver.server.database.model.Hue;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
-import com.autonomoussystemserver.server.database.repository.HueRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +28,8 @@ public class DistancesController {
     @Autowired
     private PersonalityRepository personalityRepository;
 
-//    @Autowired
-//    private HueRepository hueRepository;
+    @Autowired
+    private com.autonomoussystemserver.server.database.repository.HueRepository hueRepository;
 
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
@@ -65,13 +64,15 @@ public class DistancesController {
         System.out.println("Backend: " + "DistanceController -> POST distances: " + distances);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
-        // TODO: get Hue data from DB
-//        Hue hueData = hueRepository.updateBrightness();
-//        hueData.setIpAddress(hueData.getIpAddress());
-//        hueData.setUserName(hueData.getUserName());
-//        System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
-//        HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
-        HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
+        // TODO: We find by IpAddress, but from where we get this IpAddress?
+        Hue hueData = hueRepository.findByIpAddress("192.168.0.100");
+        hueData.setIpAddress(hueData.getIpAddress());
+        hueData.setUserName(hueData.getUserName());
+        System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName(): " + hueData.getUserName());
+
+        HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
+
+//        HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
 
         Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
@@ -100,6 +101,7 @@ public class DistancesController {
 //              if (brightness > 255) {brightness = 255;}
 
                 hueRepository.updateBrightness(brightness, hue, saturation);
+                System.out.println("Backend: " + "Hue 1 hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
 
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             }
