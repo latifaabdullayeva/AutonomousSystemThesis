@@ -4,6 +4,11 @@ public class HueDto {
     private String ipAddress;
     private String userName;
 
+    // for deserialisation
+    public HueDto() {
+
+    }
+
     public HueDto(String ipAddress, String userName) {
         System.out.println("Backend: " + "HueDto constructor");
         this.ipAddress = ipAddress;

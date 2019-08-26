@@ -2,7 +2,7 @@ package com.autonomoussystemserver.server.database.model;
 
 import javax.persistence.*;
 
-@Table(name = "huedata")
+@Table(name = "hue")
 @Entity
 public class Hue {
     @Id
@@ -22,7 +22,7 @@ public class Hue {
     }
 
     public void setId(Integer id) {
-        System.out.println("Backend: " + "Hue setId: " + id);
+        System.out.println("Backend:" + " Hue setId: " + id);
         this.id = id;
     }
 
