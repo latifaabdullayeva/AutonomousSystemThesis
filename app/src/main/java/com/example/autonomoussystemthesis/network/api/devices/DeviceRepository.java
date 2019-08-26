@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.autonomoussystemthesis.R;
+import com.example.autonomoussystemthesis.network.api.personality.Personality;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DeviceRepository extends AppCompatActivity {
     protected static final String TAG = "DeviceRepository";
     private final DeviceService deviceService;
-
+// .baseUrl("http://192.168.0.102:8080/devices/")
     public DeviceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:8080/devices/")
+                .baseUrl("https://1cc33072.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -49,7 +50,8 @@ public class DeviceRepository extends AppCompatActivity {
     }
 
     public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, Integer devicePersonality) {
-        Device deviceRequest = new Device(null, deviceName, beaconUuid, devicePersonality);
+        Personality personality = new Personality(devicePersonality);
+        Device deviceRequest = new Device(null, deviceName, beaconUuid, personality);
 
         deviceService.createDevice(deviceRequest)
                 .enqueue(new Callback<ResponseBody>() {

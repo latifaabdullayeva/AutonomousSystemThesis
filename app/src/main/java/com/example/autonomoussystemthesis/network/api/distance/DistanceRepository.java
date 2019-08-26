@@ -15,14 +15,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DistanceRepository {
     protected static final String TAG = "DistanceRepository";
     private final DistanceService distanceService;
-
+// .baseUrl("http://192.168.0.102:8080/distances/")
     public DistanceRepository() {
         // Write in terminal ./ngrok http 8080 in order to ger bseURL
         // ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.
         // TODO: always change ngrok URL
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:8080/distances/")
+                .baseUrl("https://1cc33072.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

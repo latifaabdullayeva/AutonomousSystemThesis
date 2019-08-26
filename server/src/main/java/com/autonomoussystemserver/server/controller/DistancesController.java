@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import sun.corba.Bridge;
 
 // GET --> POST
 @RestController
@@ -64,15 +65,22 @@ public class DistancesController {
         System.out.println("Backend: " + "DistanceController -> POST distances: " + distances);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
-        // TODO: We find by IpAddress, but from where we get this IpAddress?
-        Hue hueData = hueRepository.findByIpAddress("192.168.0.100");
+//        Bridge bridge = new BridgeBuilder("appname", "devicename")
+//                .setConnectionType(BridgeConnectionType.LOCAL)
+//                .setBridgeConnectionProtocol(BridgeConnectionProtocol.HTTPS)
+//                .setIpAddress(searchResult.getIP())
+//                .setBridgeId(searchResult.getUniqueID())
+//                .addBridgeStateUpdatedCallback(bridgeStateUpdateCallback)
+//                .setBridgeConnectionCallback(bridgeConnectionCallback)
+//                .build();
+
+        // TODO: We find by IpAddress, but from where we get this IpAddress? get IP from  https://discovery.meethue.com
+        Hue hueData = hueRepository.findByIpAddress("192.168.0.102");
         hueData.setIpAddress(hueData.getIpAddress());
         hueData.setUserName(hueData.getUserName());
         System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName(): " + hueData.getUserName());
-
         HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
-
-//        HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
+        // HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
 
         Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
@@ -83,26 +91,21 @@ public class DistancesController {
             if (distances.getDistance() <= 45) {
                 // TODO: vibrate the phone (this specific phone)
                 // TODO: vibrate according Personality
-//                String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
-//                Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
+                // String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
+                // Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
             }
         }
 
         if (devNameTo.getDeviceName().equals("Lamp")) {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
-
                 String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
                 Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
                 System.out.println("Backend: " + "DistanceController Personality personality = " + personality + "; personalityNameofDev = " + personalityNameofDev);
-
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
                 int saturation = personality.getSat();
-//              if (brightness > 255) {brightness = 255;}
-
                 hueRepository.updateBrightness(brightness, hue, saturation);
                 System.out.println("Backend: " + "Hue 1 hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
-
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             }
         }

@@ -1,4 +1,8 @@
 package com.autonomoussystemserver.server.bridgeDiscovery;
 
-public class BridgeDiscovery {
+
+import java.util.List;
+
+public interface BridgeDiscovery {
+    public List<DiscoveredBridge> discover();
 }
