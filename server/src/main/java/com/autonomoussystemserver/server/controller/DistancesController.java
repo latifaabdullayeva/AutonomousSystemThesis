@@ -9,6 +9,7 @@ import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sun.corba.Bridge;
 
 import javax.swing.text.View;
+import java.util.Objects;
 
 // GET --> POST
 @RestController
@@ -35,10 +37,15 @@ public class DistancesController {
     @Autowired
     private com.autonomoussystemserver.server.database.repository.HueRepository hueRepository;
 
+    // we pass command line arguments to spring server (in order to set up philips hue bridge
+    @Value("${ipAddress}")
+    private String ipAddress;
+
+    @Value("${username}")
+    private String username;
+
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
-
-
         System.out.println("Backend: " + "DistanceController -> GET getDistances");
         return distancesRepository.findAll(pageable);
     }
@@ -68,27 +75,29 @@ public class DistancesController {
         System.out.println("Backend: " + "DistanceController -> POST distances: " + distances);
         System.out.println("Backend: " + "Hue distances.getDistance(): " + distances.getDistance());
 
-//        Bridge bridge = new BridgeBuilder("appname", "devicename")
-//                .setConnectionType(BridgeConnectionType.LOCAL)
-//                .setBridgeConnectionProtocol(BridgeConnectionProtocol.HTTPS)
-//                .setIpAddress(searchResult.getIP())
-//                .setBridgeId(searchResult.getUniqueID())
-//                .addBridgeStateUpdatedCallback(bridgeStateUpdateCallback)
-//                .setBridgeConnectionCallback(bridgeConnectionCallback)
-//                .build();
-
         // TODO: We find by IpAddress, but from where we get this IpAddress? get IP from  https://discovery.meethue.com
-        Hue hueData = hueRepository.findByIpAddress("192.168.0.102");
-        hueData.setIpAddress(hueData.getIpAddress());
-        hueData.setUserName(hueData.getUserName());
-        System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName(): " + hueData.getUserName());
-        HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
-        // HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
+//        Hue hueData = hueRepository.findByIpAddress("192.168.0.100");
+//        hueData.setIpAddress(hueData.getIpAddress());
+//        hueData.setUserName(hueData.getUserName());
+//        System.out.println("Backend: " + "Hue hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName(): " + hueData.getUserName());
+//        HueRepository hueRepository = new HueRepository(hueData.getIpAddress(), hueData.getUserName());
+//         HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
+
+        // we need to find Philips Hue in our network
+        // we get ipAddress and username of hue Lamp from comand line
+        // TODO describe from where we get username
+        // we get Ip address from the website https://discovery.meethue.com/
+        HueRepository hueRepository = new HueRepository(ipAddress, username);
+        System.out.println("hueRepository, [" + hueRepository + "]; [" + ipAddress + "]; [" + username + "]");
 
         Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
 
-        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + devNameTo.getDeviceId() + "devNameFrom.getDeviceId() = " + devNameFrom.getDeviceId() + "devNameTo.getDeviceName() = " + devNameTo.getDeviceName() + "devNameFrom.getDeviceName() = " + devNameFrom.getDeviceName() + "devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality() + "devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
+//        System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + Objects.requireNonNull(devNameTo).getDeviceId() +
+//                "devNameFrom.getDeviceId() = " + Objects.requireNonNull(devNameFrom).getDeviceId() + "devNameTo.getDeviceName() = " + devNameTo.getDeviceName() +
+//                "devNameFrom.getDeviceName() = " + devNameFrom.getDeviceName() +
+//                "devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality() +
+//                "devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
 
         if (devNameTo.getDeviceName().equals("Lamp")) {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
@@ -99,7 +108,7 @@ public class DistancesController {
                 int hue = personality.getHue();
                 int saturation = personality.getSat();
                 hueRepository.updateBrightness(brightness, hue, saturation);
-                System.out.println("Backend: " + "Hue 1 hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
+//                System.out.println("Backend: " + "Hue 1 hueData.getIpAddress(): " + hueData.getIpAddress() + "; hueData.getUserName()" + hueData.getUserName());
                 System.out.println("Backend: " + "Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             }
         }
