@@ -12,6 +12,9 @@ import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
+import com.example.autonomoussystemthesis.network.api.personality.ApiPersonalityResponse;
+import com.example.autonomoussystemthesis.network.api.personality.Personality;
+import com.example.autonomoussystemthesis.network.api.personality.PersonalityRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -33,6 +36,8 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
+    final PersonalityRepository personalityRepository = new PersonalityRepository();
+
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
 
     private BeaconManager beaconManager;
@@ -40,6 +45,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("FLOW", "ShowAllDistances");
         Log.d(TAG, "ShowAllDistances onCreate()");
         setContentView(R.layout.activity_show_all_distances);
 
@@ -124,11 +130,41 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                 if (round(beacon.getDistance() * 100) <= 45) {
                                                     // TODO: vibrate the phone (this specific phone)
                                                     final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                                                    vibrator.vibrate(200);
+                                                    // vibrator.vibrate(200);
                                                     // todo personality
                                                     // TODO: vibrate according Personality
                                                     // String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
                                                     // Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
+
+                                                    //***************************************************************************************************************************************
+                                                    // Add a vibration level
+                                                    personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
+                                                        @Override
+                                                        public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                                            Log.d(TAG, response.toString());
+                                                            if (!response.isSuccessful()) {
+                                                                Log.d(TAG, "PersonalityRepository Code: " + response.code());
+                                                                return;
+                                                            }
+                                                            ApiPersonalityResponse personalities = response.body();
+
+                                                            if (personalities != null) {
+                                                                for (Personality personality : personalities.getContent()) {
+                                                                    Log.d(TAG, "Chosen devicePersonalityValue = " + devicePersValue);
+                                                                    Log.d(TAG, "personality.getPersonality_name() = " + personality.getPersonality_name());
+                                                                    if (personality.getPersonality_name().equals(devicePersValue)) {
+                                                                        vibrator.vibrate(100 * personality.getVibration_level());
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
+                                                            Log.d(TAG, "error loading from API: " + t.getMessage());
+                                                        }
+                                                    });
+                                                    //***************************************************************************************************************************************
                                                 }
                                             }
                                         } else {
