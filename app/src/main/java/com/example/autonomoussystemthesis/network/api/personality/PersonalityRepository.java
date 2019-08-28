@@ -17,13 +17,12 @@ public class PersonalityRepository {
 
     private final PersonalityService personalityService;
 
-    // "http://192.168.0.102:8080/personality/"
     public PersonalityRepository() {
+        Log.d("FLOW", "PersonalityRepository");
+
         Retrofit retrofit;
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://1cc33072.ngrok.io")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
 
         personalityService = retrofit.create(PersonalityService.class);
         Log.d(TAG, "PersonalityRepo");
@@ -33,32 +32,31 @@ public class PersonalityRepository {
         Personality personalityRequest = new Personality(null, personality_name, hue_color, bri, hue, sat, screen_color, vibration_level, music_genre);
         Log.d(TAG, "Personality sendNetReq");
 
-        personalityService.createPersonality(personalityRequest)
-                .enqueue(new Callback<ResponseBody>() {
-
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call,
-                                           @NonNull Response<ResponseBody> response) {
-                        Log.d(TAG, "Response: " + response.body());
-                        try {
-                            if (response.body() != null) {
-                                Log.d(TAG, "success! \n"
-                                        + response.body().string());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+        personalityService.createPersonality(personalityRequest).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call,
+                                   @NonNull Response<ResponseBody> response) {
+                Log.d(TAG, "Response: " + response.body());
+                try {
+                    if (response.body() != null) {
+                        Log.d(TAG, "success! \n"
+                                + response.body().string());
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e(TAG, "failure :(", t);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.e(TAG, "failure :(", t);
+            }
+        });
     }
 
     public void getNetworkRequest(Callback<ApiPersonalityResponse> callback) {
-        Log.d(TAG, "Personality getNetReq");
         personalityService.getPersonality().enqueue(callback);
+        Log.d(TAG, "Personality getNetworkRequest");
     }
 }
+// Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL

@@ -5,6 +5,8 @@ import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -54,3 +56,4 @@ public class DevicesController {
         }
     }
 }
+

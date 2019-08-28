@@ -23,15 +23,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DeviceRepository extends AppCompatActivity {
     protected static final String TAG = "DeviceRepository";
     private final DeviceService deviceService;
-// .baseUrl("http://192.168.0.102:8080/devices/")
+
     public DeviceRepository() {
-        // Write in terminal ./ngrok http 8080 in order to ger bseURL
-        // TODO: always change ngrok URL
+        Log.d("FLOW", "DeviceRepository");
+
         Retrofit retrofit;
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://1cc33072.ngrok.io")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
 
         deviceService = retrofit.create(DeviceService.class);
     }
@@ -50,33 +48,35 @@ public class DeviceRepository extends AppCompatActivity {
     }
 
     public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, Integer devicePersonality) {
+        Log.d(TAG, "sendNetworkRequest");
+//        Log.d(TAG, "DevRequestSTATUS");
+//        Intent myIntent = new Intent(DeviceRepository.this, Initialisation.class);
         Personality personality = new Personality(devicePersonality);
         Device deviceRequest = new Device(null, deviceName, beaconUuid, personality);
-
-        deviceService.createDevice(deviceRequest)
-                .enqueue(new Callback<ResponseBody>() {
-
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call,
-                                           @NonNull Response<ResponseBody> response) {
-                        Log.d(TAG, "Response: " + response.body());
-                        try {
-                            if (response.body() != null) {
-                                Log.d(TAG, "success! \n" + response.body().string());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+        deviceService.createDevice(deviceRequest).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Log.d(TAG, "Response: " + response.body());
+                try {
+                    if (response.body() != null) {
+                        Log.d(TAG, "success! \n" + response.body().string());
+//                        myIntent.putExtra("DevRequestSTATUS", "success");
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e(TAG, "failure :(", t);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.e(TAG, "failure :(", t);
+            }
+        });
     }
 
     public void getNetworkRequest(Callback<ApiDevicesResponse> callback) {
+        Log.d(TAG, "getNetworkRequest");
         deviceService.getDevices().enqueue(callback);
     }
 }
+// Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL
