@@ -9,12 +9,15 @@ import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sun.corba.Bridge;
+
+import javax.swing.text.View;
 
 // GET --> POST
 @RestController
@@ -86,15 +89,6 @@ public class DistancesController {
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
 
         System.out.println("Backend: " + "DistanceController Personality devNameTo.getDeviceId() = " + devNameTo.getDeviceId() + "devNameFrom.getDeviceId() = " + devNameFrom.getDeviceId() + "devNameTo.getDeviceName() = " + devNameTo.getDeviceName() + "devNameFrom.getDeviceName() = " + devNameFrom.getDeviceName() + "devNameTo.getDevicePersonality() = " + devNameTo.getDevicePersonality() + "devNameFrom.getDevicePersonality() = " + devNameFrom.getDevicePersonality().getPersonality_name());
-
-        if (!devNameTo.getDeviceName().equals("Lamp") && !devNameTo.getDeviceName().equals("Speakers") && !devNameTo.getDeviceName().equals("Tablet")) {
-            if (distances.getDistance() <= 45) {
-                // TODO: vibrate the phone (this specific phone)
-                // TODO: vibrate according Personality
-                // String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
-                // Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
-            }
-        }
 
         if (devNameTo.getDeviceName().equals("Lamp")) {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //

@@ -2,6 +2,7 @@ package com.example.autonomoussystemthesis;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -118,6 +119,18 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                     distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
                                                 }
                                             }
+
+                                            if (deviceTypeValue.equals("Mascot")) {
+                                                if (round(beacon.getDistance() * 100) <= 45) {
+                                                    // TODO: vibrate the phone (this specific phone)
+                                                    final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                                    vibrator.vibrate(200);
+                                                    // todo personality
+                                                    // TODO: vibrate according Personality
+                                                    // String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
+                                                    // Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
+                                                }
+                                            }
                                         } else {
                                             Log.d(TAG, "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
                                         }
@@ -127,6 +140,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                             } else {
                                 Log.d(TAG, "Your Beacon DOES NOT exists in DB");
                             }
+
                         }
                     }
 
