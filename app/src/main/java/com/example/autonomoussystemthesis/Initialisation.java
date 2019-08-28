@@ -67,6 +67,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initialisation);
+        Log.d("FLOW", "Initialisation");
         Objects.requireNonNull(getSupportActionBar()).setTitle("Initialisation");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,7 +96,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onItemClick(View view, int position) {
-//        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
+        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
         Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
         textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, beaconValue));
@@ -233,16 +234,17 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                         if (selectedRadioPersId == -1) {
                             Toast.makeText(Initialisation.this, "No Personality for Device selected", Toast.LENGTH_SHORT).show();
                         } else {
-                            saveData();
+                            // TODO: DO NOT DELETE: may need it later
+//                            saveData();
                             myIntent.putExtra("DEVICENAME", mascotValue);
                             myIntent.putExtra("PERSONALITY", devicePersonalityValue);
                         }
                     }
-                    saveData();
                     if (deviceTypeValue.equals("Mascot")) {
                         personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
                             @Override
                             public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                Log.d(TAG, response.toString());
                                 if (!response.isSuccessful()) {
                                     Log.d(TAG, "PersonalityRepository Code: " + response.code());
                                     return;
@@ -263,6 +265,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                                             Log.d(TAG, "mascotValue = " + mascotValue);
                                             Log.d(TAG, "beaconValue = " + beaconValue);
                                             Log.d(TAG, "personalityId = " + personalityId);
+                                            Log.d(TAG, "sendNetworkRequest");
                                             deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personalityId);
                                             Log.d(TAG, "personalityId = " + personalityId);
                                         }
@@ -279,7 +282,45 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                         deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, null);
                         Toast.makeText(Initialisation.this, "Other than Mascot no one can have Personality", Toast.LENGTH_SHORT).show();
                     }
-                    startActivity(myIntent);
+                    // Before starting  the ShowAllDIst Activity, check if the deviceRepository.sendNetworkRequest was successful or not
+                    // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+                    // If not, then I will consider the request as failed
+                    Log.d(TAG, "getNetworkRequest");
+                    deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+                        @Override
+                        public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                            Log.d(TAG, "getNetworkRequest = " + response.toString());
+                            if (!response.isSuccessful()) {
+                                Log.d(TAG, "getNetworkRequest DeviceRepository Code: " + response.code());
+                                return;
+                            }
+                            ApiDevicesResponse devicesResponse = response.body();
+                            if (devicesResponse != null) {
+                                for (Device device : devicesResponse.getContent()) {
+                                    Log.d(TAG, "getNetworkRequest device = " + device);
+                                    Log.d(TAG, "getNetworkRequest device.getBeaconUuid() = " + device.getBeaconUuid());
+                                    // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+                                    // If not, then I will consider the request as failed
+                                    if (device.getBeaconUuid().equals(beaconValue)) {
+                                        saveData();
+                                        startActivity(myIntent);
+                                    } else {
+                                        Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
+                                        Toast.makeText(Initialisation.this, "RESPONSE WAS NOT SUCCESSFUL :(", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            } else {
+                                Log.d(TAG, "getNetworkRequest devicesResponse is NULL");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiDevicesResponse> call, Throwable t) {
+
+                        }
+                    });
+//                    saveData();
+//                    startActivity(myIntent);
                 }
             }
         });
