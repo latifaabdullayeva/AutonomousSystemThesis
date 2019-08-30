@@ -19,6 +19,7 @@ public class DistanceRepository {
     public DistanceRepository() {
         Log.d("FLOW", "DistanceRepository");
 
+//        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -27,15 +28,15 @@ public class DistanceRepository {
     }
 
     public void sendNetworkRequest(Integer fromDevice, Integer toDevice, Long distance) {
+        Log.d(TAG, "sendNetworkRequest()");
         Distance distanceRequest = new Distance(fromDevice, toDevice, distance);
 
         distanceService.postDistance(distanceRequest).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                Log.d(TAG, "Response: " + response.body());
                 try {
                     if (response.body() != null) {
-                        Log.d(TAG, "success! \n" + response.body().string());
+                        Log.d(TAG, "success! " + response.body().string());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -47,6 +48,12 @@ public class DistanceRepository {
                 Log.e(TAG, "failure :(", t);
             }
         });
+    }
+
+    public void getNetworkRequest(Callback<ApiDistanceResponse> callback) {
+        Log.d(TAG, "getNetworkRequest() callback = " + callback);
+        distanceService.getDistances().enqueue(callback);
+
     }
 }
 // Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL

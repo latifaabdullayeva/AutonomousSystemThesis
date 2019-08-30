@@ -12,7 +12,6 @@ import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.ApiDistanceResponse;
-import com.example.autonomoussystemthesis.network.api.distance.Distance;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.api.personality.ApiPersonalityResponse;
 import com.example.autonomoussystemthesis.network.api.personality.Personality;
@@ -96,123 +95,229 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 //            }
 //        }
 //    }
-
-    public void deviceReq(Beacon beacon) {
-        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
-                Log.d(TAG, "deviceReq");
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
-                    return;
-                }
-
-                ApiDevicesResponse devicesResponse = response.body();
-                passDevicesResponse = devicesResponse;
-                if (devicesResponse != null) {
-                    for (Device device : devicesResponse.getContent()) {
-                        if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
-                            distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
-                        }
-                        passDeviceForBeacon = device;
-                        vibrationBasedOnPersonality(device);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
-                Log.d(TAG, "error loading from API: " + t.getMessage());
-            }
-        });
-    }
-
-    public void distanceReq() {
-        distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiDistanceResponse> call, @NonNull Response<ApiDistanceResponse> response) {
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
-                    return;
-                }
-                Log.d(TAG, "distanceReq");
-                ApiDistanceResponse distanceResponse = response.body();
-
-                if (distanceResponse != null) {
-                    for (Distance distance : distanceResponse.getContent()) {
-                        checkProxemicsForMascot(distance);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiDistanceResponse> call, @NonNull Throwable t) {
-                Log.d(TAG, "error loading from API: " + t.getMessage());
-            }
-        });
-    }
-
-    // This method checks if the Theory of Proxemics for Mascot-Mascot interaction is followed
-    // for that our PhoneId and the deviceId of the measured distance should be in Distance table in from and to columns respectively
-    // and the distance between these two points needs to be less or equal than 45 cm
-    public void checkProxemicsForMascot(Distance distance) {
-        Log.d(TAG, "checkProxemicsForMascot");
-        if (distance.getFromDevice().equals(FromMascotId) && distance.getToDevice().equals(ToMascotId) && distance.getDistance() <= 45) {
-            isProxemicsForMascot = true;
-        }
-    }
-
-    // This method check if both devices are Mascots, then
-    // vibrate our phone according to the personality of the device to which we measured the distance
-    public void vibrationBasedOnPersonality(Device device) {
-        personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiPersonalityResponse> call, @NonNull Response<ApiPersonalityResponse> response) {
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
-                    return;
-                }
-                Log.d(TAG, "vibrationBasedOnPersonality");
-                ApiPersonalityResponse personalities = response.body();
-
-                if (personalities != null) {
-                    for (Personality personality : personalities.getContent()) {
-                        if (deviceTypeValue.equals("Mascot")) {
-                            if (isProxemicsForMascot) {
-                                final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                                if (personality.getPersonality_name().equals(device.getDevicePersonality().toString())) {
-                                    vibrator.vibrate(100 * personality.getVibration_level());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiPersonalityResponse> call, @NonNull Throwable t) {
-                Log.d(TAG, "error loading from API: " + t.getMessage());
-            }
-        });
-    }
+//
+//    public void deviceReq(Beacon beacon) {
+//        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+//                Log.d(TAG, "deviceReq");
+//                if (!response.isSuccessful()) {
+//                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
+//                    return;
+//                }
+//
+//                ApiDevicesResponse devicesResponse = response.body();
+//                passDevicesResponse = devicesResponse;
+//                if (devicesResponse != null) {
+//                    for (Device device : devicesResponse.getContent()) {
+//                        if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
+//                            distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
+//                        }
+//                        passDeviceForBeacon = device;
+//                        vibrationBasedOnPersonality(device);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
+//                Log.d(TAG, "error loading from API: " + t.getMessage());
+//            }
+//        });
+//    }
+//
+//    public void distanceReq() {
+//        distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ApiDistanceResponse> call, @NonNull Response<ApiDistanceResponse> response) {
+//                if (!response.isSuccessful()) {
+//                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
+//                    return;
+//                }
+//                Log.d(TAG, "distanceReq");
+//                ApiDistanceResponse distanceResponse = response.body();
+//
+//                if (distanceResponse != null) {
+//                    for (Distance distance : distanceResponse.getContent()) {
+//                        checkProxemicsForMascot(distance);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ApiDistanceResponse> call, @NonNull Throwable t) {
+//                Log.d(TAG, "error loading from API: " + t.getMessage());
+//            }
+//        });
+//    }
+//
+//    // This method checks if the Theory of Proxemics for Mascot-Mascot interaction is followed
+//    // for that our PhoneId and the deviceId of the measured distance should be in Distance table in from and to columns respectively
+//    // and the distance between these two points needs to be less or equal than 45 cm
+//    public void checkProxemicsForMascot(Distance distance) {
+//        Log.d(TAG, "checkProxemicsForMascot");
+//        if (distance.getFromDevice().equals(FromMascotId) && distance.getToDevice().equals(ToMascotId) && distance.getDistance() <= 45) {
+//            isProxemicsForMascot = true;
+//        }
+//    }
+//
+//    // This method check if both devices are Mascots, then
+//    // vibrate our phone according to the personality of the device to which we measured the distance
+//    public void vibrationBasedOnPersonality(Device device) {
+//        personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ApiPersonalityResponse> call, @NonNull Response<ApiPersonalityResponse> response) {
+//                if (!response.isSuccessful()) {
+//                    Log.d(TAG, "PersonalityRepository Code: " + response.code());
+//                    return;
+//                }
+//                Log.d(TAG, "vibrationBasedOnPersonality");
+//                ApiPersonalityResponse personalities = response.body();
+//
+//                if (personalities != null) {
+//                    for (Personality personality : personalities.getContent()) {
+//                        if (deviceTypeValue.equals("Mascot")) {
+//                            if (isProxemicsForMascot) {
+//                                final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+//                                if (personality.getPersonality_name().equals(device.getDevicePersonality().toString())) {
+//                                    vibrator.vibrate(100 * personality.getVibration_level());
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ApiPersonalityResponse> call, @NonNull Throwable t) {
+//                Log.d(TAG, "error loading from API: " + t.getMessage());
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onBeaconServiceConnect() {
+//        Log.d(TAG, "onBeaconServiceConnect");
+//        beaconManager.addRangeNotifier(new RangeNotifier() {
+//            @Override
+//            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+//                Log.d(TAG, "didRangeBeaconsInRegion");
+//                if (beacons.size() > 0) {
+//                    for (Beacon beacon : beacons) {
+//                        if (!beaconTagValue.equals(beacon.getId1().toString())) {
+//                            deviceReq(beacon);
+//                            distanceReq();
+//                        } else {
+//                            Log.d(TAG, "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//        try {
+//            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+//        } catch (
+//                RemoteException ignored) {
+//        }
+//    }
 
     @Override
     public void onBeaconServiceConnect() {
-        Log.d(TAG, "onBeaconServiceConnect");
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                Log.d(TAG, "didRangeBeaconsInRegion");
-                if (beacons.size() > 0) {
-                    for (Beacon beacon : beacons) {
-                        if (!beaconTagValue.equals(beacon.getId1().toString())) {
-                            deviceReq(beacon);
-                            distanceReq();
-                        } else {
-                            Log.d(TAG, "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
+                deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+                        if (!response.isSuccessful()) {
+                            Log.d(TAG, "Code: " + response.code());
+                            return;
+                        }
+                        ApiDevicesResponse devices = response.body();
+
+                        // find my own phone (device id)
+                        Integer myDeviceID = null;
+                        if (devices != null) {
+                            Log.d(TAG, "4 > " + myDeviceID);
+                            boolean myBeaconIsInDB = false;
+                            for (int i = 0; i < devices.getContent().size(); i++) {
+                                if (devices.getContent().get(i).getBeaconUuid().contains(beaconTagValue)) {
+                                    myBeaconIsInDB = true;
+                                    myDeviceID = devices.getContent().get(i).getDeviceId();
+                                    Log.d(TAG, "6 > " + devices.getContent().get(i).getBeaconUuid() + "; " + beaconTagValue + "; " + myDeviceID);
+                                }
+                            }
+                            if (myBeaconIsInDB) {
+                                Log.d(TAG, "7 > " + beacons.size());
+                                if (beacons.size() > 0) {
+                                    Log.d(TAG, "8 > " + beacons.size());
+                                    for (Beacon beacon : beacons) {
+                                        Log.d(TAG, "9 > " + beacon);
+                                        if (!beaconTagValue.equals(beacon.getId1().toString())) {
+                                            Log.d(TAG, "10 > " + beaconTagValue + "; " + beacon.getId1().toString());
+                                            for (Device device : devices.getContent()) {
+                                                Log.d(TAG, "11 > " + device + "; " + devices.getContent());
+                                                if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
+                                                    Log.d(TAG, "12 > " + device.getBeaconUuid() + "; " + beacon.getId1().toString());
+                                                    distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
+                                                    if (deviceTypeValue.equals("Mascot") && !device.getDeviceName().equals("Lamp") && !device.getDeviceName().equals("Speaker") && !device.getDeviceName().equals("Tablet")) {
+                                                        Log.d(TAG, "13 > " + deviceTypeValue);
+                                                        if (round(beacon.getDistance() * 100) <= 70) {
+                                                            Log.d(TAG, "14 > " + round(beacon.getDistance() * 100));
+                                                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+                                                            // Add a vibration level
+                                                            personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
+                                                                @Override
+                                                                public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                                                    if (!response.isSuccessful()) {
+                                                                        Log.d(TAG, "PersonalityRepository Code: " + response.code());
+                                                                        return;
+                                                                    }
+                                                                    ApiPersonalityResponse personalities = response.body();
+
+                                                                    if (personalities != null) {
+                                                                        Log.d(TAG, "16 > " + personalities);
+                                                                        for (Personality personality : personalities.getContent()) {
+                                                                            Log.d(TAG, "17 > " + personality);
+                                                                            if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
+                                                                                Log.d(TAG, "18 > " + personality.getPersonality_name() + "; " + device.getDevicePersonality().getPersonality_name());
+                                                                                vibrator.vibrate(100 * personality.getVibration_level());
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                @Override
+                                                                public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
+                                                                    Log.d(TAG, "error loading from API: " + t.getMessage());
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            Log.d(TAG, "20 > ");
+                                            Log.d(TAG, "= myDevice (" + beaconTagValue + "); device (" + beacon.getId1().toString() + ") = same");
+                                        }
+
+                                    }
+                                }
+                            } else {
+                                Log.d(TAG, "21 > ");
+                                Log.d(TAG, "Your Beacon DOES NOT exists in DB");
+                            }
+
                         }
                     }
-                }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ApiDevicesResponse> call,
+                                          @NonNull Throwable t) {
+                        Log.d(TAG, "error loading from API... " + t.getMessage());
+                    }
+                });
             }
         });
         try {
@@ -221,6 +326,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                 RemoteException ignored) {
         }
     }
+
 
     // Disabled back button, so in this Activity user will not allowed to change anything
     @Override
