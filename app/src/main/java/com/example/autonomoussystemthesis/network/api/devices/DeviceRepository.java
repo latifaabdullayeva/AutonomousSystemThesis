@@ -27,6 +27,7 @@ public class DeviceRepository extends AppCompatActivity {
     public DeviceRepository() {
         Log.d("FLOW", "DeviceRepository");
 
+        //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -47,12 +48,12 @@ public class DeviceRepository extends AppCompatActivity {
         resultListView.setAdapter(adapter);
     }
 
-    public void sendNetworkRequest(Integer deviceId, String deviceName, String beaconUuid, Integer devicePersonality) {
+    public void sendNetworkRequest(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Integer devicePersonality) {
         Log.d(TAG, "sendNetworkRequest");
 //        Log.d(TAG, "DevRequestSTATUS");
 //        Intent myIntent = new Intent(DeviceRepository.this, Initialisation.class);
         Personality personality = new Personality(devicePersonality);
-        Device deviceRequest = new Device(null, deviceName, beaconUuid, personality);
+        Device deviceRequest = new Device(null, deviceName, deviceType, beaconUuid, personality);
         deviceService.createDevice(deviceRequest).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

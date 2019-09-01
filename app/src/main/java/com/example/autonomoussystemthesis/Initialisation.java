@@ -266,7 +266,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                                             Log.d(TAG, "beaconValue = " + beaconValue);
                                             Log.d(TAG, "personalityId = " + personalityId);
                                             Log.d(TAG, "sendNetworkRequest");
-                                            deviceRepository.sendNetworkRequest(null, mascotValue, beaconValue, personalityId);
+                                            deviceRepository.sendNetworkRequest(null, mascotValue, deviceTypeValue, beaconValue, personalityId);
                                             Log.d(TAG, "personalityId = " + personalityId);
                                         }
                                     }
@@ -279,7 +279,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                             }
                         });
                     } else {
-                        deviceRepository.sendNetworkRequest(null, deviceTypeValue, beaconValue, null);
+                        deviceRepository.sendNetworkRequest(null, null, deviceTypeValue, beaconValue, null);
                         Toast.makeText(Initialisation.this, "Other than Mascot no one can have Personality", Toast.LENGTH_SHORT).show();
                     }
                     // Before starting  the ShowAllDIst Activity, check if the deviceRepository.sendNetworkRequest was successful or not
@@ -306,7 +306,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                                         startActivity(myIntent);
                                     } else {
                                         Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
-                                        Toast.makeText(Initialisation.this, "RESPONSE WAS NOT SUCCESSFUL :(", Toast.LENGTH_SHORT).show();
+                                        // Show a user a message that we could not save your data
+                                        Toast.makeText(Initialisation.this, "SOMETHING WENT WRONG :(\n We could not save your data", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } else {
