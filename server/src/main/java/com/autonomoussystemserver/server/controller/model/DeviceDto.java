@@ -5,6 +5,7 @@ import com.autonomoussystemserver.server.database.model.Personality;
 public class DeviceDto {
 
     private String deviceName;
+    private String deviceType;
     private String beaconUuid;
     private Personality devicePersonality;
 
@@ -12,25 +13,30 @@ public class DeviceDto {
     public DeviceDto() {
     }
 
-    public DeviceDto(String deviceName, String beaconUuid, Personality devicePersonality) {
-        System.out.println("Backend: " + "DeviceDTO constructor");
+    public DeviceDto(String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
+        System.out.println("DeviceDTO constructor");
         this.deviceName = deviceName;
+        this.deviceType=deviceType;
         this.beaconUuid = beaconUuid;
         this.devicePersonality = devicePersonality;
     }
 
     public String getDeviceName() {
-        System.out.println("Backend: " + "DeviceDTO getDeviceName = " + deviceName);
+        System.out.println("DeviceDTO getDeviceName = " + deviceName);
         return deviceName;
+    }
+    public String getDeviceType(){
+        System.out.println("DeviceDTO getDeviceType = " + deviceType);
+        return deviceType;
     }
 
     public String getBeaconUuid() {
-        System.out.println("Backend: " + "DeviceDTO getBeaconUuid = " + beaconUuid);
+        System.out.println("DeviceDTO getBeaconUuid = " + beaconUuid);
         return beaconUuid;
     }
 
     public Personality getDevicePersonality() {
-        System.out.println("Backend: " + "DeviceDTO getDevicePersonality = " + devicePersonality);
+        System.out.println("DeviceDTO getDevicePersonality = " + devicePersonality);
         return devicePersonality;
     }
 }

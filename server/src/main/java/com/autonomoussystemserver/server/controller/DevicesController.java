@@ -27,13 +27,15 @@ public class DevicesController {
     // for @RequestMapping(method = RequestMethod.GET).
     @GetMapping("/devices")
     public Page<Devices> getDevices(Pageable pageable) {
-        System.out.println("Backend: " + "DeviceController -> GET getDevices()");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("DeviceController -> GET getDevices()");
         return devicesRepository.findAll(pageable);
     }
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
-        System.out.println("Backend: " + "DevicesController -> POST createDevice()");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("DevicesController -> POST createDevice()");
 
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
@@ -41,17 +43,17 @@ public class DevicesController {
             return ResponseEntity.badRequest()
                     .body(null);
         } else {
-            Personality personality = new Personality();
-            personality.setId(deviceDto.getDevicePersonality());
+            Personality personality = deviceDto.getDevicePersonality();
 
             Devices newDevice = new Devices();
-            System.out.println("Backend: " + "DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName() + "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() + "; personality = " + personality);
+            System.out.println("DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName() + "deviceDto.getDeviceName() = " + deviceDto.getDeviceName() + "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() + "; personality = " + personality);
             newDevice.setDeviceName(deviceDto.getDeviceName());
+            newDevice.setDeviceType(deviceDto.getDeviceType());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
             newDevice.setDevicePersonality(personality);
 
             devicesRepository.save(newDevice);
-            System.out.println("Backend: " + "DevicesController -> POST newDevice: " + newDevice);
+            System.out.println("DevicesController -> POST newDevice: " + newDevice);
             return ResponseEntity.ok(newDevice);
         }
     }

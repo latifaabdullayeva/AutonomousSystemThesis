@@ -24,6 +24,9 @@ public class Devices {
     @Column(name = "deviceName", nullable = false, updatable = false)
     private String deviceName;
 
+    @Column(name = "deviceType", nullable = false, updatable = false)
+    private String deviceType;
+
     @Column(name = "beaconUuid", updatable = false)
     private String beaconUuid;
 
@@ -32,42 +35,51 @@ public class Devices {
     private Personality devicePersonality;
 
     public Integer getDeviceId() {
-        System.out.println("Backend: " + "Devices getDeviceId");
+        System.out.println("---------");
+        System.out.println("Devices getDeviceId = " + deviceId);
         return deviceId;
     }
 
     public void setDeviceId(Integer deviceId) {
-        System.out.println("Backend: " + "Devices setDeviceId");
+        System.out.println("Devices setDeviceId = " + deviceId);
         this.deviceId = deviceId;
     }
 
     public String getDeviceName() {
-        System.out.println("Backend: " + "Devices getDeviceName");
+        System.out.println("Devices getDeviceName = " + deviceName);
         return deviceName;
     }
 
     public void setDeviceName(String deviceName) {
-        System.out.println("Backend: " + "Devices setDeviceName");
+        System.out.println("Devices setDeviceName = " + deviceName);
         this.deviceName = deviceName;
     }
 
+    public String getDeviceType() {
+        System.out.println("Devices getDeviceType = " + deviceType);
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        System.out.println("Devices setDeviceType = " + deviceType);
+        this.deviceType = deviceType;
+    }
+
     public String getBeaconUuid() {
-        System.out.println("Backend: " + "Devices getBeaconUuid");
+        System.out.println("Devices getBeaconUuid = " + beaconUuid);
         return beaconUuid;
     }
 
     public void setBeaconUuid(String beaconUuid) {
-        System.out.println("Backend: " + "Devices setBeaconUuid");
+        System.out.println("Devices setBeaconUuid = " + beaconUuid);
         this.beaconUuid = beaconUuid;
     }
 
     public Personality getDevicePersonality() {
-        System.out.println("Backend: " + "Devices getDevicePersonality");
         return devicePersonality;
     }
 
     public void setDevicePersonality(Personality devicePersonality) {
-        System.out.println("Backend: " + "Devices setDevicePersonality");
         this.devicePersonality = devicePersonality;
     }
 }
