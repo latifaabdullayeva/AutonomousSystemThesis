@@ -5,7 +5,9 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,8 +22,16 @@ public class PersonalityRepository {
     public PersonalityRepository() {
         Log.d("FLOW", "PersonalityRepository");
 
+//        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+                .client(
+                        new OkHttpClient.Builder()
+                                .addInterceptor(interceptor)
+                                .build()
+                )
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         personalityService = retrofit.create(PersonalityService.class);
