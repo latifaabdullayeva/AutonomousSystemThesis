@@ -34,18 +34,6 @@ public class Personality {
     @Column(name = "music_genre", nullable = false, updatable = false)
     private String music_genre;
 
-    public Personality(String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
-        this.personality_name = personality_name;
-        this.hue_color = hue_color;
-        this.bri = bri;
-        this.hue = hue;
-        this.sat = sat;
-        this.screen_color = screen_color;
-        this.vibration_level = vibration_level;
-        this.music_genre = music_genre;
-        System.out.println("PersonalityDto constructor = " + personality_name + hue_color + bri + hue + sat + screen_color + vibration_level + music_genre);
-    }
-
     public Integer getId() {
         System.out.println("");
         System.out.println("Personality getId() = " + id);

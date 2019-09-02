@@ -35,9 +35,7 @@ public class PersonalityController {
         if (existingPersonality != null) {
             return ResponseEntity.badRequest().body(null);
         } else {
-            Personality newPersonality = new Personality(personalityDto.getPersonality_name(), personalityDto.getHue_color(),
-                    personalityDto.getBri(), personalityDto.getHue(), personalityDto.getSat(), personalityDto.getScreen_color(),
-                    personalityDto.getVibration_level(), personalityDto.getMusic_genre());
+            Personality newPersonality = new Personality();
             newPersonality.setPersonality_name(personalityDto.getPersonality_name());
             newPersonality.setBri(personalityDto.getBri());
             newPersonality.setHue(personalityDto.getHue());

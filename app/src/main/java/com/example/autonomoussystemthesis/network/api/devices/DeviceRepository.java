@@ -61,8 +61,15 @@ public class DeviceRepository extends AppCompatActivity {
         Log.d(TAG, "sendNetworkRequest");
 //        Log.d(TAG, "DevRequestSTATUS");
 //        Intent myIntent = new Intent(DeviceRepository.this, Initialisation.class);
-        Personality personality = new Personality(devicePersonality);
-        Device deviceRequest = new Device(null, deviceName, deviceType, beaconUuid, personality);
+
+        Device deviceRequest;
+        if (devicePersonality != null) {
+            Personality personality = new Personality(devicePersonality);
+            deviceRequest = new Device(null, deviceName, deviceType, beaconUuid, personality);
+        } else {
+            deviceRequest = new Device(null, deviceName, deviceType, beaconUuid, null);
+        }
+
         deviceService.createDevice(deviceRequest).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

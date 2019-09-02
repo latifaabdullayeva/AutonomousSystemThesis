@@ -43,14 +43,26 @@ public class DevicesController {
             return ResponseEntity.badRequest()
                     .body(null);
         } else {
-            Personality personality = deviceDto.getDevicePersonality();
-
             Devices newDevice = new Devices();
-            System.out.println("DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName() + "deviceDto.getDeviceName() = " + deviceDto.getDeviceName() + "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() + "; personality = " + personality);
-            newDevice.setDeviceName(deviceDto.getDeviceName());
+
+            if (deviceDto.getDevicePersonality() != null) {
+                Personality personality = new Personality();
+                personality.setId(deviceDto.getDevicePersonality().getId());
+
+                newDevice.setDevicePersonality(personality);
+            }
+
+//            Personality personality = new Personality();
+//            personality.setId(deviceDto.getDevicePersonality().getId());
+
+
+            System.out.println("DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName() +
+                    "; deviceDto.getDeviceType() = " + deviceDto.getDeviceType() +
+                    "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() +
+                    "; personality = " + deviceDto.getDevicePersonality());
+            newDevice.setDeviceName(deviceDto.getDeviceName() == null ? "" : deviceDto.getDeviceName());
             newDevice.setDeviceType(deviceDto.getDeviceType());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
-            newDevice.setDevicePersonality(personality);
 
             devicesRepository.save(newDevice);
             System.out.println("DevicesController -> POST newDevice: " + newDevice);
