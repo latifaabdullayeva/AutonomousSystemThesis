@@ -19,22 +19,25 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
-        System.out.println("Backend: " + "PersonalityController -> GET getPersonality() = " + pageable);
+        System.out.println("------------------------------------------------------------");
+        System.out.println("PersonalityController -> GET getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 
     @PostMapping("/personality")
     public ResponseEntity<Personality> createPersonality(@RequestBody PersonalityDto personalityDto) {
-        System.out.println("Backend: " + "PersonalityController -> POST createPersonality()");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("PersonalityController -> POST createPersonality()");
 
         Personality existingPersonality = personalityRepository.findByPersonalityName(personalityDto.getPersonality_name());
-        System.out.println("Backend: " + "PersonalityController -> POST existingPersonality = " + existingPersonality);
+        System.out.println("PersonalityController -> POST existingPersonality = " + existingPersonality);
 
         if (existingPersonality != null) {
-            return ResponseEntity.badRequest()
-                    .body(null);
+            return ResponseEntity.badRequest().body(null);
         } else {
-            Personality newPersonality = new Personality();
+            Personality newPersonality = new Personality(personalityDto.getPersonality_name(), personalityDto.getHue_color(),
+                    personalityDto.getBri(), personalityDto.getHue(), personalityDto.getSat(), personalityDto.getScreen_color(),
+                    personalityDto.getVibration_level(), personalityDto.getMusic_genre());
             newPersonality.setPersonality_name(personalityDto.getPersonality_name());
             newPersonality.setBri(personalityDto.getBri());
             newPersonality.setHue(personalityDto.getHue());
@@ -46,7 +49,7 @@ public class PersonalityController {
 
 
             personalityRepository.save(newPersonality);
-            System.out.println("Backend: " + "PersonalityController -> POST newPersonality: " + newPersonality);
+            System.out.println("PersonalityController -> POST newPersonality: " + newPersonality);
             return ResponseEntity.ok(newPersonality);
         }
     }
