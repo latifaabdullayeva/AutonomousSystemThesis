@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse;
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
+import com.example.autonomoussystemthesis.network.api.distance.ApiDistanceResponse;
+import com.example.autonomoussystemthesis.network.api.distance.Distance;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
 import com.example.autonomoussystemthesis.network.api.personality.ApiPersonalityResponse;
 import com.example.autonomoussystemthesis.network.api.personality.Personality;
@@ -39,6 +41,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     final PersonalityRepository personalityRepository = new PersonalityRepository();
 
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
+    int fromMascotId, toMascotId;
 
     private BeaconManager beaconManager;
 
@@ -111,39 +114,61 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                     // then we check if the distance from my Mascot to any other Mascots is less or equal to 45 cm,
                                                     // we vibrate my mascot according to the personality of other mascot
 
-                                                    // If my device and other devices are mascots
-                                                    if (deviceTypeValue.equals("Mascot") && !device.getDeviceName().equals("Lamp") && !device.getDeviceName().equals("Speaker") && !device.getDeviceName().equals("Tablet")) {
-                                                        // In Distances table we have "id, from, to, distance" columns, where
-                                                        // From is the id of a device that measures the distance, and To is an id of a device to which we measure the distance
-                                                        // Server ignores the requests where the id of From and To devices are equal
-                                                        if (round(beacon.getDistance() * 100) <= 45) {
-                                                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                                    // If my device is mascot
+                                                    if (deviceTypeValue.equals("Mascot")) {
+                                                        fromMascotId = myDeviceID;
+                                                        toMascotId = device.getDeviceId();
+                                                        // check if approaching device is also mascot (we check it by gating value from "Todevice" column in Distance table
+                                                        distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<ApiDistanceResponse> call, Response<ApiDistanceResponse> response) {
+                                                                if (!response.isSuccessful()) {
+                                                                    Log.d(TAG, "DistanceRepository Code: " + response.code());
+                                                                    return;
+                                                                }
+                                                                ApiDistanceResponse distanceResponse = response.body();
+                                                                if (distanceResponse != null) {
+                                                                    for (Distance distance : distanceResponse.getContent()) {
+                                                                        // In Distances table we have "id, from, to, distance" columns, where
+                                                                        // From is the id of a device that measures the distance, and To is an id of a device to which we measure the distance
+                                                                        // Server ignores the requests where the id of From and To devices are equal
+                                                                        if (distance.getFromDevice().equals(fromMascotId) && distance.getToDevice().equals(toMascotId) && distance.getDistance() <= 45) {
+                                                                            Log.d(TAG, "");
+                                                                            final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                                                            // Add a vibration level according to the personality of a device to whom we measure the distance
+                                                                            personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
+                                                                                @Override
+                                                                                public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                                                                    if (!response.isSuccessful()) {
+                                                                                        Log.d(TAG, "PersonalityRepository Code: " + response.code());
+                                                                                        return;
+                                                                                    }
+                                                                                    ApiPersonalityResponse personalities = response.body();
 
-                                                            // Add a vibration level according to the personality of a device to whom we measure the distance
-                                                            personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
-                                                                @Override
-                                                                public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
-                                                                    if (!response.isSuccessful()) {
-                                                                        Log.d(TAG, "PersonalityRepository Code: " + response.code());
-                                                                        return;
-                                                                    }
-                                                                    ApiPersonalityResponse personalities = response.body();
+                                                                                    if (personalities != null) {
+                                                                                        for (Personality personality : personalities.getContent()) {
+                                                                                            if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
+                                                                                                vibrator.vibrate(100 * personality.getVibration_level());
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
 
-                                                                    if (personalities != null) {
-                                                                        for (Personality personality : personalities.getContent()) {
-                                                                            if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
-                                                                                vibrator.vibrate(100 * personality.getVibration_level());
-                                                                            }
+                                                                                @Override
+                                                                                public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
+                                                                                    Log.d(TAG, "error loading from API: " + t.getMessage());
+                                                                                }
+                                                                            });
                                                                         }
                                                                     }
                                                                 }
+                                                            }
 
-                                                                @Override
-                                                                public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
-                                                                    Log.d(TAG, "error loading from API: " + t.getMessage());
-                                                                }
-                                                            });
-                                                        }
+                                                            @Override
+                                                            public void onFailure(Call<ApiDistanceResponse> call, Throwable t) {
+
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             }
