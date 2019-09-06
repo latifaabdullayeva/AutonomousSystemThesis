@@ -10,9 +10,10 @@ public class InteractionTimes {
     @Column(name = "interactionId", unique = true, nullable = false, updatable = false)
     private Integer interactionId;
 
+    // mascot column of InteractionTimes table is a foreign key of deviceId column of Devices table
     @ManyToOne
-    @JoinColumn(name = "mascotId", nullable = false, updatable = false)
-    private Devices mascotId;
+    @JoinColumn(name = "mascot", nullable = false, updatable = false)
+    private Devices mascot;
 
     @Column(name = "interactionTimes", updatable = false)
     private Integer interactionTimes;
@@ -27,14 +28,14 @@ public class InteractionTimes {
         System.out.println("InteractionTimes setInteractionId = " + interactionId);
     }
 
-    public Devices getMascotId() {
-        System.out.println("InteractionTimes getMascotId = " + mascotId);
-        return mascotId;
+    public Devices getMascot() {
+        System.out.println("InteractionTimes getMascot = " + mascot);
+        return mascot;
     }
 
-    public void setMascotId(Devices mascotId) {
-        this.mascotId = mascotId;
-        System.out.println("InteractionTimes setMascotId = " + mascotId);
+    public void setMascot(Devices mascot) {
+        this.mascot = mascot;
+        System.out.println("InteractionTimes setMascot = " + mascot);
     }
 
     public Integer getInteractionTimes() {

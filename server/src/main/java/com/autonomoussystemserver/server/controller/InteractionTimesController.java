@@ -46,7 +46,7 @@ public class InteractionTimesController {
         } else {
             InteractionTimes newInteractionTimes = new InteractionTimes();
 
-            newInteractionTimes.setMascotId(device);
+            newInteractionTimes.setMascot(device);
             newInteractionTimes.setInteractionTimes(interactionTimesDto.getInteractionTimes());
 
             interactionTimesRepository.save(newInteractionTimes);
