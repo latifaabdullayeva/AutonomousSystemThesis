@@ -4,22 +4,29 @@ package com.example.autonomoussystemthesis.network.api.interaction;
 
 import android.util.Log;
 
+import com.example.autonomoussystemthesis.network.api.devices.Device;
+
 public class Interaction {
+    private final Integer interactionId;
+    private final Device mascotId;
     private final Integer interactionTimes;
-    private final Integer mascotId;
 
-    Interaction(Integer interactionTimes, Integer mascotId) {
+    Interaction(Integer interactionId, Device mascotId, Integer interactionTimes) {
         Log.d("FLOW", "Interaction");
-
+        this.interactionId = interactionId;
         this.interactionTimes = interactionTimes;
         this.mascotId = mascotId;
     }
 
-    public Integer getInteractionTimes() {
-        return interactionTimes;
+    public Integer getInteractionId() {
+        return interactionId;
     }
 
-    public Integer getMascotId() {
+    public Device getMascotId() {
         return mascotId;
+    }
+
+    public Integer getInteractionTimes() {
+        return interactionTimes;
     }
 }
