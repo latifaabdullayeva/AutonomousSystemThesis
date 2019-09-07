@@ -6,7 +6,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public class InteractionService {
+interface InteractionService {
+
     @POST("interactionTimes")
     Call<ResponseBody> postInteraction(@Body Interaction interaction);
 
