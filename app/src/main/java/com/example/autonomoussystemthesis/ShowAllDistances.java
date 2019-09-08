@@ -12,6 +12,9 @@ import com.example.autonomoussystemthesis.network.api.devices.ApiDevicesResponse
 import com.example.autonomoussystemthesis.network.api.devices.Device;
 import com.example.autonomoussystemthesis.network.api.devices.DeviceRepository;
 import com.example.autonomoussystemthesis.network.api.distance.DistanceRepository;
+import com.example.autonomoussystemthesis.network.api.interaction.ApiInteractionResponse;
+import com.example.autonomoussystemthesis.network.api.interaction.Interaction;
+import com.example.autonomoussystemthesis.network.api.interaction.InteractionRepository;
 import com.example.autonomoussystemthesis.network.api.personality.ApiPersonalityResponse;
 import com.example.autonomoussystemthesis.network.api.personality.Personality;
 import com.example.autonomoussystemthesis.network.api.personality.PersonalityRepository;
@@ -37,6 +40,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
     final PersonalityRepository personalityRepository = new PersonalityRepository();
+    final InteractionRepository interactionRepository = new InteractionRepository();
 
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
     int fromMascotId, toMascotId;
@@ -107,6 +111,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                             for (Device device : devices.getContent()) {
                                                 if (device.getBeaconUuid().equals(beacon.getId1().toString())) {
                                                     distanceRepository.sendNetworkRequest(myDeviceID, device.getDeviceId(), round(beacon.getDistance() * 100));
+                                                    Integer myMascotId = myDeviceID;
 
                                                     // When the type of our device is Mascot, We get all other devices from DB that are Mascots,
                                                     // then we check if the distance from my Mascot to any other Mascots is less or equal to 45 cm,
@@ -135,6 +140,47 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                                         if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
                                                                             vibrator.vibrate(100 * personality.getVibration_level());
                                                                             Log.d(TAG, "personality.getVibration_level() = " + device.getDevicePersonality().getVibration_level());
+                                                                            // TODO: when vibrated -> get, post Interaction
+                                                                            interactionRepository.getNetworkRequest(new Callback<ApiInteractionResponse>() {
+                                                                                @Override
+                                                                                public void onResponse(Call<ApiInteractionResponse> call, Response<ApiInteractionResponse> response) {
+                                                                                    if (!response.isSuccessful()) {
+                                                                                        Log.d(TAG, "InteractionRepository Code: " + response.code());
+                                                                                        return;
+                                                                                    }
+                                                                                    int interactionTimes = 0;
+                                                                                    ApiInteractionResponse interactionResponse = response.body();
+                                                                                    if (interactionResponse != null) {
+                                                                                        Integer otherMascotID = device.getDeviceId();
+                                                                                        Log.d("test", "" + "myMascotId = " + myMascotId + "; otherMascotID = " + otherMascotID);
+                                                                                        Log.d("test", "" + "interactionTimes = " + interactionTimes);
+
+                                                                                        if (interactionResponse.getContent().isEmpty()) {
+                                                                                            Log.d("test", "IF CONTENT is EMPTY");
+                                                                                            interactionTimes += 1;
+                                                                                            Log.d("test", "" + "interactionTimes = " + interactionTimes);
+                                                                                        } else {
+                                                                                            Log.d("test", "ELSE CONTENT");
+                                                                                            for (Interaction interaction : interactionResponse.getContent()) {
+                                                                                                Log.d("test", "for each interaction");
+                                                                                                // TODO: error interaction.getMascotId() is NULL
+                                                                                                Log.d("test", "interaction.getMascotId() = " + interaction.getMascotId());
+                                                                                                if (myMascotId.equals(interaction.getMascotId())) {
+                                                                                                    interactionTimes = interaction.getInteractionTimes() + 1;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        Log.d("test", "SEND REQUEST: myMascotId = " + myMascotId + "; interactionTimes = " + interactionTimes);
+                                                                                        interactionRepository.sendNetworkRequest(null, myMascotId, interactionTimes);
+                                                                                    }
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onFailure(Call<ApiInteractionResponse> call, Throwable t) {
+
+                                                                                }
+                                                                            });
+
                                                                         }
                                                                     }
                                                                 }

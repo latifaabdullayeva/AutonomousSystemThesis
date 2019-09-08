@@ -3,8 +3,6 @@ package com.example.autonomoussystemthesis.network.api.interaction;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.autonomoussystemthesis.network.api.devices.Device;
-
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -27,7 +25,7 @@ public class InteractionRepository {
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.101:8080/")
+        retrofit = new Retrofit.Builder().baseUrl("https://a8ae1e71.ngrok.io")
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)
@@ -41,30 +39,27 @@ public class InteractionRepository {
     public void sendNetworkRequest(Integer interactionId, Integer mascotId, Integer interactionTimes) {
         Log.d(TAG, "sendNetworkRequest()");
         Interaction interactionRequest;
-        if (mascotId != null) {
-            Device device = new Device(mascotId);
-            interactionRequest = new Interaction(null, mascotId, interactionTimes);
 
-        }
-        interactionRequest =
+//        Device device = new Device(mascotId);
+        interactionRequest = new Interaction(null, mascotId, interactionTimes);
 
-                interactionService.postInteraction(interactionRequest).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                        try {
-                            if (response.body() != null) {
-                                Log.d(TAG, "success! " + response.body().string());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+        interactionService.postInteraction(interactionRequest).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) {
+                        Log.d(TAG, "success! " + response.body().string());
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        Log.e(TAG, "failure :(", t);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.e(TAG, "failure :(", t);
+            }
+        });
     }
 
     public void getNetworkRequest(Callback<ApiInteractionResponse> callback) {

@@ -15,7 +15,7 @@ public class ApiInteractionResponse {
     }
 
     public List<Interaction> getContent() {
-        Log.d(TAG, "content = " + content.get(0).getMascotId() + "; " + content.get(0).getInteractionTimes());
+//        Log.d(TAG, "content = " + content.get(0).getMascotId() + "; " + content.get(0).getInteractionTimes());
         return content;
     }
 }
