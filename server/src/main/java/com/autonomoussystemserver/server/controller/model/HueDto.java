@@ -6,22 +6,21 @@ public class HueDto {
 
     // for deserialisation
     public HueDto() {
-
     }
 
     public HueDto(String ipAddress, String userName) {
-        System.out.println("Backend: " + "HueDto constructor");
+        System.out.println("HueDto constructor");
         this.ipAddress = ipAddress;
         this.userName = userName;
     }
 
     public String getIpAddress() {
-        System.out.println("Backend: " + "HueDto getIpAddress");
+        System.out.println("HueDto getIpAddress = " + ipAddress);
         return ipAddress;
     }
 
     public String getUserName() {
-        System.out.println("Backend: " + "HueDto getUserName");
+        System.out.println("HueDto getUserName = " + userName);
         return userName;
     }
 }

@@ -4,9 +4,8 @@ import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +39,7 @@ public class DevicesController {
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
         if (existingDevice != null) {
-            return ResponseEntity.badRequest()
-                    .body(null);
+            return ResponseEntity.badRequest().body(null);
         } else {
             Devices newDevice = new Devices();
 
@@ -60,6 +58,7 @@ public class DevicesController {
                     "; deviceDto.getDeviceType() = " + deviceDto.getDeviceType() +
                     "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() +
                     "; personality = " + deviceDto.getDevicePersonality());
+
             newDevice.setDeviceName(deviceDto.getDeviceName() == null ? "" : deviceDto.getDeviceName());
             newDevice.setDeviceType(deviceDto.getDeviceType());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());

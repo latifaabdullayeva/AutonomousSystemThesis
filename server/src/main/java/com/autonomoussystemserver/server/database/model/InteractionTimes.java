@@ -15,7 +15,7 @@ public class InteractionTimes {
     @JoinColumn(name = "mascot", nullable = false, updatable = false)
     private Devices mascot;
 
-    @Column(name = "interactionTimes", updatable = false)
+    @Column(name = "interactionTimes")
     private Integer interactionTimes;
 
     public Integer getInteractionId() {

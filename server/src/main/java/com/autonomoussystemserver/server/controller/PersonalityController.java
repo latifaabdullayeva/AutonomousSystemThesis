@@ -3,6 +3,7 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.PersonalityDto;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

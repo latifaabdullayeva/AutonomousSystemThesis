@@ -12,7 +12,11 @@ public class Device {
     private final String beaconUuid;
     private final Personality devicePersonality;
 
-    Device(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
+    public Device(Integer id) {
+        this(id, null, null, null, null);
+    }
+
+    public Device(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
         Log.d("FLOW", "Device");
 
         this.deviceId = deviceId;

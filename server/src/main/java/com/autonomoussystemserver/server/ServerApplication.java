@@ -15,3 +15,5 @@ public class ServerApplication {
         SpringApplication.run(ServerApplication.class, args);
     }
 }
+// Write in terminal
+// mvn spring-boot:run -e -X -Dspring-boot.run.arguments=--username=sFsM2OIr6DUWtWeyGFSIOwGtuIIFQBf14gtlxXFj,--ipAddress=192.168.0.100

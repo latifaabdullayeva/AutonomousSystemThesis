@@ -1,7 +1,13 @@
 package com.autonomoussystemserver.server.controller;
 
-import com.autonomoussystemserver.server.controller.HueRequest;
-import com.autonomoussystemserver.server.controller.HueService;
+import com.autonomoussystemserver.server.database.model.Devices;
+import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
+import com.autonomoussystemserver.server.controller.InteractionTimesController;
+import com.autonomoussystemserver.server.database.model.InteractionTimes;
+
+import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
+import com.autonomoussystemserver.server.service.InteractionTimesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,8 +22,18 @@ public class HueRepository {
     private final HueService hueService;
     private final String username;
 
+    @Autowired
+    InteractionTimesRepository interactionTimesRepository;
+
+    @Autowired
+    InteractionTimesDto interactionTimesDto;
+
+    @Autowired
+    InteractionTimesService interactionTimesService;
+
+
     public HueRepository(String ipAddress, String user) {
-        System.out.println("Backend: " + "HueRepository constructor");
+        System.out.println("HueRepository constructor");
 //         The Retrofit class generates an implementation of the HueService interface.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + ipAddress + "/api/")
@@ -28,8 +44,11 @@ public class HueRepository {
     }
 
     public void updateBrightness(int brightness, int hue, int saturation) {
-        System.out.println("Backend: " + "HueRepository updateBrightness");
+        System.out.println("HueRepository updateBrightness");
         HueRequest request = new HueRequest(true, brightness, hue, saturation);
+
+        // InteractionTimes interactionTimes = interactionTimesService.create(interactionTimesDto);
+
 
         hueService.updateHueLamp(username, 1, request)
                 .enqueue(new Callback<okhttp3.ResponseBody>() {
@@ -39,6 +58,11 @@ public class HueRepository {
                         try {
                             if (response.body() != null) {
                                 System.out.println("HueRepository " + response.body().string());
+                                System.out.println("HueRepository ------------------------------------------------------------------------------------------------------------------------------");
+                                // TODO: we get interactionTimes that is mascot=ourMascot
+                                //  and make POST (interactionTimes + 1)
+
+                                interactionTimesService.incrementInteractionTimes(interactionTimesDto);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

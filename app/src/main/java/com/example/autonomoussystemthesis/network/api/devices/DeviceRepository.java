@@ -30,10 +30,11 @@ public class DeviceRepository extends AppCompatActivity {
         Log.d("FLOW", "DeviceRepository");
 
         //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+        // IP uni: "http://10.20.130.243:8080/"
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+        retrofit = new Retrofit.Builder().baseUrl("https://a8ae1e71.ngrok.io")
                 .client(
                         new OkHttpClient.Builder()
                             .addInterceptor(interceptor)

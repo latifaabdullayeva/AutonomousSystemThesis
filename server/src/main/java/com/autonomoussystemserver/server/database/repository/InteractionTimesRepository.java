@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface InteractionTimesRepository extends JpaRepository<InteractionTimes, Integer>, CrudRepository<InteractionTimes, Integer> {
 
-    @Query("select interaction from InteractionTimes interaction where mascot=:mascot")
+    @Query("select interaction from InteractionTimes interaction where mascot=:mascot ORDER BY interactionId ASC")
     InteractionTimes findByMascot(Devices mascot);
 }

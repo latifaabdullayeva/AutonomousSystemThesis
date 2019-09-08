@@ -10,12 +10,11 @@ public class ApiPersonalityResponse {
     private List<Personality> content;
 
     public ApiPersonalityResponse(List<Personality> content) {
+        Log.d("FLOW", "ApiPersonalityResponse");
         this.content = content;
-        Log.d(TAG, "Personality API");
     }
 
     public List<Personality> getContent() {
-        Log.d(TAG, "Personality Api getContent()");
         return content;
     }
 }

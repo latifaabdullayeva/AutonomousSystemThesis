@@ -16,7 +16,7 @@ public class DeviceDto {
     public DeviceDto(String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
         System.out.println("DeviceDTO constructor");
         this.deviceName = deviceName;
-        this.deviceType=deviceType;
+        this.deviceType = deviceType;
         this.beaconUuid = beaconUuid;
         this.devicePersonality = devicePersonality;
     }
@@ -25,7 +25,8 @@ public class DeviceDto {
         System.out.println("DeviceDTO getDeviceName = " + deviceName);
         return deviceName;
     }
-    public String getDeviceType(){
+
+    public String getDeviceType() {
         System.out.println("DeviceDTO getDeviceType = " + deviceType);
         return deviceType;
     }
@@ -39,4 +40,10 @@ public class DeviceDto {
         System.out.println("DeviceDTO getDevicePersonality = " + devicePersonality);
         return devicePersonality;
     }
+
+//    @JsonProperty("personality_id")
+//    private void unpackNested(Integer id) {
+//        this.devicePersonality = new Personality();
+//        devicePersonality.setId(id);
+//    }
 }

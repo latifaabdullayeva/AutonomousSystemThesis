@@ -1,9 +1,9 @@
 package com.autonomoussystemserver.server.controller;
 
 import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
-import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.InteractionTimes;
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
+import com.autonomoussystemserver.server.service.InteractionTimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +20,9 @@ public class InteractionTimesController {
     @Autowired
     private InteractionTimesRepository interactionTimesRepository;
 
+    @Autowired
+    private InteractionTimesService interactionTimesService;
+
     @GetMapping("/interactionTimes")
     public Page<InteractionTimes> getInteractionTimes(Pageable pageable) {
         System.out.println("------------------------------------------------------------");
@@ -29,28 +32,18 @@ public class InteractionTimesController {
 
     @PostMapping("/interactionTimes")
     public ResponseEntity<InteractionTimes> createInteraction(@RequestBody InteractionTimesDto interactionTimesDto) {
+        // (, Integer mascotId, Integer interactionTimes)
         System.out.println("------------------------------------------------------------");
         System.out.println("InteractionTimesController -> POST createInteraction()");
 
-        if (interactionTimesDto.getMascotId() == null) {
-            return ResponseEntity.badRequest().body(null);
+        InteractionTimes interactionTimes = interactionTimesService
+                .incrementInteractionTimes(interactionTimesDto);
+
+        if (interactionTimes == null) {
+            return ResponseEntity.badRequest()
+                    .body(null);
         }
 
-        Devices device = new Devices();
-        device.setDeviceId(interactionTimesDto.getMascotId());
-
-        InteractionTimes existingInteraction = interactionTimesRepository.findByMascot(device);
-
-        if (existingInteraction != null) {
-            return ResponseEntity.badRequest().body(null);
-        } else {
-            InteractionTimes newInteractionTimes = new InteractionTimes();
-
-            newInteractionTimes.setMascot(device);
-            newInteractionTimes.setInteractionTimes(interactionTimesDto.getInteractionTimes());
-
-            interactionTimesRepository.save(newInteractionTimes);
-            return ResponseEntity.ok(newInteractionTimes);
-        }
+        return ResponseEntity.ok(interactionTimes);
     }
 }

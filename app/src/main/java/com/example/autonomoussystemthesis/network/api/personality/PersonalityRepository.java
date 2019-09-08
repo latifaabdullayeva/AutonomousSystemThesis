@@ -22,11 +22,12 @@ public class PersonalityRepository {
     public PersonalityRepository() {
         Log.d("FLOW", "PersonalityRepository");
 
-//        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+        // retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+        // when you connect uni wi-fi (10.20.130.243)
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
+        retrofit = new Retrofit.Builder().baseUrl("https://a8ae1e71.ngrok.io")
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)

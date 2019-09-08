@@ -152,8 +152,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                         if (beacons.size() > 0) {
                             for (Beacon beacon : beacons) {
-                                Log.d(TAG, "beacons = " + beacons.toString());
-                                Log.d(TAG, "beacon = " + beacon.getId1().toString());
+//                                Log.d(TAG, "beacons = " + beacons.toString());
+//                                Log.d(TAG, "beacon = " + beacon.getId1().toString());
 
                                 if (!tempBeaconList.contains(beacon.getId1().toString())) {
                                     tempBeaconList.add(beacon.getId1().toString());

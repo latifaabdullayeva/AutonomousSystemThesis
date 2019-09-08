@@ -36,12 +36,10 @@ public class InteractionRepository {
         interactionService = retrofit.create(InteractionService.class);
     }
 
-    public void sendNetworkRequest(Integer interactionId, Integer mascotId, Integer interactionTimes) {
+    public void sendNetworkRequest(Integer mascotId) {
         Log.d(TAG, "sendNetworkRequest()");
-        Interaction interactionRequest;
 
-//        Device device = new Device(mascotId);
-        interactionRequest = new Interaction(null, mascotId, interactionTimes);
+        Interaction interactionRequest = new Interaction(mascotId);
 
         interactionService.postInteraction(interactionRequest).enqueue(new Callback<ResponseBody>() {
             @Override
