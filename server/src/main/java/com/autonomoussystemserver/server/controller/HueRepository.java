@@ -1,21 +1,19 @@
 package com.autonomoussystemserver.server.controller;
 
-import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
-import com.autonomoussystemserver.server.controller.InteractionTimesController;
-import com.autonomoussystemserver.server.database.model.InteractionTimes;
-
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
 import com.autonomoussystemserver.server.service.InteractionTimesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.IOException;
 
 public class HueRepository {
 

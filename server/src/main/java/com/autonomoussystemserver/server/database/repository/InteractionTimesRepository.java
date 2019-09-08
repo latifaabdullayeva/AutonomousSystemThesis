@@ -2,6 +2,7 @@ package com.autonomoussystemserver.server.database.repository;
 
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.InteractionTimes;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -7,6 +7,7 @@ import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;

@@ -4,6 +4,7 @@ import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.InteractionTimes;
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
