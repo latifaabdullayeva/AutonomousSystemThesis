@@ -25,7 +25,7 @@ public class DistanceRepository {
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://c36820ec.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.101:8080/")
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)

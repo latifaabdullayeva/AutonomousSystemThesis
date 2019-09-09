@@ -20,7 +20,6 @@ import com.example.autonomoussystemthesis.network.api.personality.PersonalityRep
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
@@ -167,7 +166,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
                         }
                     } else {
-                        Log.d(TAG, "Your Beacon DOES NOT exists in DB");
+                        Log.d(TAG, "Your Beacon DOES NOT exists in DB ");
                     }
 
                 }
@@ -183,12 +182,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
     @Override
     public void onBeaconServiceConnect() {
-        beaconManager.addRangeNotifier(new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                getDeviceRequest(beacons);
-            }
-        });
+        beaconManager.addRangeNotifier((beacons, region) -> getDeviceRequest(beacons));
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (
