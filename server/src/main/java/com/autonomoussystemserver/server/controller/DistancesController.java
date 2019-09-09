@@ -99,8 +99,11 @@ public class DistancesController {
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
                 int saturation = personality.getSat();
-                hueRepository.updateBrightness(brightness, hue, saturation);
+                hueRepository.updateBrightness(true, brightness, hue, saturation);
                 System.out.println("Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
+            } else {
+                // else if the mascot is outside of range, then turn off the lamp, or let other mascot to change its state
+                hueRepository.updateBrightness(false, 0, 0, 0);
             }
 
         } else if (devNameTo.getDeviceType().equals("Speakers")) {

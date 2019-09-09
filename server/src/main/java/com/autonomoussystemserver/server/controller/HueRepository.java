@@ -41,9 +41,9 @@ public class HueRepository {
         username = user;
     }
 
-    public void updateBrightness(int brightness, int hue, int saturation) {
+    public void updateBrightness(boolean lampState, int brightness, int hue, int saturation) {
         System.out.println("HueRepository updateBrightness");
-        HueRequest request = new HueRequest(true, brightness, hue, saturation);
+        HueRequest request = new HueRequest(lampState, brightness, hue, saturation);
 
         // InteractionTimes interactionTimes = interactionTimesService.create(interactionTimesDto);
 
