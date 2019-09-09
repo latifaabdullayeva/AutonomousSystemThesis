@@ -28,7 +28,7 @@ public class Personality {
         );
     }
 
-    public Personality(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
+    Personality(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
         Log.d("FLOW", "Personality");
 
         this.id = id;

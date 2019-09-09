@@ -15,11 +15,11 @@ public class Distance {
         this.distance = distance;
     }
 
-    public Integer getFromDevice() {
+    Integer getFromDevice() {
         return fromDevice;
     }
 
-    public Integer getToDevice() {
+    Integer getToDevice() {
         return toDevice;
     }
 
