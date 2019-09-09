@@ -116,12 +116,12 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                     // we vibrate my mascot according to the personality of other mascot
 
                                                     // We check whether user's device and the approaching device both are Mascots and their distance is less or equal 45 cm
-                                                    if (deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot") && beacon.getDistance() <= 45) {
-                                                        final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                                    final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                                    if (beacon.getDistance() <= 20 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
                                                         // Add a vibration level according to the personality of a device to whom we measure the distance
                                                         personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
                                                             @Override
-                                                            public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
+                                                            public void onResponse(@NonNull Call<ApiPersonalityResponse> call, @NonNull Response<ApiPersonalityResponse> response) {
                                                                 if (!response.isSuccessful()) {
                                                                     Log.d(TAG, "PersonalityRepository Code: " + response.code());
                                                                     return;
@@ -145,10 +145,13 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                             }
 
                                                             @Override
-                                                            public void onFailure(Call<ApiPersonalityResponse> call, Throwable t) {
+                                                            public void onFailure(@NonNull Call<ApiPersonalityResponse> call, @NonNull Throwable t) {
                                                                 Log.d(TAG, "error loading from API: " + t.getMessage());
                                                             }
                                                         });
+                                                    } else if (beacon.getDistance() > 20) {
+                                                        // if the distance is more than 45 cm, cancel vibration
+                                                        vibrator.cancel();
                                                     }
                                                 }
                                             }
