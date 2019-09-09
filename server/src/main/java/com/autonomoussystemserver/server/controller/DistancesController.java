@@ -78,7 +78,7 @@ public class DistancesController {
 //         HueRepository hueRepository = new HueRepository("192.168.0.100", "vY5t4oArH-K0BUA7430cb1rJ8mC1DYMzkmBWRr91");
 
         // we need to find Philips Hue in our network
-        // we get ipAddress and username of hue Lamp from comand line
+        // we get ipAddress and username of hue Lamp from command line
         // TODO describe from where we get username
         // we get Ip address from the website https://discovery.meethue.com/
         HueRepository hueRepository = new HueRepository(ipAddress, username);
@@ -89,10 +89,12 @@ public class DistancesController {
 
         System.out.println("devNameFrom.getDeviceType() = " + devNameFrom.getDeviceType());
         System.out.println("devNameTo.getDeviceType() = " + devNameTo.getDeviceType());
+
+        String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
+        Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
+
         if (devNameTo.getDeviceType().equals("Lamp")) {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
-                String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
-                Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
                 System.out.println("DistanceController Personality personality = " + personality + "; personalityNameofDev = " + personalityNameofDev);
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
@@ -100,7 +102,23 @@ public class DistancesController {
                 hueRepository.updateBrightness(brightness, hue, saturation);
                 System.out.println("Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             }
+
+        } else if (devNameTo.getDeviceType().equals("Speakers")) {
+            if (distances.getDistance() >= 370) {
+                System.out.println();
+                // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
+                String musicGenre = personality.getMusic_genre();
+                // TODO: Here api for music genre
+                // have 3-4 music from each genre, then play sequentially. Locally save these songs
+
+            }
         }
+        // TODO: For Mascot-Tablet interaction
+        // Tablet may periodically ask, is there any changes in its state. For example, make GET request to server every half of second
+        // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
+        // Write another app for Tablet in order to change the color of screen
+        // There will be retrofit (http client that makes requests to server, and asks what it needs to display at this moment
+
         return distances;
     }
 }

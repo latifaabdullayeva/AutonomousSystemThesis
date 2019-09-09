@@ -138,7 +138,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                                                                         if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
                                                                             vibrator.vibrate(100 * personality.getVibration_level());
                                                                             Log.d(TAG, "personality.getVibration_level() = " + device.getDevicePersonality().getVibration_level());
-                                                                            // TODO: when vibrated -> get, post Interaction
                                                                             interactionRepository.sendNetworkRequest(myMascotId);
                                                                         }
                                                                     }
