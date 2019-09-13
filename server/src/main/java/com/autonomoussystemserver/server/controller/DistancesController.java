@@ -3,9 +3,11 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.DistanceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Distances;
+import com.autonomoussystemserver.server.database.model.InteractionTimes;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
+import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class DistancesController {
 
     @Autowired
     private PersonalityRepository personalityRepository;
+
+    @Autowired
+    private InteractionTimesRepository interactionTimesRepository;
 
     // we pass command line arguments to spring server (in order to set up philips hue bridge
     @Value("${ipAddress}")
@@ -108,12 +113,14 @@ public class DistancesController {
 
         } else if (devNameTo.getDeviceType().equals("Speakers")) {
             if (distances.getDistance() >= 370) {
-                System.out.println();
+                System.out.println("DistanceController Speakers");
                 // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
                 String musicGenre = personality.getMusic_genre();
                 // TODO: Here api for music genre
                 // have 3-4 music from each genre, then play sequentially. Locally save these songs
 
+                InteractionTimes interactionTimes = interactionTimesRepository.findMaximum();
+                System.out.println("DistanceController interactionTimes = " + interactionTimes);
             }
         }
         // TODO: For Mascot-Tablet interaction

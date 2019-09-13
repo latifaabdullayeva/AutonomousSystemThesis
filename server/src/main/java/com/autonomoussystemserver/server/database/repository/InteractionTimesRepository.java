@@ -11,4 +11,8 @@ public interface InteractionTimesRepository extends JpaRepository<InteractionTim
 
     @Query("select interaction from InteractionTimes interaction where mascot=:mascot ORDER BY interactionId ASC")
     InteractionTimes findByMascot(Devices mascot);
+
+    @Query("SELECT interaction.mascot FROM InteractionTimes interaction WHERE interaction.interactionTimes = " +
+            "(SELECT MAX(interaction.interactionTimes) FROM InteractionTimes interaction)")
+    InteractionTimes findMaximum();
 }
