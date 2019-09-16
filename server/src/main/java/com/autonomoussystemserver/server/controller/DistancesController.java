@@ -10,6 +10,12 @@ import com.autonomoussystemserver.server.database.repository.DistancesRepository
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
 
+import javafx.embed.swing.JFXPanel;
+
+import javax.sound.sampled.*;
+import javax.swing.*;
+
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +25,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.*;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
+
+import java.lang.management.PlatformLoggingMXBean;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import static sun.audio.AudioPlayer.player;
 
 // GET --> POST
 @RestController
@@ -44,6 +66,8 @@ public class DistancesController {
 
     @Value("${username}")
     private String username;
+
+    private long initialMillisec = System.currentTimeMillis();
 
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
@@ -115,31 +139,48 @@ public class DistancesController {
                 hueRepository.updateBrightness(false, 0, 0, 0);
             }
 
-        } else if (devNameTo.getDeviceType().equals("Speakers")) {
-            // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
-            //  regardless of the type of device
-            if (distances.getDistance() >= 370) {
-                System.out.println("DistanceController Speakers");
+            // here instead of If devTo is Speaker, we will set a timer and say, if 3 minutes is up
+        }
 
-                // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
-                List<Devices> interactionTimes = interactionTimesRepository.findMaximum(PageRequest.of(0, 1));
-                // winner is the most active Mascot that the DB returns
-                Integer winner = interactionTimes.get(0).getDeviceId();
-                System.out.println("DistanceController mostActiveMascot = " + winner);
+        // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
+        //  regardless of the type of device
+        if (distances.getDistance() >= 370) {
+            System.out.println("DistanceController Speakers");
 
-                // here we get the personality of the mascot that has ID winner
-                Devices act = Objects.requireNonNull(devicesRepository.findById(winner).orElse(null));
-                String personalityNameOfMascot = act.getDevicePersonality().getPersonality_name();
-                Personality personalityOfActiveMascot = personalityRepository.findByPersonalityName(personalityNameOfMascot);
+            // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
+            List<Devices> interactionTimes = interactionTimesRepository.findMaximum(PageRequest.of(0, 1));
+            // winner is the most active Mascot that the DB returns
+            Integer winner = interactionTimes.get(0).getDeviceId();
+            System.out.println("DistanceController mostActiveMascot = " + winner);
 
-                // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
-                String musicGenre = personalityOfActiveMascot.getMusic_genre();
-                System.out.println("DistanceController or most active mascot is = " + winner +
-                        "; its personality is = " + personalityOfActiveMascot + "; and correlated music genre is = " + musicGenre);
-                // TODO: Here api for music genre
-                // have 3-4 music from each genre, then play sequentially. Locally save these songs
+            // here we get the personality of the mascot that has ID winner
+            Devices act = Objects.requireNonNull(devicesRepository.findById(winner).orElse(null));
+            String personalityNameOfMascot = act.getDevicePersonality().getPersonality_name();
+            Personality personalityOfActiveMascot = personalityRepository.findByPersonalityName(personalityNameOfMascot);
+
+            // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
+            String musicGenre = personalityOfActiveMascot.getMusic_genre();
+            System.out.println("DistanceController the most active mascot is = " + winner +
+                    "; its personality is = " + personalityNameOfMascot + "; and correlated music genre is = " + musicGenre);
+            // TODO: Here api for music genre
+            // have 3-4 music from each genre, then play sequentially. Locally save these songs
+//                Media hit = new Media(new File("src/main/java/com/autonomoussystemserver/server/assets/" + musicGenre + ".mp3").toURI().toString());
+//                MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//                mediaPlayer.play();
+
+            String songFilePath = "src/main/java/com/autonomoussystemserver/server/assets/" + musicGenre + ".mp3";
+            try {
+                InputStream input = new FileInputStream(songFilePath);
+                AudioStream stream = new AudioStream(input);
+                AudioData data = stream.getData();
+                ContinuousAudioDataStream loop = new ContinuousAudioDataStream(data);
+                player.start(loop);
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
             }
         }
+
+
         // TODO: For Mascot-Tablet interaction
         // Tablet may periodically ask, is there any changes in its state. For example, make GET request to server every half of second
         // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
@@ -148,6 +189,15 @@ public class DistancesController {
 
         return distances;
     }
+
+    public void playMusic() {
+        long currentMillisec = System.currentTimeMillis();
+        System.out.println(currentMillisec);
+        if (currentMillisec - initialMillisec == 60000) {
+
+        }
+    }
+
 }
 
 /*
