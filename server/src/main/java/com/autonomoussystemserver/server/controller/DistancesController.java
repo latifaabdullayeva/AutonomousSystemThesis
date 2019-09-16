@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 // GET --> POST
 @RestController
@@ -119,14 +120,24 @@ public class DistancesController {
             //  regardless of the type of device
             if (distances.getDistance() >= 370) {
                 System.out.println("DistanceController Speakers");
-                // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
-                String musicGenre = personality.getMusic_genre();
-                // TODO: Here api for music genre
-                // have 3-4 music from each genre, then play sequentially. Locally save these songs
 
                 // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
                 List<Devices> interactionTimes = interactionTimesRepository.findMaximum(PageRequest.of(0, 1));
-                System.out.println("DistanceController mostActiveMascot = " + interactionTimes.get(0).getDeviceId());
+                // winner is the most active Mascot that the DB returns
+                Integer winner = interactionTimes.get(0).getDeviceId();
+                System.out.println("DistanceController mostActiveMascot = " + winner);
+
+                // here we get the personality of the mascot that has ID winner
+                Devices act = Objects.requireNonNull(devicesRepository.findById(winner).orElse(null));
+                String personalityNameOfMascot = act.getDevicePersonality().getPersonality_name();
+                Personality personalityOfActiveMascot = personalityRepository.findByPersonalityName(personalityNameOfMascot);
+
+                // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
+                String musicGenre = personalityOfActiveMascot.getMusic_genre();
+                System.out.println("DistanceController or most active mascot is = " + winner +
+                        "; its personality is = " + personalityOfActiveMascot + "; and correlated music genre is = " + musicGenre);
+                // TODO: Here api for music genre
+                // have 3-4 music from each genre, then play sequentially. Locally save these songs
             }
         }
         // TODO: For Mascot-Tablet interaction
