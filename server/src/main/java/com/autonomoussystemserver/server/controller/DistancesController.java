@@ -12,11 +12,14 @@ import com.autonomoussystemserver.server.database.repository.PersonalityReposito
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 // GET --> POST
 @RestController
@@ -112,6 +115,8 @@ public class DistancesController {
             }
 
         } else if (devNameTo.getDeviceType().equals("Speakers")) {
+            // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
+            //  regardless of the type of device
             if (distances.getDistance() >= 370) {
                 System.out.println("DistanceController Speakers");
                 // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
@@ -119,8 +124,9 @@ public class DistancesController {
                 // TODO: Here api for music genre
                 // have 3-4 music from each genre, then play sequentially. Locally save these songs
 
-                InteractionTimes interactionTimes = interactionTimesRepository.findMaximum();
-                System.out.println("DistanceController interactionTimes = " + interactionTimes);
+                // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
+                List<Devices> interactionTimes = interactionTimesRepository.findMaximum(PageRequest.of(0, 1));
+                System.out.println("DistanceController mostActiveMascot = " + interactionTimes.get(0).getDeviceId());
             }
         }
         // TODO: For Mascot-Tablet interaction
