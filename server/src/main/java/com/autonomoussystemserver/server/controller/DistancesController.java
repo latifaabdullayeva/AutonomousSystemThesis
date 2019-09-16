@@ -3,19 +3,11 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.DistanceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Distances;
-import com.autonomoussystemserver.server.database.model.InteractionTimes;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
 import com.autonomoussystemserver.server.database.repository.DistancesRepository;
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
-
-import javafx.embed.swing.JFXPanel;
-
-import javax.sound.sampled.*;
-import javax.swing.*;
-
-import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -24,23 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.*;
-
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
 
-import java.lang.management.PlatformLoggingMXBean;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import static sun.audio.AudioPlayer.player;
 
@@ -68,6 +51,7 @@ public class DistancesController {
     private String username;
 
     private long initialMillisec = System.currentTimeMillis();
+    private int counter = 1;
 
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
@@ -99,8 +83,11 @@ public class DistancesController {
         // Proxemics Theory
 
         distancesRepository.save(distances);
-        System.out.println("DistanceController -> POST distances: " + distances);
-        System.out.println("Hue distances.getDistance(): " + distances.getDistance());
+//        System.out.println("DistanceController -> POST distances: " + distances);
+//        System.out.println("Hue distances.getDistance(): " + distances.getDistance());
+
+        // this method checks if the time is 3 minutes, play a music
+        playMusic(distances);
 
         // TODO: We find by IpAddress, but from where we get this IpAddress? get IP from  https://discovery.meethue.com
 //        Hue hueData = hueRepository.findByIpAddress("192.168.0.100");
@@ -115,25 +102,25 @@ public class DistancesController {
         // TODO describe from where we get username
         // we get Ip address from the website https://discovery.meethue.com/
         HueRepository hueRepository = new HueRepository(ipAddress, username);
-        System.out.println("DistanceController hueRepository, [" + hueRepository + "]; [" + ipAddress + "]; [" + username + "]");
+//        System.out.println("DistanceController hueRepository, [" + hueRepository + "]; [" + ipAddress + "]; [" + username + "]");
 
         Devices devNameFrom = devicesRepository.findById(distanceDto.getFromDevice()).orElse(null);
         Devices devNameTo = devicesRepository.findById(distanceDto.getToDevice()).orElse(null);
 
-        System.out.println("devNameFrom.getDeviceType() = " + devNameFrom.getDeviceType());
-        System.out.println("devNameTo.getDeviceType() = " + devNameTo.getDeviceType());
+//        System.out.println("devNameFrom.getDeviceType() = " + devNameFrom.getDeviceType());
+//        System.out.println("devNameTo.getDeviceType() = " + devNameTo.getDeviceType());
 
         String personalityNameofDev = devNameFrom.getDevicePersonality().getPersonality_name();
         Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
 
         if (devNameTo.getDeviceType().equals("Lamp")) {
             if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
-                System.out.println("DistanceController Personality personality = " + personality + "; personalityNameofDev = " + personalityNameofDev);
+//                System.out.println("DistanceController Personality personality = " + personality + "; personalityNameofDev = " + personalityNameofDev);
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
                 int saturation = personality.getSat();
                 hueRepository.updateBrightness(true, brightness, hue, saturation);
-                System.out.println("Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
+//                System.out.println("Hue hueRepository.updateBrightness() brightness = [" + brightness + "]; hue = [" + hue + "]; saturation = [" + saturation + "]");
             } else {
                 // else if the mascot is outside of range, then turn off the lamp, or let other mascot to change its state
                 hueRepository.updateBrightness(false, 0, 0, 0);
@@ -141,10 +128,28 @@ public class DistancesController {
 
             // here instead of If devTo is Speaker, we will set a timer and say, if 3 minutes is up
         }
+        // TODO: For Mascot-Tablet interaction
+        // Tablet may periodically ask, is there any changes in its state. For example, make GET request to server every half of second
+        // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
+        // Write another app for Tablet in order to change the color of screen
+        // There will be retrofit (http client that makes requests to server, and asks what it needs to display at this moment
 
-        // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
-        //  regardless of the type of device
-        if (distances.getDistance() >= 370) {
+        return distances;
+    }
+
+    private void playMusic(Distances distances) {
+        long currentMillisec = System.currentTimeMillis();
+        System.out.println(initialMillisec + " = initialMillisec; " + currentMillisec + " = currentMillisec"
+                + "; counter = " + counter + "; minus = " + (currentMillisec - initialMillisec));
+        // here you specify the time, every 55000-600000 milliseconds (55 sec - 60 sec), the music will play
+        if ((currentMillisec - initialMillisec) >= 55000 * counter && (currentMillisec - initialMillisec) <= 60000 * counter) {
+            System.out.println("****************************************************************************************");
+            System.out.println("-- inside Speaker's IF");
+//            initialMillisec = currentMillisec;
+            counter += 1;
+            // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
+            //  regardless of the type of device
+//            if (distances.getDistance() >= 370) {
             System.out.println("DistanceController Speakers");
 
             // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
@@ -178,23 +183,7 @@ public class DistancesController {
             } catch (Exception e) {
                 System.out.println("Error: " + e);
             }
-        }
-
-
-        // TODO: For Mascot-Tablet interaction
-        // Tablet may periodically ask, is there any changes in its state. For example, make GET request to server every half of second
-        // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
-        // Write another app for Tablet in order to change the color of screen
-        // There will be retrofit (http client that makes requests to server, and asks what it needs to display at this moment
-
-        return distances;
-    }
-
-    public void playMusic() {
-        long currentMillisec = System.currentTimeMillis();
-        System.out.println(currentMillisec);
-        if (currentMillisec - initialMillisec == 60000) {
-
+//            }
         }
     }
 
