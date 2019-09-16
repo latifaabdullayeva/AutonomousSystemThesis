@@ -97,7 +97,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
         // We check whether user's device and the approaching device both are Mascots and their distance is less or equal 45 cm
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        if (beacon.getDistance() <= 20 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
+        if (round(beacon.getDistance() * 100) <= 20 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
             Log.d("test", "If DISTANCE == : " + deviceTypeValue + "; " +
                     device.getDeviceType() + "; " + round(beacon.getDistance() * 100));
             // Add a vibration level according to the personality of a device to whom we measure the distance
