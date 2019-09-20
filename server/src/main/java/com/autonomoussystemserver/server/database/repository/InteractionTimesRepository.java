@@ -17,5 +17,5 @@ public interface InteractionTimesRepository extends JpaRepository<InteractionTim
 
     @Query("SELECT interaction.mascot FROM InteractionTimes interaction WHERE interaction.interactionTimes = " +
             "(SELECT MAX(interaction.interactionTimes) FROM InteractionTimes interaction)")
-    List<Devices> findMaximum(Pageable pageable);
+    List<Devices> findMaximumInteractedMascot(Pageable pageable);
 }

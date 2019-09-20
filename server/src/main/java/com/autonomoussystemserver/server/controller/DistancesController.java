@@ -16,16 +16,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import sun.audio.AudioData;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
+import uk.co.caprica.vlcj.binding.LibC.*;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Semaphore;
 
-import static sun.audio.AudioPlayer.player;
+import static java.lang.System.exit;
 
 // GET --> POST
 @RestController
@@ -52,6 +54,9 @@ public class DistancesController {
 
     private long initialMillisec = System.currentTimeMillis();
     private int counter = 1;
+    private MediaPlayerFactory factory;
+    private MediaPlayer audioPlayer;
+    private Semaphore sync = new Semaphore(0);
 
     @GetMapping("/distances")
     public org.springframework.data.domain.Page<Distances> getDistances(Pageable pageable) {
@@ -80,14 +85,12 @@ public class DistancesController {
         distances.setToDevice(toDevice);
         distances.setDistance(distanceDto.getDistance());
 
-        // Proxemics Theory
-
         distancesRepository.save(distances);
 //        System.out.println("DistanceController -> POST distances: " + distances);
 //        System.out.println("Hue distances.getDistance(): " + distances.getDistance());
 
         // this method checks if the time is 3 minutes, play a music
-        playMusic(distances);
+        checkTheTime();
 
         // TODO: We find by IpAddress, but from where we get this IpAddress? get IP from  https://discovery.meethue.com
 //        Hue hueData = hueRepository.findByIpAddress("192.168.0.100");
@@ -128,6 +131,7 @@ public class DistancesController {
 
             // here instead of If devTo is Speaker, we will set a timer and say, if 3 minutes is up
         }
+
         // TODO: For Mascot-Tablet interaction
         // Tablet may periodically ask, is there any changes in its state. For example, make GET request to server every half of second
         // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
@@ -137,56 +141,56 @@ public class DistancesController {
         return distances;
     }
 
-    private void playMusic(Distances distances) {
+    // this method periodically checks if the 1 minute (60 000 milisec) passed, if yes, it calls the playMusic method
+    private void checkTheTime() {
+        // the number of interaction of each Mascot will be checked only after 3 minutes
+        // the initial time is the time when server get the first "post distance" request,
         long currentMillisec = System.currentTimeMillis();
         System.out.println(initialMillisec + " = initialMillisec; " + currentMillisec + " = currentMillisec"
                 + "; counter = " + counter + "; minus = " + (currentMillisec - initialMillisec));
         // here you specify the time, every 55000-600000 milliseconds (55 sec - 60 sec), the music will play
+        // TODO: do not forget to make it 3 minutes (= 180 000 milliseconds)
         if ((currentMillisec - initialMillisec) >= 55000 * counter && (currentMillisec - initialMillisec) <= 60000 * counter) {
-            System.out.println("****************************************************************************************");
-            System.out.println("-- inside Speaker's IF");
-//            initialMillisec = currentMillisec;
             counter += 1;
-            // todo: maybe you don't need to specify that the device is speaker, the music will play every n minutes
-            //  regardless of the type of device
-//            if (distances.getDistance() >= 370) {
-            System.out.println("DistanceController Speakers");
-
-            // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
-            List<Devices> interactionTimes = interactionTimesRepository.findMaximum(PageRequest.of(0, 1));
-            // winner is the most active Mascot that the DB returns
-            Integer winner = interactionTimes.get(0).getDeviceId();
-            System.out.println("DistanceController mostActiveMascot = " + winner);
-
-            // here we get the personality of the mascot that has ID winner
-            Devices act = Objects.requireNonNull(devicesRepository.findById(winner).orElse(null));
-            String personalityNameOfMascot = act.getDevicePersonality().getPersonality_name();
-            Personality personalityOfActiveMascot = personalityRepository.findByPersonalityName(personalityNameOfMascot);
-
-            // TODO: when the distance is more than 370 cm, play a music according to the personality of winner
-            String musicGenre = personalityOfActiveMascot.getMusic_genre();
-            System.out.println("DistanceController the most active mascot is = " + winner +
-                    "; its personality is = " + personalityNameOfMascot + "; and correlated music genre is = " + musicGenre);
-            // TODO: Here api for music genre
-            // have 3-4 music from each genre, then play sequentially. Locally save these songs
-//                Media hit = new Media(new File("src/main/java/com/autonomoussystemserver/server/assets/" + musicGenre + ".mp3").toURI().toString());
-//                MediaPlayer mediaPlayer = new MediaPlayer(hit);
-//                mediaPlayer.play();
-
-            String songFilePath = "src/main/java/com/autonomoussystemserver/server/assets/" + musicGenre + ".mp3";
-            try {
-                InputStream input = new FileInputStream(songFilePath);
-                AudioStream stream = new AudioStream(input);
-                AudioData data = stream.getData();
-                ContinuousAudioDataStream loop = new ContinuousAudioDataStream(data);
-                player.start(loop);
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
-            }
-//            }
+            chooseWinnerMascot();
         }
     }
 
+    // this method gets from DB the most Active mascot, finds its personality from other table and calls  playMusic method
+    private void chooseWinnerMascot() {
+        System.out.println("DistanceController Speakers");
+        // when there are several mascots with the same maximum interactionTimes value, then we just choose the first row (first Mascot)
+        List<Devices> interactionTimes = interactionTimesRepository.findMaximumInteractedMascot(PageRequest.of(0, 1));
+        // winner is the most active Mascot that the DB returns
+        Integer winnerMascot = interactionTimes.get(0).getDeviceId();
+        System.out.println("DistanceController mostActiveMascot = " + winnerMascot);
+
+        // here we get the personality of the mascot that has ID winner
+        Devices mostActive = Objects.requireNonNull(devicesRepository.findById(winnerMascot).orElse(null));
+        String personalityNameOfMascot = mostActive.getDevicePersonality().getPersonality_name();
+        Personality personalityOfActiveMascot = personalityRepository.findByPersonalityName(personalityNameOfMascot);
+
+        // we get the musicGenre of personality of the winnerMascot
+        String musicGenre = personalityOfActiveMascot.getMusic_genre();
+        System.out.println("DistanceController the most active mascot is = " + winnerMascot +
+                "; its personality is = " + personalityNameOfMascot + "; and correlated music genre is = " + musicGenre);
+
+        playMusic(musicGenre + ".mp3");
+    }
+
+    private void playMusic(String trackName) {
+        try {
+            // TODO: cross platform, call Example class from another project
+            Process process = new ProcessBuilder()
+                    .command("afplay", "/Users/latifaabdullayeva/Desktop/vlc-example/src/main/resources/" + trackName)
+                    .start();
+
+            process.waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+        // TODO: maybe need some logic to stop the music
+    }
 }
 
 /*
