@@ -7,14 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3bec802-f35f-4c4e-a9dc-e6135509ab8f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/ScreenColorChange.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/RecyclerViewAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_tabletinitialisation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/recyclerview_row.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/LaunchScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/LaunchScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/TabletInitialisation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/TabletInitialisation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,45 +34,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="36" column="63" lean-forward="true" selection-start-line="36" selection-start-column="63" selection-end-line="36" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="10" selection-start-line="10" selection-end-line="35" selection-end-column="18" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MyMascotApp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="76" />
+            <state relative-caret-position="441">
+              <caret line="315" column="30" selection-start-line="315" selection-start-column="22" selection-end-line="315" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4216#4263#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="36" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="36" />
+            <state relative-caret-position="103">
+              <caret line="38" column="30" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="48">
+              <caret line="4" column="36" lean-forward="true" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="57" column="32" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+              <folding>
+                <element signature="e#1050#1091#0" expanded="true" />
+                <element signature="e#1750#1774#0" expanded="true" />
+                <element signature="e#2479#2517#0" expanded="true" />
+                <element signature="e#2910#2926#0" expanded="true" />
+                <element signature="e#3273#3287#0" expanded="true" />
+                <element signature="e#3638#3656#0" expanded="true" />
+                <element signature="e#4005#4021#0" expanded="true" />
+                <element signature="e#4366#4406#0" expanded="true" />
+                <element signature="e#5245#5289#0" expanded="true" />
+                <element signature="e#5671#5689#0" expanded="true" />
+                <element signature="e#6027#6054#0" expanded="true" />
+                <element signature="e#6392#6414#0" expanded="true" />
+                <element signature="e#6752#6775#0" expanded="true" />
+                <element signature="e#7113#7134#0" expanded="true" />
+                <element signature="e#7483#7497#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="7" column="40" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -85,6 +119,8 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>distance</find>
+      <find>recyclerview</find>
+      <find>recyclerview_row</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -127,11 +163,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/InteractionRepository.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/DeviceRepository.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="width" value="677" />
+    <option name="width" value="714" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -360,10 +398,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="677" height="900" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="714" height="900" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" weight="0.6047244" />
+      <window_info content_ui="combo" id="Project" weight="0.25178826" />
       <window_info id="Structure" side_tool="true" />
       <window_info id="Build Variants" side_tool="true" />
       <window_info id="Image Layers" />
@@ -398,13 +435,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/test/java/com/example/mymascotapp/ExampleUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="31" selection-start-column="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="31" selection-start-column="31" selection-end-column="31" />
@@ -488,13 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
@@ -557,20 +580,13 @@
     <entry file="file://$PROJECT_DIR$/app/app.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="36" column="63" lean-forward="true" selection-start-line="36" selection-start-column="63" selection-end-line="36" selection-end-column="63" />
+        <state relative-caret-position="204">
+          <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" selection-start-line="10" selection-end-line="35" selection-end-column="18" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MyMascotApp.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -582,27 +598,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="102" />
+        <state relative-caret-position="120">
+          <caret line="10" selection-start-line="10" selection-end-line="35" selection-end-column="18" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="36" column="63" lean-forward="true" selection-start-line="36" selection-start-column="63" selection-end-line="36" selection-end-column="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a8e7153660f0642982a76d40bd652b71/cardview-v7-28.0.0/jars/classes.jar!/android/support/v7/widget/CardView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="31" column="39" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/967e8d778145ef395ac0dc868ec88b33/recyclerview-v7-28.0.0/jars/classes.jar!/android/support/v7/widget/RecyclerView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="105" column="48" selection-start-line="105" selection-start-column="48" selection-end-line="105" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+        <state relative-caret-position="84">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="4" column="36" lean-forward="true" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="36" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="36" />
+        <state relative-caret-position="103">
+          <caret line="38" column="30" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="57" column="32" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+          <folding>
+            <element signature="e#1050#1091#0" expanded="true" />
+            <element signature="e#1750#1774#0" expanded="true" />
+            <element signature="e#2479#2517#0" expanded="true" />
+            <element signature="e#2910#2926#0" expanded="true" />
+            <element signature="e#3273#3287#0" expanded="true" />
+            <element signature="e#3638#3656#0" expanded="true" />
+            <element signature="e#4005#4021#0" expanded="true" />
+            <element signature="e#4366#4406#0" expanded="true" />
+            <element signature="e#5245#5289#0" expanded="true" />
+            <element signature="e#5671#5689#0" expanded="true" />
+            <element signature="e#6027#6054#0" expanded="true" />
+            <element signature="e#6392#6414#0" expanded="true" />
+            <element signature="e#6752#6775#0" expanded="true" />
+            <element signature="e#7113#7134#0" expanded="true" />
+            <element signature="e#7483#7497#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="315" column="30" selection-start-line="315" selection-start-column="22" selection-end-line="315" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4216#4263#0" expanded="true" />
           </folding>
         </state>
       </provider>
