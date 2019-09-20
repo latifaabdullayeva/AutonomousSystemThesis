@@ -1,4 +1,6 @@
 package com.example.mytabletapp;
 
-public class TabletInitialisation {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class TabletInitialisation extends AppCompatActivity {
 }

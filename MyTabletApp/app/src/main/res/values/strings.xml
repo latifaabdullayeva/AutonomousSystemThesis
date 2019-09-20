@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyTabletApp</string>
+    <string name="welcome_to_our_autonomous_system_app">Welcome to our Autonomous System App!</string>
+    <string name="initialiseTablet">Go To Tablet Initialisation</string>
 </resources>
