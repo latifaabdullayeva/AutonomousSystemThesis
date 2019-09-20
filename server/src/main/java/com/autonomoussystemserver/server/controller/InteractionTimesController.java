@@ -26,16 +26,16 @@ public class InteractionTimesController {
 
     @GetMapping("/interactionTimes")
     public Page<InteractionTimes> getInteractionTimes(Pageable pageable) {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("InteractionTimesController -> GET getInteractionTimes()");
+//        System.out.println("------------------------------------------------------------");
+//        System.out.println("InteractionTimesController -> GET getInteractionTimes()");
         return interactionTimesRepository.findAll(pageable);
     }
 
     @PostMapping("/interactionTimes")
     public ResponseEntity<InteractionTimes> createInteraction(@RequestBody InteractionTimesDto interactionTimesDto) {
         // (, Integer mascotId, Integer interactionTimes)
-        System.out.println("------------------------------------------------------------");
-        System.out.println("InteractionTimesController -> POST createInteraction()");
+//        System.out.println("------------------------------------------------------------");
+//        System.out.println("InteractionTimesController -> POST createInteraction()");
 
         InteractionTimes interactionTimes = interactionTimesService
                 .incrementInteractionTimes(interactionTimesDto);

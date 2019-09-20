@@ -13,21 +13,21 @@ public class DistanceDto {
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;
         this.distance = distance;
-        System.out.println("DistanceDto constructor");
+//        System.out.println("DistanceDto constructor");
     }
 
     public Integer getFromDevice() {
-        System.out.println("DistanceDto getFromDevice = " + fromDevice);
+//        System.out.println("DistanceDto getFromDevice = " + fromDevice);
         return fromDevice;
     }
 
     public Integer getToDevice() {
-        System.out.println("DistanceDto getToDevice = " + toDevice);
+//        System.out.println("DistanceDto getToDevice = " + toDevice);
         return toDevice;
     }
 
     public Integer getDistance() {
-        System.out.println("DistanceDto getDistance = " + distance);
+//        System.out.println("DistanceDto getDistance = " + distance);
         return distance;
     }
 }

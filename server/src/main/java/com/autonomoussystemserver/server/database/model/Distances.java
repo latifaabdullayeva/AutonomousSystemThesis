@@ -34,43 +34,43 @@ public class Distances {
     private Integer distance;
 
     public Integer getDistanceId() {
-        System.out.println("---------");
-        System.out.println("Distances getDistanceId");
+//        System.out.println("---------");
+//        System.out.println("Distances getDistanceId");
         return distanceId;
     }
 
     public void setDistanceId(Integer distanceId) {
-        System.out.println("Distances setDistanceId");
+//        System.out.println("Distances setDistanceId");
         this.distanceId = distanceId;
     }
 
     public Devices getFromDevice() {
-        System.out.println("Distances getFromDevice");
+//        System.out.println("Distances getFromDevice");
         return fromDevice;
     }
 
     public void setFromDevice(Devices fromDevice) {
-        System.out.println("Distances setFromDevice");
+//        System.out.println("Distances setFromDevice");
         this.fromDevice = fromDevice;
     }
 
     public Devices getToDevice() {
-        System.out.println("Distances getToDevice");
+//        System.out.println("Distances getToDevice");
         return toDevice;
     }
 
     public void setToDevice(Devices toDevice) {
-        System.out.println("Distances setToDevice");
+//        System.out.println("Distances setToDevice");
         this.toDevice = toDevice;
     }
 
     public Integer getDistance() {
-        System.out.println("Distances getDistance");
+//        System.out.println("Distances getDistance");
         return distance;
     }
 
     public void setDistance(Integer distance) {
-        System.out.println("Distances setDistance");
+//        System.out.println("Distances setDistance");
         this.distance = distance;
     }
 }

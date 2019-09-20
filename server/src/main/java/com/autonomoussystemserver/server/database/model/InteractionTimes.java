@@ -19,32 +19,32 @@ public class InteractionTimes {
     private Integer interactionTimes;
 
     public Integer getInteractionId() {
-        System.out.println("InteractionTimes getInteractionId = " + interactionId);
+//        System.out.println("InteractionTimes getInteractionId = " + interactionId);
         return interactionId;
     }
 
     public void setInteractionId(Integer interactionId) {
         this.interactionId = interactionId;
-        System.out.println("InteractionTimes setInteractionId = " + interactionId);
+//        System.out.println("InteractionTimes setInteractionId = " + interactionId);
     }
 
     public Devices getMascot() {
-        System.out.println("InteractionTimes getMascot = " + mascot);
+//        System.out.println("InteractionTimes getMascot = " + mascot);
         return mascot;
     }
 
     public void setMascot(Devices mascot) {
         this.mascot = mascot;
-        System.out.println("InteractionTimes setMascot = " + mascot);
+//        System.out.println("InteractionTimes setMascot = " + mascot);
     }
 
     public Integer getInteractionTimes() {
-        System.out.println("InteractionTimes getInteractionTimes = " + interactionTimes);
+//        System.out.println("InteractionTimes getInteractionTimes = " + interactionTimes);
         return interactionTimes;
     }
 
     public void setInteractionTimes(Integer interactionTimes) {
         this.interactionTimes = interactionTimes;
-        System.out.println("InteractionTimes setInteractionTimes = " + interactionTimes);
+//        System.out.println("InteractionTimes setInteractionTimes = " + interactionTimes);
     }
 }

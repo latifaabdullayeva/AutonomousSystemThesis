@@ -182,7 +182,7 @@ public class DistancesController {
         try {
             // TODO: cross platform, call Example class from another project
             Process process = new ProcessBuilder()
-                    .command("afplay", "/Users/latifaabdullayeva/Desktop/vlc-example/src/main/resources/" + trackName)
+                    .command("afplay", "/Users/latifaabdullayeva/Desktop/Thesis/ThesisScript/AutonomousSystemThesis/server/src/main/resources/assets/" + trackName)
                     .start();
 
             process.waitFor();
@@ -190,6 +190,8 @@ public class DistancesController {
             e.printStackTrace();
         }
         // TODO: maybe need some logic to stop the music
+        // TODO: cross platform with example-vlc:
+        //  .command("afplay", "/Users/latifaabdullayeva/Desktop/vlc-example/src/main/resources/" + trackName)
     }
 }
 

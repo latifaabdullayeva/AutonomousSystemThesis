@@ -20,18 +20,18 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("PersonalityController -> GET getPersonality()");
+//        System.out.println("------------------------------------------------------------");
+//        System.out.println("PersonalityController -> GET getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 
     @PostMapping("/personality")
     public ResponseEntity<Personality> createPersonality(@RequestBody PersonalityDto personalityDto) {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("PersonalityController -> POST createPersonality()");
+//        System.out.println("------------------------------------------------------------");
+//        System.out.println("PersonalityController -> POST createPersonality()");
 
         Personality existingPersonality = personalityRepository.findByPersonalityName(personalityDto.getPersonality_name());
-        System.out.println("PersonalityController -> POST existingPersonality = " + existingPersonality);
+//        System.out.println("PersonalityController -> POST existingPersonality = " + existingPersonality);
 
         if (existingPersonality != null) {
             return ResponseEntity.badRequest().body(null);
@@ -48,7 +48,7 @@ public class PersonalityController {
 
 
             personalityRepository.save(newPersonality);
-            System.out.println("PersonalityController -> POST newPersonality: " + newPersonality);
+//            System.out.println("PersonalityController -> POST newPersonality: " + newPersonality);
             return ResponseEntity.ok(newPersonality);
         }
     }

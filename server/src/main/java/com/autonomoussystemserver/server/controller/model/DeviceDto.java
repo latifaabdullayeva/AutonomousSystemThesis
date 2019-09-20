@@ -14,7 +14,7 @@ public class DeviceDto {
     }
 
     public DeviceDto(String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
-        System.out.println("DeviceDTO constructor");
+//        System.out.println("DeviceDTO constructor");
         this.deviceName = deviceName;
         this.deviceType = deviceType;
         this.beaconUuid = beaconUuid;
@@ -22,22 +22,22 @@ public class DeviceDto {
     }
 
     public String getDeviceName() {
-        System.out.println("DeviceDTO getDeviceName = " + deviceName);
+//        System.out.println("DeviceDTO getDeviceName = " + deviceName);
         return deviceName;
     }
 
     public String getDeviceType() {
-        System.out.println("DeviceDTO getDeviceType = " + deviceType);
+//        System.out.println("DeviceDTO getDeviceType = " + deviceType);
         return deviceType;
     }
 
     public String getBeaconUuid() {
-        System.out.println("DeviceDTO getBeaconUuid = " + beaconUuid);
+//        System.out.println("DeviceDTO getBeaconUuid = " + beaconUuid);
         return beaconUuid;
     }
 
     public Personality getDevicePersonality() {
-        System.out.println("DeviceDTO getDevicePersonality = " + devicePersonality);
+//        System.out.println("DeviceDTO getDevicePersonality = " + devicePersonality);
         return devicePersonality;
     }
 

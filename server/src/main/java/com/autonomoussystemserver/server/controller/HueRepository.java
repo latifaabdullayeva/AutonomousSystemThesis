@@ -31,7 +31,7 @@ public class HueRepository {
 
 
     public HueRepository(String ipAddress, String user) {
-        System.out.println("HueRepository constructor");
+//        System.out.println("HueRepository constructor");
 //         The Retrofit class generates an implementation of the HueService interface.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + ipAddress + "/api/")
@@ -42,7 +42,7 @@ public class HueRepository {
     }
 
     public void updateBrightness(boolean lampState, int brightness, int hue, int saturation) {
-        System.out.println("HueRepository updateBrightness");
+//        System.out.println("HueRepository updateBrightness");
         HueRequest request = new HueRequest(lampState, brightness, hue, saturation);
 
         // InteractionTimes interactionTimes = interactionTimesService.create(interactionTimesDto);
@@ -52,24 +52,18 @@ public class HueRepository {
                 .enqueue(new Callback<okhttp3.ResponseBody>() {
                     @Override
                     public void onResponse(@NonNull Call<okhttp3.ResponseBody> call, @NonNull Response<okhttp3.ResponseBody> response) {
-                        System.out.println("HueRepository " + "success!");
-                        try {
-                            if (response.body() != null) {
-                                System.out.println("HueRepository " + response.body().string());
-                                System.out.println("HueRepository ------------------------------------------------------------------------------------------------------------------------------");
-                                // TODO: we get interactionTimes that is mascot=ourMascot
-                                //  and make POST (interactionTimes + 1)
+//                        System.out.println("HueRepository " + "success!");
+                        if (response.body() != null) {
+//                                System.out.println("HueRepository " + response.body().string());
+//                                System.out.println("HueRepository ------------------------------------------------------------------------------------------------------------------------------");
 
-                                interactionTimesService.incrementInteractionTimes(interactionTimesDto);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            interactionTimesService.incrementInteractionTimes(interactionTimesDto);
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<okhttp3.ResponseBody> call, @NonNull Throwable t) {
-                        System.out.println("HueRepository " + " failure :( " + t);
+//                        System.out.println("HueRepository " + " failure :( " + t);
                     }
                 });
     }

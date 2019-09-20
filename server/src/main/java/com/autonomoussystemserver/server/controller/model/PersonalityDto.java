@@ -22,46 +22,46 @@ public class PersonalityDto {
         this.screen_color = screen_color;
         this.vibration_level = vibration_level;
         this.music_genre = music_genre;
-        System.out.println("PersonalityDto constructor = " + personality_name + hue_color + bri + hue + sat + screen_color + vibration_level + music_genre);
+//        System.out.println("PersonalityDto constructor = " + personality_name + hue_color + bri + hue + sat + screen_color + vibration_level + music_genre);
     }
 
     public String getPersonality_name() {
-        System.out.println("PersonalityDto getPersonality_name() = " + personality_name);
+//        System.out.println("PersonalityDto getPersonality_name() = " + personality_name);
         return personality_name;
     }
 
     public String getHue_color() {
-        System.out.println("PersonalityDto getHue_color() = " + hue_color);
+//        System.out.println("PersonalityDto getHue_color() = " + hue_color);
         return hue_color;
     }
 
     public Integer getBri() {
-        System.out.println("PersonalityDto getBri() = " + bri);
+//        System.out.println("PersonalityDto getBri() = " + bri);
         return bri;
     }
 
     public Integer getHue() {
-        System.out.println("PersonalityDto getHue() = " + hue);
+//        System.out.println("PersonalityDto getHue() = " + hue);
         return hue;
     }
 
     public Integer getSat() {
-        System.out.println("PersonalityDto getSat() = " + sat);
+//        System.out.println("PersonalityDto getSat() = " + sat);
         return sat;
     }
 
     public String getScreen_color() {
-        System.out.println("PersonalityDto getScreen_color() = " + screen_color);
+//        System.out.println("PersonalityDto getScreen_color() = " + screen_color);
         return screen_color;
     }
 
     public Integer getVibration_level() {
-        System.out.println("PersonalityDto getVibration_level() = " + vibration_level);
+//        System.out.println("PersonalityDto getVibration_level() = " + vibration_level);
         return vibration_level;
     }
 
     public String getMusic_genre() {
-        System.out.println("PersonalityDto getMusic_genre() = " + music_genre);
+//        System.out.println("PersonalityDto getMusic_genre() = " + music_genre);
         return music_genre;
     }
 
