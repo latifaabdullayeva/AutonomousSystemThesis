@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">MyTabletApp</string>
-    <string name="welcome_to_our_autonomous_system_app">Welcome to our Autonomous System App!</string>
-    <string name="initialiseTablet">Go To Tablet Initialisation</string>
-    <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
-    <string name="selectedBeacon">Your selection: %1$s</string>
-    <string name="saveTablet">Save Tablet</string>
 </resources>

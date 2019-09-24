@@ -2,21 +2,20 @@ package com.example.mytabletapp;
 
 import android.app.Application;
 
-
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
 public class LaunchScreen extends Application {
-    @Override
     public void onCreate() {
         super.onCreate();
-        setUpBeaconManager();
+        setupBeaconManager();
     }
 
-    private void setUpBeaconManager() {
+    private void setupBeaconManager() {
         BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().clear();
+
         beaconManager.getBeaconParsers().add(new BeaconParser()
                 .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24")
         );
