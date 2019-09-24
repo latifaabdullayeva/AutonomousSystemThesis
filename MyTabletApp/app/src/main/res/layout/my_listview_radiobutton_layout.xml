@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+This layout helps to have a ListView with a Single Choice Option with RadioButtons on the left side
+-->
+
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:checkMark="@null"
+    android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+    android:gravity="center_vertical"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    android:textColor="#FDB91266" />

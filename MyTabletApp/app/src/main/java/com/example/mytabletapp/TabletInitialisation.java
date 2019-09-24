@@ -1,10 +1,9 @@
 package com.example.mytabletapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,11 +13,9 @@ import android.widget.Toast;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 import androidx.appcompat.app.ActionBar;
@@ -109,12 +106,12 @@ public class TabletInitialisation extends AppCompatActivity implements BeaconCon
                     Button buttonSave = findViewById(R.id.buttonBeaconSave);
                     buttonSave.setOnClickListener(v -> {
                         // deviceRepository.sendNetworkRequest("Nexus", beaconList.get(position), "intimate");
-//                                    Intent myIntent = new Intent(TabletInitialisation.this, DeviceInitialisation.class);
+                        Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
 
 //                                    String deviceValue = beaconList.get(position);
 //                                    myIntent.putExtra("BEACONUUID", deviceValue);
 //
-//                                    startActivity(myIntent);
+                        startActivity(myIntent);
                     });
 
                 });
