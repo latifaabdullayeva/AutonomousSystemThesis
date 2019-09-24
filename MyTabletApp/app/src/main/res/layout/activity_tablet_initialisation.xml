@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fbe8ef"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".TabletInitialisation">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/IntroText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/choose_one_uuid_for_your_beacon"
+        android:textColor="#FDB91266"
+        android:textSize="22sp" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:choiceMode="singleChoice" />
+
+    <Button
+        android:id="@+id/buttonBeaconSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FDB91266"
+        android:text="@string/save"
+        android:textColor="#ffffff" />
+
+</LinearLayout>
+
+
+
+    <!--<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".TabletInitialisation">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/IntroTextBeacon"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/choose_one_uuid_for_your_beacon"-->
+<!--                android:textColor="#FDB91266"-->
+<!--                android:textSize="22sp"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/listViewBeacon"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:choiceMode="singleChoice"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/showSelectedBeacon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/selectedBeacon"/>-->
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/saveButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#FDB91266"-->
+<!--            android:text="@string/save"-->
+<!--            android:textColor="#ffffff" />-->
+<!--    </LinearLayout>-->
+
+<!--</androidx.core.widget.NestedScrollView>-->
