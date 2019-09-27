@@ -70,10 +70,11 @@ public class TabletInitialisation extends AppCompatActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         // TODO: add back Button and functionality for it
 
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-
+        this.deviceList = new ArrayList<>();
         this.tempBeaconList = new ArrayList<>();
         textViewSelectedBeacon = findViewById(R.id.showSelectedBeacon);
+
+        beaconManager = BeaconManager.getInstanceForApplication(this);
 
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
@@ -82,6 +83,8 @@ public class TabletInitialisation extends AppCompatActivity
         beaconListView.setAdapter(adapter);
 
         saveButton = findViewById(R.id.buttonBeaconSave);
+
+        saveButtonListener();
     }
 
     @Override
@@ -123,7 +126,6 @@ public class TabletInitialisation extends AppCompatActivity
                 ApiDevicesResponse devices = response.body();
                 for (Device device : Objects.requireNonNull(devices).getContent()) {
                     deviceList.add(device.getBeaconUuid());
-                    Log.d(TAG, "deviceList = " + deviceList);
                 }
 
                 beaconManager.addRangeNotifier((beacons, region) -> {
@@ -170,6 +172,51 @@ public class TabletInitialisation extends AppCompatActivity
             public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
                 Log.d(TAG, "error loading from API... " + t.getMessage());
             }
+        });
+    }
+
+    private void saveButtonListener() {
+        saveButton.setOnClickListener(v -> {
+            Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
+            myIntent.putExtra("BEACONUUID", beaconValue);
+            myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+
+            deviceRepository.sendNetworkRequest(null, null, deviceTypeValue, beaconValue, null);
+
+            // Before starting  the ShowAllDIst Activity, check if the deviceRepository.sendNetworkRequest was successful or not
+            // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+            // If not, then I will consider the request as failed
+            deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+                    if (!response.isSuccessful()) {
+                        Log.d(TAG, "getNetworkRequest DeviceRepository Code: " + response.code());
+                        return;
+                    }
+                    ApiDevicesResponse devicesResponse = response.body();
+                    if (devicesResponse != null) {
+                        for (Device device : devicesResponse.getContent()) {
+                            // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+                            // If not, then I will consider the request as failed
+                            if (device.getBeaconUuid().equals(beaconValue)) {
+                                saveData();
+                                startActivity(myIntent);
+                            } else {
+                                Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
+                                // Show a user a message that we could not save your data
+                                Toast.makeText(TabletInitialisation.this, "SOMETHING WENT WRONG :(\n We could not save your data", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "getNetworkRequest devicesResponse is NULL");
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
+
+                }
+            });
         });
     }
 
