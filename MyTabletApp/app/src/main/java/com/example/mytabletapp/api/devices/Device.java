@@ -1,7 +1,5 @@
 package com.example.mytabletapp.api.devices;
 
-import android.util.Log;
-
 import com.example.mytabletapp.api.personality.Personality;
 
 public class Device {
@@ -16,9 +14,7 @@ public class Device {
         this(id, null, null, null, null);
     }
 
-    public Device(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
-        Log.d("FLOW", "Device");
-
+    Device(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Personality devicePersonality) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.deviceType = deviceType;

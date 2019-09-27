@@ -1,25 +1,33 @@
 package com.example.mytabletapp.api.distance;
 
-import android.util.Log;
+import com.example.mytabletapp.api.devices.Device;
 
 public class Distance {
-    private final Integer fromDevice;
-    private final Integer toDevice;
+    private final Integer distanceId;
+    private final Device fromDevice;
+    private final Device toDevice;
     private final Long distance;
 
-    Distance(Integer fromDevice, Integer toDevice, Long distance) {
-        Log.d("FLOW", "Distance");
+    public Distance(Integer id) {
+        this(id, null, null, null);
+    }
 
+    Distance(Integer distanceId, Device fromDevice, Device toDevice, Long distance) {
+        this.distanceId = distanceId;
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;
         this.distance = distance;
     }
 
-    Integer getFromDevice() {
+    public Integer getDistanceId() {
+        return distanceId;
+    }
+
+    public Device getFromDevice() {
         return fromDevice;
     }
 
-    Integer getToDevice() {
+    public Device getToDevice() {
         return toDevice;
     }
 
