@@ -1,14 +1,21 @@
 package com.example.mytabletapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.mytabletapp.api.devices.ApiDevicesResponse;
+import com.example.mytabletapp.api.devices.Device;
+import com.example.mytabletapp.api.devices.DeviceRepository;
+import com.example.mytabletapp.api.distance.DistanceRepository;
+import com.example.mytabletapp.api.interaction.InteractionRepository;
+import com.example.mytabletapp.api.personality.PersonalityRepository;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -18,28 +25,43 @@ import org.altbeacon.beacon.Region;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import static java.lang.Math.round;
+public class TabletInitialisation extends AppCompatActivity
+        implements BeaconConsumer, RecyclerViewAdapter.ItemClickListener {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT1 = "text1";
+    public static final String TEXT2 = "text2";
 
-public class TabletInitialisation extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "TabletInitialisation";
+
+    final DistanceRepository distanceRepository = new DistanceRepository();
+    final DeviceRepository deviceRepository = new DeviceRepository();
+    final PersonalityRepository personalityRepository = new PersonalityRepository();
+    final InteractionRepository interactionRepository = new InteractionRepository();
+
     private BeaconManager beaconManager;
     private TextView numbOfBeacons;
 
-    //-----
-    private ArrayList<String> beaconList;
-    private ListView beaconListView;
-    private ArrayAdapter<String> adapter;
-    //-----
+    private ArrayList<String> beaconList, deviceList, tempBeaconList;
+    private RecyclerViewAdapter adapter;
+
+    String deviceTypeValue = "Tablet";
+    String beaconValue;
+    TextView textViewSelectedBeacon;
+    Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TestActivity", "TabletInitialisation");
         setContentView(R.layout.activity_tablet_initialisation);
-        Log.d(TAG, "TabletInitialisation started up");
 
         ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
         actionBar.setDisplayShowHomeEnabled(true);
@@ -50,13 +72,24 @@ public class TabletInitialisation extends AppCompatActivity implements BeaconCon
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
-        //-----
+        this.tempBeaconList = new ArrayList<>();
+        textViewSelectedBeacon = findViewById(R.id.showSelectedBeacon);
+
         // Choose the Beacon Device out of list
         this.beaconList = new ArrayList<>();
-        this.beaconListView = findViewById(R.id.listView);
-        this.adapter = new ArrayAdapter<>(this, R.layout.my_listview_radiobutton_layout, this.beaconList);
-        this.beaconListView.setAdapter(adapter);
-        //-----
+        RecyclerView beaconListView = findViewById(R.id.listViewBeacon);
+        this.adapter = new RecyclerViewAdapter(this, this.beaconList);
+        beaconListView.setAdapter(adapter);
+
+        saveButton = findViewById(R.id.buttonBeaconSave);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
+        beaconValue = beaconList.get(position);
+        Toast.makeText(TabletInitialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
+        textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, beaconValue));
     }
 
     @Override
@@ -79,60 +112,73 @@ public class TabletInitialisation extends AppCompatActivity implements BeaconCon
 
     @Override
     public void onBeaconServiceConnect() {
-//        final DistanceRepository distanceRepository = new DistanceRepository();
-//        final DeviceRepository deviceRepository = new DeviceRepository();
-
-
-        beaconManager.addRangeNotifier((beacons, region) -> {
-
-            if (beacons.size() > 0) {
-
-                // Show the List of all beacons
-                beaconList.clear();
-                for (Beacon beacon : beacons) {
-                    if (!beaconList.contains(beacon.getId1().toString())) {
-                        beaconList.add(beacon.getId1().toString());
-                    }
+        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiDevicesResponse> call, @NonNull Response<ApiDevicesResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "Code: " + response.code());
+                    return;
                 }
-                runOnUiThread(() -> adapter.notifyDataSetChanged());
 
-                // Bind onclick event handler
-                beaconListView.setOnItemClickListener((parent, view, position, id) -> {
+                ApiDevicesResponse devices = response.body();
+                for (Device device : Objects.requireNonNull(devices).getContent()) {
+                    deviceList.add(device.getBeaconUuid());
+                    Log.d(TAG, "deviceList = " + deviceList);
+                }
 
-                    Toast.makeText(TabletInitialisation.this, "Selected Beacon: " +
-                            beaconList.get(position), Toast.LENGTH_SHORT).show();
+                beaconManager.addRangeNotifier((beacons, region) -> {
+                    beaconList.clear();
 
-                    // Action for Save button
-                    Button buttonSave = findViewById(R.id.buttonBeaconSave);
-                    buttonSave.setOnClickListener(v -> {
-                        // deviceRepository.sendNetworkRequest("Nexus", beaconList.get(position), "intimate");
-                        Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
+                    if (beacons.size() > 0) {
+                        for (Beacon beacon : beacons) {
+                            if (!tempBeaconList.contains(beacon.getId1().toString())) {
+                                tempBeaconList.add(beacon.getId1().toString());
+                                // if you want to get ID of beacon -> .getId1();
+                                // maybeSolved TODO: do not show this beacon if it is already in the database
+                            }
+                        }
 
-//                                    String deviceValue = beaconList.get(position);
-//                                    myIntent.putExtra("BEACONUUID", deviceValue);
-//
-                        startActivity(myIntent);
-                    });
+                        for (String device : deviceList) {
+                            tempBeaconList.remove(device);
+                        }
 
+                        beaconList.addAll(tempBeaconList);
+
+                        if (beaconList.isEmpty()) {
+                            textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, "No beacons in our range"));
+                        }
+
+                        runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+                        // set up the RecyclerView
+                        RecyclerView recyclerView = findViewById(R.id.listViewBeacon);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(TabletInitialisation.this));
+                        adapter = new RecyclerViewAdapter(TabletInitialisation.this, beaconList);
+                        adapter.setClickListener(TabletInitialisation.this);
+                        recyclerView.setAdapter(adapter);
+                    }
                 });
 
-                Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
-
-                for (Beacon beacon : beacons) {
-//                        deviceRepository.sendNetworkRequest("Nexus", beacon.toString(), "intimate");
-                    Log.d(TAG, "The beacon " + beacon.toString());
-//                        distanceRepository.sendNetworkRequest(1, 2, round(beacon.getDistance() * 100));
-
-                    Log.d(TAG, "DISTANCE" + round(beacon.getDistance() * 100) + " cm away.");
-
+                try {
+                    beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+                } catch (RemoteException ignored) {
                 }
-                Log.d(TAG, "------------------------------------------------------------");
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "error loading from API... " + t.getMessage());
             }
         });
-        try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-        } catch (
-                RemoteException ignored) {
-        }
+    }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT1, beaconValue);
+        editor.putString(TEXT2, deviceTypeValue);
+        editor.apply();
+        Toast.makeText(TabletInitialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }
 }

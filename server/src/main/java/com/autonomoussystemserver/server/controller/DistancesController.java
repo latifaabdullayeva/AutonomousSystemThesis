@@ -97,7 +97,7 @@ public class DistancesController {
         Personality personality = personalityRepository.findByPersonalityName(personalityNameofDev);
 
         if (devNameTo != null && devNameTo.getDeviceType().equals("Lamp")) {
-            if (distances.getDistance() >= 120 && distances.getDistance() <= 370) { //
+            if (distances.getDistance() >= 121 && distances.getDistance() <= 370) { //
                 int brightness = personality.getBri();
                 int hue = personality.getHue();
                 int saturation = personality.getSat();
@@ -115,6 +115,11 @@ public class DistancesController {
         // and ask "do I need to change the color", "do I need to change the color"... It will revoke the information from server about itself
         // Write another app for Tablet in order to change the color of screen
         // There will be retrofit (http client that makes requests to server, and asks what it needs to display at this moment
+        else if (devNameTo != null && devNameTo.getDeviceType().equals("Tablet")) {
+            if (distances.getDistance() >= 46 && distances.getDistance() <= 120) {
+
+            }
+        }
 
         return distances;
     }
