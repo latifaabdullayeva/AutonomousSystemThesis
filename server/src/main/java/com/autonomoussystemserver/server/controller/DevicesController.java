@@ -4,7 +4,6 @@ import com.autonomoussystemserver.server.controller.model.DeviceDto;
 import com.autonomoussystemserver.server.database.model.Devices;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.DevicesRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,15 +25,11 @@ public class DevicesController {
     // for @RequestMapping(method = RequestMethod.GET).
     @GetMapping("/devices")
     public Page<Devices> getDevices(Pageable pageable) {
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("DeviceController -> GET getDevices()");
         return devicesRepository.findAll(pageable);
     }
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("DevicesController -> POST createDevice()");
 
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
@@ -50,21 +45,11 @@ public class DevicesController {
                 newDevice.setDevicePersonality(personality);
             }
 
-//            Personality personality = new Personality();
-//            personality.setId(deviceDto.getDevicePersonality().getId());
-
-
-//            System.out.println("DevicesController -> POST deviceDto.getDeviceName() = " + deviceDto.getDeviceName() +
-//                    "; deviceDto.getDeviceType() = " + deviceDto.getDeviceType() +
-//                    "; deviceDto.getBeaconUuid() = " + deviceDto.getBeaconUuid() +
-//                    "; personality = " + deviceDto.getDevicePersonality());
-
             newDevice.setDeviceName(deviceDto.getDeviceName() == null ? "" : deviceDto.getDeviceName());
             newDevice.setDeviceType(deviceDto.getDeviceType());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
 
             devicesRepository.save(newDevice);
-//            System.out.println("DevicesController -> POST newDevice: " + newDevice);
             return ResponseEntity.ok(newDevice);
         }
     }

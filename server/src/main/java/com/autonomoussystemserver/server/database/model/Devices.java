@@ -35,43 +35,34 @@ public class Devices {
     private Personality devicePersonality;
 
     public Integer getDeviceId() {
-//        System.out.println("---------");
-//        System.out.println("Devices getDeviceId = " + deviceId);
         return deviceId;
     }
 
     public void setDeviceId(Integer deviceId) {
-//        System.out.println("Devices setDeviceId = " + deviceId);
         this.deviceId = deviceId;
     }
 
     public String getDeviceName() {
-//        System.out.println("Devices getDeviceName = " + deviceName);
         return deviceName;
     }
 
     public void setDeviceName(String deviceName) {
-//        System.out.println("Devices setDeviceName = " + deviceName);
         this.deviceName = deviceName;
     }
 
     public String getDeviceType() {
-//        System.out.println("Devices getDeviceType = " + deviceType);
         return deviceType;
     }
 
     public void setDeviceType(String deviceType) {
-//        System.out.println("Devices setDeviceType = " + deviceType);
         this.deviceType = deviceType;
     }
 
     public String getBeaconUuid() {
-//        System.out.println("Devices getBeaconUuid = " + beaconUuid);
         return beaconUuid;
     }
 
     public void setBeaconUuid(String beaconUuid) {
-//        System.out.println("Devices setBeaconUuid = " + beaconUuid);
         this.beaconUuid = beaconUuid;
     }
 

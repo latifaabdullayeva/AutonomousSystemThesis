@@ -3,7 +3,6 @@ package com.autonomoussystemserver.server.controller;
 import com.autonomoussystemserver.server.controller.model.PersonalityDto;
 import com.autonomoussystemserver.server.database.model.Personality;
 import com.autonomoussystemserver.server.database.repository.PersonalityRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,18 +19,13 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("PersonalityController -> GET getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 
     @PostMapping("/personality")
     public ResponseEntity<Personality> createPersonality(@RequestBody PersonalityDto personalityDto) {
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("PersonalityController -> POST createPersonality()");
 
         Personality existingPersonality = personalityRepository.findByPersonalityName(personalityDto.getPersonality_name());
-//        System.out.println("PersonalityController -> POST existingPersonality = " + existingPersonality);
 
         if (existingPersonality != null) {
             return ResponseEntity.badRequest().body(null);
@@ -48,7 +42,6 @@ public class PersonalityController {
 
 
             personalityRepository.save(newPersonality);
-//            System.out.println("PersonalityController -> POST newPersonality: " + newPersonality);
             return ResponseEntity.ok(newPersonality);
         }
     }

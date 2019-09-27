@@ -4,7 +4,6 @@ import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
 import com.autonomoussystemserver.server.database.model.InteractionTimes;
 import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
 import com.autonomoussystemserver.server.service.InteractionTimesService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,16 +25,11 @@ public class InteractionTimesController {
 
     @GetMapping("/interactionTimes")
     public Page<InteractionTimes> getInteractionTimes(Pageable pageable) {
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("InteractionTimesController -> GET getInteractionTimes()");
         return interactionTimesRepository.findAll(pageable);
     }
 
     @PostMapping("/interactionTimes")
     public ResponseEntity<InteractionTimes> createInteraction(@RequestBody InteractionTimesDto interactionTimesDto) {
-        // (, Integer mascotId, Integer interactionTimes)
-//        System.out.println("------------------------------------------------------------");
-//        System.out.println("InteractionTimesController -> POST createInteraction()");
 
         InteractionTimes interactionTimes = interactionTimesService
                 .incrementInteractionTimes(interactionTimesDto);
