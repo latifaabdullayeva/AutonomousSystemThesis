@@ -5,4 +5,6 @@
     <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
     <string name="selectedBeacon">Your selection: %1$s</string>
     <string name="save">Save</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
 </resources>

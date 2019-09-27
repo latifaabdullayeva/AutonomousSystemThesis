@@ -11,11 +11,19 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Red" />
+        android:text="@string/red" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Green" />
+        android:text="@string/green" />
+
+    <ListView
+        android:id="@+id/list_view_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:choiceMode="singleChoice" />
+
 </LinearLayout>
