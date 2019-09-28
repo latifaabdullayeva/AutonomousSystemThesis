@@ -20,7 +20,7 @@
             android:name=".TabletInitialisation"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".BackgroundColorChange" />
-
+        <activity android:name=".api.devices.DeviceRepository" />
 
         <activity
             android:name=".MainActivity"
