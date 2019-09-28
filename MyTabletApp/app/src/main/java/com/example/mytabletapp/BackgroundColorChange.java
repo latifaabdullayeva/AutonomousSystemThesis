@@ -1,40 +1,26 @@
 package com.example.mytabletapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.mytabletapp.api.devices.ApiDevicesResponse;
-import com.example.mytabletapp.api.devices.Device;
 import com.example.mytabletapp.api.devices.DeviceRepository;
+import com.example.mytabletapp.api.distance.ApiDistanceResponse;
+import com.example.mytabletapp.api.distance.Distance;
 import com.example.mytabletapp.api.distance.DistanceRepository;
 import com.example.mytabletapp.api.interaction.InteractionRepository;
-import com.example.mytabletapp.api.personality.ApiPersonalityResponse;
-import com.example.mytabletapp.api.personality.Personality;
 import com.example.mytabletapp.api.personality.PersonalityRepository;
 
-import org.altbeacon.beacon.Beacon;
-import org.altbeacon.beacon.BeaconConsumer;
-import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.RangeNotifier;
-import org.altbeacon.beacon.Region;
-
-import java.util.Collection;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static java.lang.Math.round;
-
-public class BackgroundColorChange extends AppCompatActivity implements BeaconConsumer {
+public class BackgroundColorChange extends AppCompatActivity {
     protected static final String TAG = "BackgroundColorChange";
     final DistanceRepository distanceRepository = new DistanceRepository();
     final DeviceRepository deviceRepository = new DeviceRepository();
@@ -43,9 +29,8 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
 
     private long initialMillisec = System.currentTimeMillis();
     private int counter = 1;
-    private BeaconManager beaconManager;
 
-    String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
+    String beaconTagValue, deviceTypeValue;
     Button redButton, greenButton;
     LinearLayout linearLayout;
 
@@ -55,27 +40,56 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
         setContentView(R.layout.activity_background_color_change);
         linearLayout = findViewById(R.id.linearLayout);
 
-//        redButton = findViewById(R.id.button1);
-//        greenButton = findViewById(R.id.button2);
-
-//        redButton.setOnClickListener(v -> linearLayout.setBackgroundColor(getResources().getColor(R.color.red)));
-//
-//        greenButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                linearLayout.setBackgroundColor(BackgroundColorChange.this.getResources().getColor(R.color.green));
-//            }
-//        });
-
         setupActionBar();
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-
-        // TODO: shared Preferences
 
         beaconTagValue = getIntent().getStringExtra("BEACONUUID");
         deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
-        mascotNameValue = getIntent().getStringExtra("DEVICENAME");
-        devicePersValue = getIntent().getStringExtra("PERSONALITY");
+        Log.d(TAG, "beaconTagValue = " + beaconTagValue + "; deviceTypeValue = " + deviceTypeValue);
+
+        long currentMillisec = System.currentTimeMillis();
+        // here you specify the time, every second (1000 milliseconds)
+        // TODO: instead of IF, which will check only once, use WHILE
+        if ((currentMillisec - initialMillisec) <= 1000 * counter) {
+            Log.d(TAG, "counter = " + counter + "; currentMillisec = " + currentMillisec + "; initialMillisec = " + initialMillisec + "; currentMillisec - initialMillisec = " + (currentMillisec - initialMillisec));
+            checkProxemicsTheory();
+            counter += 1;
+        }
+    }
+
+    private void checkProxemicsTheory() {
+        Log.d(TAG, "checkDistanceForProxemics()...");
+        distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
+            @Override
+            public void onResponse(Call<ApiDistanceResponse> call, Response<ApiDistanceResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "Code: " + response.code());
+                    return;
+                }
+                ApiDistanceResponse distanceResponse = response.body();
+                if (distanceResponse != null) {
+                    for (Distance distance : distanceResponse.getContent()) {
+                        Log.d(TAG, "distance.getDistance() = " + distance.getDistance() +
+                                "; getFromDevice = " + distance.getFromDevice().getDeviceId() + "(" + distance.getFromDevice().getDeviceType() + ")" +
+                                "; getToDevice = " + distance.getToDevice().getDeviceId() + "(" + distance.getToDevice().getDeviceType() + ")");
+                        if (distance.getDistance() >= 46 && distance.getDistance() <= 120) {
+                            Log.d(TAG, "Distance fits Proxemics -> ");
+                            if (distance.getFromDevice().getDeviceType().equals("Mascot") && distance.getToDevice().getDeviceType().equals("Tablet")) {
+                                Log.d(TAG, "Device type fits Proxemics -> ");
+                            } else {
+                                Log.d(TAG, "Device type does NOT fit Proxemics");
+                            }
+                        } else {
+                            Log.d(TAG, "Distance does NOT fit Proxemics");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiDistanceResponse> call, Throwable t) {
+                Log.d(TAG, t.getMessage());
+            }
+        });
     }
 
     private void setupActionBar() {
@@ -84,16 +98,57 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
         actionBar.setTitle("Color Change");
     }
 
-    @Override
+}
+
+
+/*
+private void checkDeviceTypeForProxemics() {
+        Log.d(TAG, "checkDeviceTypeForProxemics()");
+        deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
+            @Override
+            public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "Code: " + response.code());
+                    return;
+                }
+                ApiDevicesResponse devices = response.body();
+
+                // find this Tablet (by device id)
+                Integer myTabletID = null;
+                if (devices != null) {
+                    // we check if the beacon that the user has chosen exists in DB
+                    boolean myBeaconIsInDB = false;
+                    for (int i = 0; i < devices.getContent().size(); i++) {
+                        if (devices.getContent().get(i).getBeaconUuid().contains(beaconTagValue)) {
+                            myBeaconIsInDB = true;
+                            myTabletID = devices.getContent().get(i).getDeviceId();
+                            Log.d(TAG, "myTabletID = " + myTabletID);
+                            for (Device device : devices.getContent()) {
+                                Log.d(TAG, "deviceTypeValue = " + deviceTypeValue + "; device.getDeviceType() = " + device.getDeviceType());
+                                if (device.getDeviceType().equals("Mascot")) {
+                                    getPersonalityOfApproachingMascot(device, myTabletID);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiDevicesResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "error loading from API: " + t.getMessage());
+            }
+        });
+    }
+
+ */
+
+/*
+@Override
     public void onBeaconServiceConnect() {
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                // todo:
-                //  - set the timer, every 3 seconds,
-                //  - send GET distance request, if distance between this tablet and approaching mascot is ... cm
-                //  - if yes, get personality of that
-
                 checkTheTime(beacons);
             }
         });
@@ -105,16 +160,18 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
     }
 
     private void checkTheTime(Collection<Beacon> beacons) {
+        Log.d(TAG, "checkTheTime()");
         long currentMillisec = System.currentTimeMillis();
         // here you specify the time, every second (1000 milliseconds)
         if ((currentMillisec - initialMillisec) >= 1000 * counter) {
             counter += 1;
-            Log.d("test", "counter = " + counter + "; currentMillisec = " + currentMillisec + "; initialMillisec = " + initialMillisec);
+            Log.d(TAG, "counter = " + counter + "; currentMillisec = " + currentMillisec + "; initialMillisec = " + initialMillisec);
             getDevice(beacons);
         }
     }
 
     private void getDevice(Collection<Beacon> beacons) {
+        Log.d(TAG, "getDevice()");
         deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
             @Override
             public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
@@ -163,6 +220,7 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
     }
 
     private void mascotTabletInteraction(Beacon beacon, Device device, Integer myTabletID) {
+        Log.d(TAG, "mascotTabletInteraction()");
 
         // When the type of our device is Tablet, We get all other devices from DB that are Tablets,
         // then we check if the distance from  Mascot to our Tablet is between 46-120 cm,
@@ -193,6 +251,7 @@ public class BackgroundColorChange extends AppCompatActivity implements BeaconCo
     }
 
     private void tabletBackgroundChange(ApiPersonalityResponse personalities, Device device, Integer myMascotId) {
+        Log.d(TAG, "tabletBackgroundChange()");
         if (personalities != null) {
             for (Personality personality : personalities.getContent()) {
                 if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
