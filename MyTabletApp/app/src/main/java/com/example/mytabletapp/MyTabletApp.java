@@ -6,7 +6,7 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
-public class LaunchScreen extends Application {
+public class MyTabletApp extends Application {
     public void onCreate() {
         super.onCreate();
         setupBeaconManager();

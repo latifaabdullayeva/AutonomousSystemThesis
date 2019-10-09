@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".LaunchScreen"
+        android:name=".MyTabletApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,21 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".TabletInitialisation"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".BackgroundColorChange" />
-        <activity android:name=".api.devices.DeviceRepository" />
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".TabletInitialisation"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".BackgroundColorChange" />
+        <activity android:name=".api.devices.DeviceRepository" />
     </application>
 
 </manifest>
