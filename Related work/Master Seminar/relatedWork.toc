@@ -1,0 +1,13 @@
+\thispagestyle {plain}
+\vspace {-.45cm}
+\contentsline {section}{\numberline {1}Related work}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Ubiquitous Computing}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Internet of Things}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Social Internet of Things}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Autonomous interaction of things}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}The Theory of Proxemics}{4}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}The Social Structure of things}{7}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Social Patterns in the Humanized IoT Domain}{7}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}Interaction design for SIoT}{9}{subsection.1.8}
+\contentsline {subsubsection}{Definition of Personality Traits}{10}{subsubsection*.1}
+\contentsline {section}{Bibliography}{11}{section*.2}

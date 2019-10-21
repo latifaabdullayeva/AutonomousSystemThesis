@@ -1,0 +1,101 @@
+\documentclass[12pt]{article}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{natbib}
+
+\title{Methodology Example}
+
+\begin{document}
+\maketitle
+
+\section{Vibration Level} 
+First, we can consider the case of vibrating mascots, where the vibration level represents or at least gives a clue about which type of personality the approaching mascot has.
+In order to associate the level of vibration with a certain personality trait, we make an assumption about the vibration being conceptualized as a quality of self-expression that can be characterized as assertive behaviour. Depending on the personality of the device, the levels of assertiveness, which are presented as vibration levels, will differ. Since we decided to base our theory on the Big Five Personality Model which is characterized by five factors, the vibration levels in our system will vary from one to five (where L1 is scored as the lowest level of assertiveness and L5 represented as a highly assertive personality). Subsequent studies~\cite{bagherianrelationship}~\cite{kirst2011investigating}~\cite{ramanaiah1993neo}~\cite{lefevre1981assertiveness} investigated the relationship between assertiveness and five personality factors (extraversion, neuroticism, openness to experience, agreeableness, and conscientiousness). The consistent findings of the differences in personality traits between assertive and non-assertive behaviors which are described in these papers can aid in developing our prototype. 
+
+\par In the following study ~\cite{bagherianrelationship}, authors describe the correlation between assertiveness and personality traits based on regression analysis. This analysis together with a correlation coefficient presented in Table \ref{table:1}~\cite{bagherianrelationship} shows that neuroticism, extraversion and conscientiousness factors are the main predictors of assertiveness having a p-value\textless 0.01 (denoted with asterisks) which indicates the significance of the relationship between these variables. The factors of agreeableness and openness to experience have shown no significant relationship in predicting assertiveness. 
+
+\begin{table} [h]
+\caption{Correlation Coefficients between personality traits and assertiveness}
+\centering
+\begin{tabular}{c c c c c c} 
+\\
+ \hline \hline
+						& \textbf{N} 			&\textbf{E}		&\textbf{O}		&\textbf{A}		&\textbf{C}	\\ [0.5ex] 
+ \hline
+ N 						& 1.000 				&				&				&				&	\\ 
+ E 						& -0.423** 			&1.000			&				&				&	\\
+ O 						& -0.047 				&-0.001			&1.000			&				&	\\
+ A 						& -0.253** 			&0.351**			&0.057			&1.000			&	\\
+ C 						& -0.356** 			&0.387**			&0.091			&0.0263**			&1.000	\\ [1ex] 
+ \hline
+ \textbf{asseriveness}  		& \textbf{-0.253**}		&\textbf{0.241**}	&\textbf{-0.002}		&\textbf{0.064}		&\textbf{0.225**}	\\
+ \hline \hline
+ \end{tabular}
+ \label{table:1}
+ \end{table}
+ 
+\par The results reported in Table \ref{table:1} shows that there is a linear correlation between extraversion and conscientiousness with assertiveness. Conversely, the inverse relationship between neuroticism and assertiveness makes this personality traits the lowest predictor. In addition, the authors did not find any significant relation between agreeableness and openness with assertiveness. We considered the Table \ref{table:1} as an example, and the results found in other works~\cite{kirst2011investigating}~\cite{ramanaiah1993neo}~\cite{lefevre1981assertiveness} are also consistent with the results shown in this table. On the one hand, the high level of assertiveness and extraversion can be explained as individuals with this type of personality tend to seek stimulation from the environment that helps them to assert their opinions without hesitation or to take the initiative while starting a communication with others. In the case of Conscientiousness, since these individuals are more concentrated and goal-oriented, they may see assertiveness as a tool to achieve these goals. A neurotic personality trait, on the other hand, is characterized by people who are unable to assert or approve themselves and have difficulty in coping with stressful interpersonal situations which explains why assertiveness and neuroticism are inversely correlated to each other.
+
+\par However, with the Openness and Agreeableness personality traits, the picture is more ambiguous, in order to draw a conclusion out of it. Unfortunately, in many research papers that we studied, the correlation between these personality types and the level of assertiveness is not significant.
+In order to make an assumption about what level of vibration would better characterize these two personality dimensions, we need to refer to other factors.
+For example, in addition to assertiveness, we can also consider which motives or needs these individuals pursue and therefore, make an assumption based on this additional factor.
+The authors of the following papers~\cite{costa1988catalog} studied the relationship between personality traits and needs and provided us PRF (The Personality Research Form) pattern, which measures 20 needs that each personality trait may have.
+Before we study the PRF pattern, let us examine what are the characteristic features inherent in these two types of personalities.
+
+In the following book~\cite{matthews2003personality}, Openness to experience personality trait is described as a more open individuals with a deep imagination, who are always open to new knowledge, to some extent even curious and inquisitive and have wide interests. Given these characteristics, we can consider the needs and motives that these traits have according to the PRF pattern. The examination of this pattern may help us to understand how individuals behave in a wide variety of situations. 
+For example, according to Table \ref{table:2}, the high score of CH describes that individuals with Openness personality dislike routine and avoid it, readily adapts to changes in the environment, which show how much they appreciate variety. The high level of UN scale shows that open individuals want to understand different areas in order to satisfy intellectual curiosity. Whereas the low level of HA describes their adventurous side of the personality. All these scales demonstrate the types of behaviors that openness personality may show to fulfill their needs. Consequently, we can make an assumption that individuals high in openness personality trait generally behave in a relatively assertive manner (i.e they take the initiative, lead discussions) in order to broaden their knowledge. By relatively, we mean that the level of assertiveness needs to be less than the in Extravert and Conscientiousness and more than Neuroticism personality since they are the main predictors of assertiveness and the results have high significant value. 
+The level of vibration that we can assign to our Mascot with this personality trait is L3. 
+\begin{table} [h]
+\caption{Joint Factor Loadings for NEO-PI Factors and PRF Scales}
+\centering
+\begin{tabular}{c c c} 
+\\
+ \hline \hline
+PRF	scores				& \textbf{O} 	&\textbf{A}	\\ [0.5ex] 
+ \hline
+ Social Recognition (SR)		& -10 		& -19		\\ 
+ Defendence (DE)			& -13		& \textbf{-48}	\\
+ Succorance (SU)			& \textbf{-34}	& 18			\\
+ Affiliation (AF)				& -13  		& 19			\\
+ Exhibition (EX)				& 23			& \textbf{-31}	\\
+ Play (PL)					& 07			& -06		\\
+ Understanding (UN)			& \textbf{64}	& 10			\\
+ Change (CH)				& \textbf{60}	& -12		\\
+ Sentience (SE)				& \textbf{53}	& 13			\\
+ Autonomy (AU)			& \textbf{47}	& -26		\\
+ Harmavoidance (HA)		& \textbf{-52}	& \textbf{32}	\\
+ Abasement (AB)			& 12			& \textbf{58}	\\
+ Nurturance (NU)			& 10			& \textbf{55}	\\
+ Dominance (DO)			& \textbf{45}	& \textbf{-46}	\\
+ Aggression (AG)			& 14			& \textbf{-68}	\\
+ Achievement (AC)			& \textbf{46}	& 02			\\
+ Order (OR)				& -25		& -17		\\
+ Endurance (EN)			& \textbf{33}	& 15			\\
+ Impulsivity (IM)				& 24			& 03			\\
+ Desirability (DY)			& 07			& 10			\\ [1ex] 
+ \hline \hline		
+ \end{tabular}
+ \label{table:2}
+ \end{table}
+\par Agreeableness is described as a personality trait that is perceived as sympathetic, kind, warm, generous, helpful, forgiving, friendly, unselfish and gentle personality~\cite{matthews2003personality}.
+In addition to this definition, having examined the Table \ref{table:2} we will analyze their goals, motives and needs that they fulfill while communicating with others. 
+For example, this type of personality has a high score in AB, NU, HA and low level of AG, DO. To summarize, the Table \ref{table:2} gives us clues that individuals who are high in Agreeable personality like to be modest, tend to be self-effacing, does not need and want to be the centre of attention. According to the needs of this personality trait, they can also be interpreted as being shy individuals who feel tense in the presence of others. Thus, making plausible for us to assume that, in general, people high in Agreeableness behave less assertive than ones who are low in this personality trait. This shows that the level of assertiveness that Agreeable people have should be relatively less than who have high Openness personality.
+The level of vibration that we can assign for this personality trait is L2.
+
+\par To summarize, the vibration level values that we assigned for each personality traits in our system are the following:
+\begin{itemize}
+\item L1 is assigned to the mascot with Neuroticism personality trait where the vibration has the lowest level of amplitude.
+\item L2 is assigned to Agreeableness
+\item L3 is assigned to Openness to Experience
+\item L4 is assigned to Conscientiousness
+\item L5 which represents the highest vibration level and the longest duration is assigned to Extravert personality trait
+\end{itemize}
+
+
+% To change the title from References to Bibliography:
+\renewcommand\refname{Bibliography}
+
+\bibliographystyle{unsrt} % or try abbrvnat or unsrtnat
+\bibliography{example} % refers to example.bib
+
+\end{document}
