@@ -1,9 +1,8 @@
-package com.example.mytabletapp;
+package com.example.mymascotapp;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 

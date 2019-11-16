@@ -18,14 +18,14 @@ public class InteractionRepository {
     protected static final String TAG = "InteractionRepository";
     private final InteractionService interactionService;
 
-    public InteractionRepository() {
+    public InteractionRepository(String address) {
         Log.d("FLOW", "InteractionRepository");
 
 //      retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)
@@ -34,6 +34,10 @@ public class InteractionRepository {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         interactionService = retrofit.create(InteractionService.class);
+
+        // 1) In LauncherActivity, start service discovery
+        // 2) As soon as service is discovered, start MainActivity with discovered ip address
+        // 3) In MainActivity, extract ip address from extras and pass it to repositories etc
     }
 
     public void sendNetworkRequest(Integer mascotId) {

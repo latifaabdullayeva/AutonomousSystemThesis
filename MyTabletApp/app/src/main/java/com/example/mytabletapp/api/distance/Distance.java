@@ -8,11 +8,11 @@ public class Distance {
     private final Device toDevice;
     private final Long distance;
 
-    public Distance(Integer id) {
+    Distance(Integer id) {
         this(id, null, null, null);
     }
 
-    Distance(Integer distanceId, Device fromDevice, Device toDevice, Long distance) {
+    public Distance(Integer distanceId, Device fromDevice, Device toDevice, Long distance) {
         this.distanceId = distanceId;
         this.fromDevice = fromDevice;
         this.toDevice = toDevice;

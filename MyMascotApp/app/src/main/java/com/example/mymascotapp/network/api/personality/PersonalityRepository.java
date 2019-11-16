@@ -19,7 +19,7 @@ public class PersonalityRepository {
 
     private final PersonalityService personalityService;
 
-    public PersonalityRepository() {
+    public PersonalityRepository(String address) {
         Log.d("FLOW", "PersonalityRepository");
 
         // retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
@@ -27,7 +27,7 @@ public class PersonalityRepository {
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)

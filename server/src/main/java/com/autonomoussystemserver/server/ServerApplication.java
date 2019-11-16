@@ -16,4 +16,4 @@ public class ServerApplication {
     }
 }
 // Write in terminal
-// mvn spring-boot:run -e -X -Dspring-boot.run.arguments=--username=sFsM2OIr6DUWtWeyGFSIOwGtuIIFQBf14gtlxXFj,--ipAddress=192.168.0.100
+// mvn spring-boot:run -e -X -Dspring-boot.run.arguments=--hueUsername=sFsM2OIr6DUWtWeyGFSIOwGtuIIFQBf14gtlxXFj,--hueIPAddress=192.168.0.101

@@ -1,4 +1,4 @@
-package com.example.mytabletapp;
+package com.example.mymascotapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +41,7 @@ public class NsdHelper {
 
                     String address = "http://" + host + ":" + port + "/";
                     Log.d(TAG, "Host address is " + host + " port is " + port);
+                    Log.d(TAG, "Address: " + address);
 
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra("serverAddress", address);

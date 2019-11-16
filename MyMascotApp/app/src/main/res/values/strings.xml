@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AutonomousSystemThesis</string>
     <string name="save_all_data">Save All data</string>
-    <string name="choose_a_type_of_your_device">Choose a Type of your device:</string>
+    <string name="choose_a_type_of_your_device">Choose Mascot and give it a name:</string>
     <string name="tablet">Tablet</string>
     <string name="lamp">Lamp</string>
     <string name="speakers">Speakers</string>
@@ -17,7 +17,7 @@
     <string name="neuroticism">Neuroticism</string>
     <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
     <string name="next">Next</string>
-    <string name="selectedBeacon">Your selection: %1$s</string>
-    <string name="selectedPer">Your selection: %1$s</string>
+    <string name="selectedBeacon">Your Beacon: %1$s</string>
+    <string name="selectedPer">Your Mascot Personality: %1$s</string>
     <string name="beaconSize">Number of Beacon devices: %1$d</string>
 </resources>

@@ -2,20 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp">
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkMark="?android:attr/listChoiceIndicatorSingle" />
+    <!--    <CheckedTextView-->
+    <!--        android:id="@+id/checkedTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:checkMark="?android:attr/listChoiceIndicatorSingle" />-->
 
     <TextView
         android:id="@+id/beaconItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/checkedTextView"
         android:textColor="#FDB91266" />
 
 </RelativeLayout>

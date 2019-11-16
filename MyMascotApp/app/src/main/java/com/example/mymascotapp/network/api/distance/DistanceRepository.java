@@ -18,14 +18,14 @@ public class DistanceRepository {
     protected static final String TAG = "DistanceRepository";
     private final DistanceService distanceService;
 
-    public DistanceRepository() {
+    public DistanceRepository(String address) {
         Log.d("FLOW", "DistanceRepository");
 
 //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)

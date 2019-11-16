@@ -19,11 +19,13 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
+        System.out.println("PersonalityController: getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 
     @PostMapping("/personality")
     public ResponseEntity<Personality> createPersonality(@RequestBody PersonalityDto personalityDto) {
+        System.out.println("PersonalityController: createPersonality()");
 
         Personality existingPersonality = personalityRepository.findByPersonalityName(personalityDto.getPersonality_name());
 

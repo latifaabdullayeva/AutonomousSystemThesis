@@ -51,11 +51,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "MainAct else -->" + "deviceTypeValue: " + deviceTypeValue +
                     "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
+
+            String serverAddress = getIntent().getExtras()
+                    .getString("serverAddress");
+
             Intent myIntent = new Intent(MainActivity.this, ShowAllDistances.class);
             myIntent.putExtra("BEACONUUID", beaconValue);
             myIntent.putExtra("DEVICETYPE", deviceTypeValue);
             myIntent.putExtra("DEVICENAME", devNameValue);
             myIntent.putExtra("PERSONALITY", persValue);
+            myIntent.putExtra("serverAddress", serverAddress);
+
             startActivity(myIntent);
         }
     }
@@ -70,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
     private void setupQuestionnaireButton() {
         Button gotoQuestionnare = findViewById(R.id.gotoQuestionnare);
         gotoQuestionnare.setOnClickListener(button -> {
-            startActivity(new Intent(MainActivity.this, Initialisation.class));
+            String serverAddress = getIntent().getExtras()
+                    .getString("serverAddress");
+
+            Intent intent = new Intent(MainActivity.this, Initialisation.class);
+            intent.putExtra("serverAddress", serverAddress);
+
+            startActivity(intent);
         });
     }
 

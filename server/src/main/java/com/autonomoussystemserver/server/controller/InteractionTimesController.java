@@ -25,11 +25,13 @@ public class InteractionTimesController {
 
     @GetMapping("/interactionTimes")
     public Page<InteractionTimes> getInteractionTimes(Pageable pageable) {
+        System.out.println("InteractionTimesController: getInteractionTimes()");
         return interactionTimesRepository.findAll(pageable);
     }
 
     @PostMapping("/interactionTimes")
     public ResponseEntity<InteractionTimes> createInteraction(@RequestBody InteractionTimesDto interactionTimesDto) {
+        System.out.println("InteractionTimesController: createInteraction()");
 
         InteractionTimes interactionTimes = interactionTimesService
                 .incrementInteractionTimes(interactionTimesDto);

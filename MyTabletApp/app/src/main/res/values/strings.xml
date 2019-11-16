@@ -2,9 +2,13 @@
     <string name="app_name">MyTabletApp</string>
     <string name="welcome_to_our_autonomous_system_app">Welcome to our Autonomous System App!</string>
     <string name="let_s_go_to_questionnaire">Let\'s go to Questionnaire</string>
-    <string name="choose_one_uuid_for_your_beacon">Choose one UUID for your beacon:</string>
-    <string name="selectedBeacon">Your selection: %1$s</string>
+    <string name="choose_one_beacon_for_tablet">Choose one beacon for Tablet:</string>
+    <string name="choose_one_beacon_for_lamp">Choose one beacon for Lamp:</string>
+    <string name="choose_one_beacon_for_speakers">Choose one beacon for Speakers:</string>
     <string name="save">Save</string>
-    <string name="red">Red</string>
-    <string name="green">Green</string>
+    <string name="openness">Openness</string>
+    <string name="conscientiousness">Conscientiousness</string>
+    <string name="extroversion">Extroversion</string>
+    <string name="agreeableness">Agreeableness</string>
+    <string name="neuroticism">Neuroticism</string>
 </resources>

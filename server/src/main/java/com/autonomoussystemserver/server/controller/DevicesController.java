@@ -25,11 +25,13 @@ public class DevicesController {
     // for @RequestMapping(method = RequestMethod.GET).
     @GetMapping("/devices")
     public Page<Devices> getDevices(Pageable pageable) {
+        System.out.println("DevicesController: getDevices()");
         return devicesRepository.findAll(pageable);
     }
 
     @PostMapping("/devices")
     public ResponseEntity<Devices> createDevice(@RequestBody DeviceDto deviceDto) {
+        System.out.println("DevicesController: createDevice()");
 
         Devices existingDevice = devicesRepository.findByBeacon(deviceDto.getBeaconUuid());
 
@@ -48,6 +50,8 @@ public class DevicesController {
             newDevice.setDeviceName(deviceDto.getDeviceName() == null ? "" : deviceDto.getDeviceName());
             newDevice.setDeviceType(deviceDto.getDeviceType());
             newDevice.setBeaconUuid(deviceDto.getBeaconUuid());
+
+            System.out.println("DevicesController: newDevice = " + newDevice);
 
             devicesRepository.save(newDevice);
             return ResponseEntity.ok(newDevice);

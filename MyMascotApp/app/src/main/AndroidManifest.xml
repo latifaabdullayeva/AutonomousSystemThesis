@@ -13,10 +13,23 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" />
+
         <activity android:name=".Initialisation" />
         <activity android:name=".ShowAllDistances" />
         <activity android:name=".network.api.devices.DeviceRepository" />
@@ -24,15 +37,6 @@
          the singleInstance is important to keep two copies of our activity
         from getting launched on automatic startup
         -->
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

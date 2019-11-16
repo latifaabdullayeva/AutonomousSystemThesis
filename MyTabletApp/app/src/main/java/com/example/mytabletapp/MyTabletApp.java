@@ -1,6 +1,7 @@
 package com.example.mytabletapp;
 
 import android.app.Application;
+import android.util.Log;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -9,6 +10,7 @@ import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 public class MyTabletApp extends Application {
     public void onCreate() {
         super.onCreate();
+        Log.d("FLOW", "MyTabletApp");
         setupBeaconManager();
     }
 

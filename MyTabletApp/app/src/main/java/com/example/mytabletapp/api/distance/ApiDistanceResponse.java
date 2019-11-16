@@ -14,7 +14,7 @@ public class ApiDistanceResponse {
     }
 
     public List<Distance> getContent() {
-        Log.d(TAG, "content = " + content.get(0).getFromDevice() + "; " + content.get(0).getToDevice());
+//        Log.d(TAG, "content = " + content.get(0).getFromDevice() + "; " + content.get(0).getToDevice());
         return content;
     }
 }

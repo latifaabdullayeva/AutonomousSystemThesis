@@ -34,10 +34,10 @@ import static java.lang.Math.round;
 public class ShowAllDistances extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "ShowAllDistances";
 
-    final DistanceRepository distanceRepository = new DistanceRepository();
-    final DeviceRepository deviceRepository = new DeviceRepository();
-    final PersonalityRepository personalityRepository = new PersonalityRepository();
-    final InteractionRepository interactionRepository = new InteractionRepository();
+    DistanceRepository distanceRepository;
+    DeviceRepository deviceRepository;
+    PersonalityRepository personalityRepository;
+    InteractionRepository interactionRepository;
 
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
     int fromMascotId, toMascotId;
@@ -51,6 +51,14 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         setContentView(R.layout.activity_show_all_distances);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("All Distances");
+
+        String serverAddress = getIntent().getExtras()
+                .getString("serverAddress");
+
+        distanceRepository = new DistanceRepository(serverAddress);
+        deviceRepository = new DeviceRepository(serverAddress);
+        personalityRepository = new PersonalityRepository(serverAddress);
+        interactionRepository = new InteractionRepository(serverAddress);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -97,7 +105,8 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
         // We check whether user's device and the approaching device both are Mascots and their distance is less or equal 45 cm
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        if (round(beacon.getDistance() * 100) <= 20 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
+        // TODO: if (devicetype is Mascot - Mascot)
+        if (round(beacon.getDistance() * 100) <= 45 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
             Log.d("test", "If DISTANCE == : " + deviceTypeValue + "; " +
                     device.getDeviceType() + "; " + round(beacon.getDistance() * 100));
             // Add a vibration level according to the personality of a device to whom we measure the distance
@@ -117,7 +126,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                     Log.d(TAG, "error loading from API: " + t.getMessage());
                 }
             });
-        } else if (beacon.getDistance() > 20) {
+        } else if (beacon.getDistance() > 45) {
             Log.d("test", "ELSE DISTANCE != : " + round(beacon.getDistance() * 100));
             // if the distance is more than 45 cm, cancel vibration
             vibrator.cancel();

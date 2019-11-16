@@ -2,9 +2,10 @@ package com.example.mytabletapp.api.distance;
 
 import android.util.Log;
 
+import com.example.mytabletapp.api.devices.Device;
+
 import java.io.IOException;
 
-import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,14 +19,14 @@ public class DistanceRepository {
     protected static final String TAG = "DistanceRepository";
     private final DistanceService distanceService;
 
-    public DistanceRepository() {
+    public DistanceRepository(String address) {
         Log.d("FLOW", "DistanceRepository");
 
 //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)
@@ -36,13 +37,13 @@ public class DistanceRepository {
         distanceService = retrofit.create(DistanceService.class);
     }
 
-    public void sendNetworkRequest(Integer fromDevice, Integer toDevice, Long distance) {
+    public void sendNetworkRequest(Integer id, Device fromDevice, Device toDevice, Long distance) {
         Log.d(TAG, "sendNetworkRequest()");
-        Distance distanceRequest = new Distance(fromDevice, toDevice, distance);
+        Distance distanceRequest = new Distance(null,fromDevice, toDevice, distance);
 
         distanceService.postDistance(distanceRequest).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse( Call<ResponseBody> call,  Response<ResponseBody> response) {
                 try {
                     if (response.body() != null) {
                         Log.d(TAG, "success! " + response.body().string());
@@ -53,7 +54,7 @@ public class DistanceRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure( Call<ResponseBody> call,  Throwable t) {
                 Log.e(TAG, "failure :(", t);
             }
         });

@@ -11,7 +11,6 @@ import com.example.mytabletapp.api.personality.Personality;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -26,18 +25,18 @@ public class DeviceRepository extends AppCompatActivity {
     protected static final String TAG = "DeviceRepository";
     private final DeviceService deviceService;
 
-    public DeviceRepository() {
+    public DeviceRepository(String address) {
 
         //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         // IP uni: "http://10.20.130.243:8080/"
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
-                            .addInterceptor(interceptor)
-                            .build()
+                                .addInterceptor(interceptor)
+                                .build()
                 )
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
@@ -69,7 +68,7 @@ public class DeviceRepository extends AppCompatActivity {
 
         deviceService.createDevice(deviceRequest).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(TAG, "Response: " + response.body());
                 try {
                     if (response.body() != null) {
@@ -82,7 +81,7 @@ public class DeviceRepository extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, "failure :(", t);
             }
         });

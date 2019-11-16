@@ -26,7 +26,7 @@ public class DeviceRepository extends AppCompatActivity {
     protected static final String TAG = "DeviceRepository";
     private final DeviceService deviceService;
 
-    public DeviceRepository() {
+    public DeviceRepository(String address) {
         Log.d("FLOW", "DeviceRepository");
 
         //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
@@ -34,7 +34,7 @@ public class DeviceRepository extends AppCompatActivity {
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                             .addInterceptor(interceptor)

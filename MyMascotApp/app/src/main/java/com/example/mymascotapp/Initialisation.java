@@ -47,9 +47,9 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     protected static final String TAG = "InitialisationActivity";
 
-    final DistanceRepository distanceRepository = new DistanceRepository();
-    final DeviceRepository deviceRepository = new DeviceRepository();
-    final PersonalityRepository personalityRepository = new PersonalityRepository();
+    DistanceRepository distanceRepository;
+    DeviceRepository deviceRepository;
+    PersonalityRepository personalityRepository;
 
     LinearLayout personalityLayout;
     Button saveButton;
@@ -60,7 +60,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     private BeaconManager beaconManager;
     private ArrayList<String> beaconList, deviceList, tempBeaconList;
     private RecyclerViewAdapter adapter;
-    private String beaconValue, deviceTypeValue, devicePersonalityValue, mascotValue;
+    private String beaconValue, devicePersonalityValue, mascotValue;
+    private String deviceTypeValue = "Mascot";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +72,17 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String serverAddress = getIntent().getExtras()
+                .getString("serverAddress");
+
+        distanceRepository = new DistanceRepository(serverAddress);
+        deviceRepository = new DeviceRepository(serverAddress);
+        personalityRepository = new PersonalityRepository(serverAddress);
+
         this.deviceList = new ArrayList<>();
         this.tempBeaconList = new ArrayList<>();
         textViewSelectedBeacon = findViewById(R.id.showSelectedBeacon);
+        textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, ""));
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -95,9 +104,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
     @Override
     public void onItemClick(View view, int position) {
-        Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
         beaconValue = beaconList.get(position);
-        Toast.makeText(Initialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_SHORT).show();
         textViewSelectedBeacon.setText(getString(R.string.selectedBeacon, beaconValue));
     }
 
@@ -154,8 +161,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                             if (!tempBeaconList.contains(beacon.getId1().toString())) {
                                 tempBeaconList.add(beacon.getId1().toString());
-                                // if you want to get ID of beacon -> .getId1();
-                                // maybeSolved TODO: do not show this beacon if it is already in the database
                             }
                         }
 
@@ -192,8 +197,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         int selectedRadioDevTypeId = radioGroupDevType.getCheckedRadioButtonId();
         RadioButton radioButtonDevType;
         radioButtonDevType = findViewById(selectedRadioDevTypeId);
-        deviceTypeValue = radioButtonDevType.getText().toString();
-        Toast.makeText(Initialisation.this, "3" + deviceTypeValue, Toast.LENGTH_SHORT).show();
+//        deviceTypeValue = radioButtonDevType.getText().toString();
 
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
         personalityLayout = findViewById(R.id.radioGroupPersonality);
@@ -203,10 +207,12 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         int selectedRadioPersId = radioGroupPersonality.getCheckedRadioButtonId();
         RadioButton radioButtonPersonality;
         radioButtonPersonality = findViewById(selectedRadioPersId);
-        mascotValue = mascotNameEditText.getText().toString();
-        devicePersonalityValue = radioButtonPersonality.getText().toString();
-        Toast.makeText(Initialisation.this, "2" + devicePersonalityValue, Toast.LENGTH_SHORT).show();
-        saveButtonListener();
+        mascotValue = "";
+        if (deviceTypeValue != null && deviceTypeValue.equals("Mascot")) {
+            mascotValue = mascotNameEditText.getText().toString();
+            devicePersonalityValue = radioButtonPersonality.getText().toString();
+            saveButtonListener();
+        }
     }
 
     public void saveButtonListener() {
@@ -217,11 +223,18 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
             } else {
                 RadioButton radioButtonDevType;
                 radioButtonDevType = findViewById(selectedRadioDevTypeId);
-                Toast.makeText(Initialisation.this, "1" + radioButtonDevType.getText(), Toast.LENGTH_SHORT).show();
                 deviceTypeValue = radioButtonDevType.getText().toString();
-                Intent myIntent = new Intent(Initialisation.this, ShowAllDistances.class);
-                myIntent.putExtra("BEACONUUID", beaconValue);
-                myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+
+                String serverAddress = getIntent().getExtras()
+                        .getString("serverAddress");
+
+                Intent intent = new Intent(this, ShowAllDistances.class);
+
+                intent.putExtra("serverAddress", serverAddress);
+                intent.putExtra("BEACONUUID", beaconValue);
+                intent.putExtra("DEVICETYPE", deviceTypeValue);
+
+
                 if (deviceTypeValue.equals("Mascot")) {
                     int selectedRadioPersId = radioGroupPersonality.getCheckedRadioButtonId();
                     if (selectedRadioPersId == -1) {
@@ -229,8 +242,8 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     } else {
                         // maybeSolved TODO: DO NOT DELETE: may need it later
 //                            saveData();
-                        myIntent.putExtra("DEVICENAME", mascotValue);
-                        myIntent.putExtra("PERSONALITY", devicePersonalityValue);
+                        intent.putExtra("DEVICENAME", mascotValue);
+                        intent.putExtra("PERSONALITY", devicePersonalityValue);
                     }
                 }
                 if (deviceTypeValue.equals("Mascot")) {
@@ -296,7 +309,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                                 // If not, then I will consider the request as failed
                                 if (device.getBeaconUuid().equals(beaconValue)) {
                                     saveData();
-                                    startActivity(myIntent);
+                                    Toast.makeText(Initialisation.this, "You choice was successfully saved! :)", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
                                     // Show a user a message that we could not save your data
@@ -313,8 +326,7 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                     }
                 });
-//                    saveData();
-//                    startActivity(myIntent);
+                startActivity(intent);
             }
         });
     }
@@ -327,6 +339,5 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
         editor.putString(TEXT3, mascotValue);
         editor.putString(TEXT4, devicePersonalityValue);
         editor.apply();
-        Toast.makeText(Initialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }
 }

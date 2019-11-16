@@ -2,20 +2,19 @@ package com.example.mytabletapp;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 
 import org.altbeacon.beacon.BeaconManager;
 
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("FLOW", "MainActivity");
 
         setupActionBar();
         setupQuestionnaireButton();
@@ -43,9 +43,13 @@ public class MainActivity extends AppCompatActivity {
             verifyBluetooth();
             askPermission();
         } else {
+            String serverAddress = getIntent().getExtras()
+                    .getString("serverAddress");
+
             Intent myIntent = new Intent(MainActivity.this, BackgroundColorChange.class);
             myIntent.putExtra("BEACONUUID", beaconValue);
             myIntent.putExtra("DEVICETYPE", deviceTypeValue);
+            myIntent.putExtra("serverAddress", serverAddress);
             startActivity(myIntent);
         }
     }
@@ -58,7 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupQuestionnaireButton() {
         Button gotoQuestionnaire = findViewById(R.id.gotoQuestionnare);
-        gotoQuestionnaire.setOnClickListener(button -> startActivity(new Intent(MainActivity.this, TabletInitialisation.class)));
+        gotoQuestionnaire.setOnClickListener(button -> {
+            String serverAddress = getIntent().getExtras()
+                    .getString("serverAddress");
+
+            Intent intent = new Intent(MainActivity.this, PersonalityInitialisation.class);
+            intent.putExtra("serverAddress", serverAddress);
+
+            startActivity(intent);
+        });
     }
 
     private void verifyBluetooth() {
@@ -101,9 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults
-    ) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_COARSE_LOCATION) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);

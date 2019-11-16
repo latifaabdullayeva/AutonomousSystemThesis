@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,14 +17,14 @@ public class InteractionRepository {
     protected static final String TAG = "InteractionRepository";
     private final InteractionService interactionService;
 
-    public InteractionRepository() {
+    public InteractionRepository(String address) {
         Log.d("FLOW", "InteractionRepository");
 
 //      retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        retrofit = new Retrofit.Builder().baseUrl("https://0f608cb3.ngrok.io")
+        retrofit = new Retrofit.Builder().baseUrl(address)
                 .client(
                         new OkHttpClient.Builder()
                                 .addInterceptor(interceptor)
@@ -43,7 +42,7 @@ public class InteractionRepository {
 
         interactionService.postInteraction(interactionRequest).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse( Call<ResponseBody> call,  Response<ResponseBody> response) {
                 try {
                     if (response.body() != null) {
                         Log.d(TAG, "success! " + response.body().string());
@@ -54,7 +53,7 @@ public class InteractionRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure( Call<ResponseBody> call,  Throwable t) {
                 Log.e(TAG, "failure :(", t);
             }
         });

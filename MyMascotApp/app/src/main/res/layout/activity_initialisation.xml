@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,28 +19,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/IntroTextBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/choose_one_uuid_for_your_beacon"
                     android:textColor="#FDB91266"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/listViewBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:choiceMode="singleChoice"
-                    android:orientation="vertical" />
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"/>
 
                 <TextView
                     android:id="@+id/showSelectedBeacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/selectedBeacon" />
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/selectedBeacon"
+                    android:textColor="#FDB91266"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -53,7 +60,8 @@
             <RadioGroup
                 android:id="@+id/radioGroupDevType"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/IntroTextDevType"
@@ -62,30 +70,6 @@
                     android:text="@string/choose_a_type_of_your_device"
                     android:textColor="#FDB91266"
                     android:textSize="22sp" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDeviceNameTablet"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="checkDevButton"
-                    android:text="@string/tablet"
-                    android:textColor="#FDB91266" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDeviceNameLamp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="checkDevButton"
-                    android:text="@string/lamp"
-                    android:textColor="#FDB91266" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDeviceNameSpeakers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="checkDevButton"
-                    android:text="@string/speakers"
-                    android:textColor="#FDB91266" />
 
                 <RadioButton
                     android:id="@+id/radioButtonDeviceNameMascot"
@@ -117,7 +101,8 @@
             <RadioGroup
                 android:id="@+id/radioGroupPersonality"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/IntroTextPer"

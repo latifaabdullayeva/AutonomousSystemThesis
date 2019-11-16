@@ -2,7 +2,6 @@ package com.example.mytabletapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -36,13 +35,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TabletInitialisation extends AppCompatActivity
+public class SpeakersInitialisation extends AppCompatActivity
         implements BeaconConsumer, RecyclerViewAdapter.ItemClickListener {
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT1 = "text1";
-    public static final String TEXT2 = "text2";
 
-    protected static final String TAG = "TabletInitialisation";
+    protected static final String TAG = "SpeakersInitialisation";
 
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
@@ -51,10 +47,10 @@ public class TabletInitialisation extends AppCompatActivity
 
     private BeaconManager beaconManager;
 
-    private ArrayList<String> beaconListForTablet, deviceListForTablet, tempBeaconListForTablet;
-    private RecyclerViewAdapter adapterForTablet;
+    private ArrayList<String> beaconListForSpeakers, deviceListForSpeakers, tempBeaconListForSpeakers;
+    private RecyclerViewAdapter adapterForSpeakers;
 
-    String deviceTypeValue = "Tablet";
+    String deviceTypeValue = "Speakers";
     String beaconValue;
     TextView textViewSelectedBeacon;
     Button saveButton;
@@ -63,14 +59,13 @@ public class TabletInitialisation extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tablet_initialisation);
+        setContentView(R.layout.activity_speakers_initialisation);
 
         ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Tablet Initialisation");
+        actionBar.setTitle("Speakers Initialisation");
         actionBar.setDisplayHomeAsUpEnabled(true);
-        // TODO: add back Button and functionality for it
 
         String serverAddress = getIntent().getExtras()
                 .getString("serverAddress");
@@ -80,17 +75,17 @@ public class TabletInitialisation extends AppCompatActivity
         personalityRepository = new PersonalityRepository(serverAddress);
         interactionRepository = new InteractionRepository(serverAddress);
 
-        this.deviceListForTablet = new ArrayList<>();
-        this.tempBeaconListForTablet = new ArrayList<>();
-        textViewSelectedBeacon = findViewById(R.id.showSelectedBeaconForTablet);
+        this.deviceListForSpeakers = new ArrayList<>();
+        this.tempBeaconListForSpeakers = new ArrayList<>();
+        textViewSelectedBeacon = findViewById(R.id.showSelectedBeaconForSpeakers);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
         // Choose the Beacon Device out of list
-        this.beaconListForTablet = new ArrayList<>();
-        RecyclerView beaconListView = findViewById(R.id.listViewBeaconForTablet);
-        this.adapterForTablet = new RecyclerViewAdapter(this, this.beaconListForTablet);
-        beaconListView.setAdapter(adapterForTablet);
+        this.beaconListForSpeakers = new ArrayList<>();
+        RecyclerView beaconListView = findViewById(R.id.listViewBeaconForSpeakers);
+        this.adapterForSpeakers = new RecyclerViewAdapter(this, this.beaconListForSpeakers);
+        beaconListView.setAdapter(adapterForSpeakers);
 
         saveButton = findViewById(R.id.buttonBeaconSave);
 
@@ -99,10 +94,10 @@ public class TabletInitialisation extends AppCompatActivity
 
     @Override
     public void onItemClick(View view, int position) {
-        Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
-        beaconValue = beaconListForTablet.get(position);
-        Toast.makeText(TabletInitialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_LONG).show();
-//        textViewSelectedBeacon.setText(getString(R.string.selectedBeaconForTablet, beaconValue));
+        Intent myIntent = new Intent(SpeakersInitialisation.this, TabletInitialisation.class);
+        beaconValue = beaconListForSpeakers.get(position);
+        Toast.makeText(SpeakersInitialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_LONG).show();
+//        textViewSelectedBeacon.setText(getString(R.string.selectedBeaconForSpeakers, beaconValue));
     }
 
     @Override
@@ -135,32 +130,32 @@ public class TabletInitialisation extends AppCompatActivity
 
                 ApiDevicesResponse devices = response.body();
                 for (Device device : Objects.requireNonNull(devices).getContent()) {
-                    deviceListForTablet.add(device.getBeaconUuid());
+                    deviceListForSpeakers.add(device.getBeaconUuid());
                 }
 
                 beaconManager.addRangeNotifier((beacons, region) -> {
-                    beaconListForTablet.clear();
+                    beaconListForSpeakers.clear();
 
                     if (beacons.size() > 0) {
                         for (Beacon beacon : beacons) {
-                            if (!tempBeaconListForTablet.contains(beacon.getId1().toString())) {
-                                tempBeaconListForTablet.add(beacon.getId1().toString());
+                            if (!tempBeaconListForSpeakers.contains(beacon.getId1().toString())) {
+                                tempBeaconListForSpeakers.add(beacon.getId1().toString());
                                 // if you want to get ID of beacon -> .getId1();
                                 // maybeSolved TODO: do not show this beacon if it is already in the database
                             }
                         }
 
-                        for (String device : deviceListForTablet) {
-                            tempBeaconListForTablet.remove(device);
+                        for (String device : deviceListForSpeakers) {
+                            tempBeaconListForSpeakers.remove(device);
                         }
 
-                        beaconListForTablet.addAll(tempBeaconListForTablet);
+                        beaconListForSpeakers.addAll(tempBeaconListForSpeakers);
 
                         String noBeaconsInRange = "Unfortunately, there are no beacons in our range :(";
-                        if (beaconListForTablet.isEmpty()) {
+                        if (beaconListForSpeakers.isEmpty()) {
                             textViewSelectedBeacon.setText(noBeaconsInRange);
                             textViewSelectedBeacon.setTypeface(Typeface.DEFAULT_BOLD);
-                            AlertDialog alertDialog = new AlertDialog.Builder(TabletInitialisation.this).create();
+                            AlertDialog alertDialog = new AlertDialog.Builder(SpeakersInitialisation.this).create();
                             alertDialog.setTitle("No beacons in our range :(");
                             alertDialog.setMessage("Please make sure that you have beacons near you and check whether these beacons are active or not.\n" +
                                     "You can also check either the Internet, Bluetooth or Location connection");
@@ -178,15 +173,14 @@ public class TabletInitialisation extends AppCompatActivity
 
                             }
                         }
-
-                        runOnUiThread(() -> adapterForTablet.notifyDataSetChanged());
+                        runOnUiThread(() -> adapterForSpeakers.notifyDataSetChanged());
 
                         // set up the RecyclerView
-                        RecyclerView recyclerView = findViewById(R.id.listViewBeaconForTablet);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(TabletInitialisation.this));
-                        adapterForTablet = new RecyclerViewAdapter(TabletInitialisation.this, beaconListForTablet);
-                        adapterForTablet.setClickListener(TabletInitialisation.this);
-                        recyclerView.setAdapter(adapterForTablet);
+                        RecyclerView recyclerView = findViewById(R.id.listViewBeaconForSpeakers);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(SpeakersInitialisation.this));
+                        adapterForSpeakers = new RecyclerViewAdapter(SpeakersInitialisation.this, beaconListForSpeakers);
+                        adapterForSpeakers.setClickListener(SpeakersInitialisation.this);
+                        recyclerView.setAdapter(adapterForSpeakers);
                     }
                 });
 
@@ -209,10 +203,8 @@ public class TabletInitialisation extends AppCompatActivity
             String serverAddress = getIntent().getExtras()
                     .getString("serverAddress");
 
-            Intent myIntent = new Intent(TabletInitialisation.this, BackgroundColorChange.class);
+            Intent myIntent = new Intent(SpeakersInitialisation.this, TabletInitialisation.class);
             myIntent.putExtra("serverAddress", serverAddress);
-            myIntent.putExtra("BEACONUUID", beaconValue);
-            myIntent.putExtra("DEVICETYPE", deviceTypeValue);
 
             if (beaconValue != null) {
 
@@ -234,12 +226,11 @@ public class TabletInitialisation extends AppCompatActivity
                                 // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
                                 // If not, then I will consider the request as failed
                                 if (device.getBeaconUuid().equals(beaconValue)) {
-                                    saveData();
-                                    Toast.makeText(TabletInitialisation.this, "You choice was successfully saved! :)", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SpeakersInitialisation.this, "You choice was successfully saved! :)", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
                                     // Show a user a message that we could not save your data
-                                    Toast.makeText(TabletInitialisation.this, "SOMETHING WENT WRONG :(\n We could not save your data", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SpeakersInitialisation.this, "SOMETHING WENT WRONG :(\n We could not save your data", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
@@ -253,7 +244,7 @@ public class TabletInitialisation extends AppCompatActivity
                 });
                 startActivity(myIntent);
             } else {
-                AlertDialog alertDialog = new AlertDialog.Builder(TabletInitialisation.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(SpeakersInitialisation.this).create();
                 alertDialog.setTitle("Something went Wrong! :(");
                 alertDialog.setMessage("Please make sure that you have chosen any beacon tags. \n" +
                         "We need to register each device, so the system can work properly");
@@ -266,14 +257,5 @@ public class TabletInitialisation extends AppCompatActivity
                 alertDialog.show();
             }
         });
-    }
-
-    public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT1, beaconValue);
-        editor.putString(TEXT2, deviceTypeValue);
-        editor.apply();
-        Toast.makeText(TabletInitialisation.this, "Data SAVED!", Toast.LENGTH_SHORT).show();
     }
 }
