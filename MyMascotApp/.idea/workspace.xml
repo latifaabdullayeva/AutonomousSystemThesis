@@ -9,105 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3bec802-f35f-4c4e-a9dc-e6135509ab8f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/LauncherActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/NsdHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/LampInitialisation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/PersonalityInitialisation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/SpeakersInitialisation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_lamp_initialisation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_personality_initialisation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_speakers_initialisation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/render.experimental.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_appcompat_v7_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_appcompat_v7_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_asynclayoutinflater_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_asynclayoutinflater_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cardview_v7_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cardview_v7_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_coordinatorlayout_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_coordinatorlayout_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cursoradapter_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cursoradapter_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_customview_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_customview_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_documentfile_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_documentfile_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_drawerlayout_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_drawerlayout_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_interpolator_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_interpolator_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_loader_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_loader_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_localbroadcastmanager_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_localbroadcastmanager_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_print_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_print_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_recyclerview_v7_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_recyclerview_v7_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_slidingpanelayout_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_slidingpanelayout_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_compat_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_compat_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_ui_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_ui_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_utils_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_utils_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_fragment_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_fragment_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_vector_drawable_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_vector_drawable_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_swiperefreshlayout_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_swiperefreshlayout_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_3_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_3_0_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_3_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_3_0_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_monitor_1_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_monitor_1_0_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_runner_1_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_runner_1_0_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_versionedparcelable_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_versionedparcelable_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_altbeacon_android_beacon_library_2_16_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_altbeacon_android_beacon_library_2_16_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/DeviceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/DeviceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/ApiDistanceResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/ApiDistanceResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/InteractionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/InteractionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/personality/PersonalityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/personality/PersonalityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/network_security_config.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/BackgroundColorChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/BackgroundColorChange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/LauncherActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/LauncherActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MyTabletApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/MyTabletApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/NsdHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/NsdHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/RecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/RecyclerViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/TabletInitialisation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/TabletInitialisation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/devices/DeviceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/devices/DeviceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/ApiDistanceResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/ApiDistanceResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/Distance.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/Distance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/DistanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/distance/DistanceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/interaction/InteractionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/interaction/InteractionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/personality/PersonalityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/java/com/example/mytabletapp/api/personality/PersonalityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_background_color_change.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_background_color_change.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_tablet_initialisation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/layout/activity_tablet_initialisation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/app/src/main/res/xml/network_security_config.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyTabletApp/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyTabletApp/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/ServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DevicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DevicesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DistancesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DistancesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/InteractionTimesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/InteractionTimesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/PersonalityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/PersonalityController.java" afterDir="false" />
-    </list>
+    <list default="true" id="c3bec802-f35f-4c4e-a9dc-e6135509ab8f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +19,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="84fdd328" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="ENU7N15B05019744" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -137,29 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/Distance.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="98" selection-start-line="98" selection-end-line="98" />
+            <state relative-caret-position="224">
+              <caret line="91" column="77" lean-forward="true" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -190,8 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ItemClickListener</find>
-      <find>setClickListener</find>
       <find>Region</find>
       <find>.getN</find>
       <find>list_view_result</find>
@@ -220,6 +102,8 @@
       <find>color</find>
       <find>no bea</find>
       <find>deviceTypeValue</find>
+      <find>vibra</find>
+      <find>vibrator</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -285,9 +169,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -394,6 +277,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -506,9 +390,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2739628" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.2739628" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -517,15 +402,15 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49928468" weight="0.5328377" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.4985694" visible="true" weight="0.5724907" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4985694" weight="0.57160646" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32961586" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.488228" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50143063" side_tool="true" weight="0.5724907" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.75216854" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32961586" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32876712" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.5204461" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" weight="0.3297568" />
@@ -676,12 +561,12 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -691,16 +576,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_show_all_distances.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
           <caret line="48" lean-forward="true" selection-start-line="42" selection-start-column="2" selection-end-line="48" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/my_listview_radiobutton_layout.xml">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/Device.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -736,12 +621,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="20" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="20" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/RecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -778,12 +663,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_launcher.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/ApiDistanceResponse.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -846,6 +731,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_initialisation.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="69" column="59" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
@@ -853,21 +739,6 @@
             <element signature="e#3246#3262#0" expanded="true" />
             <element signature="e#4702#4742#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="98" selection-start-line="98" selection-end-line="98" />
         </state>
       </provider>
     </entry>
@@ -893,6 +764,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
           <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="91" column="77" lean-forward="true" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="77" />
         </state>
       </provider>
     </entry>
