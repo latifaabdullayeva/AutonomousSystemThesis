@@ -3,6 +3,8 @@ Master Thesis Project
 
 Supervisor: Donald Degraen, German Research Center for Artificial Intelligence, Saarbrücken, Germany
 
+* The paper related to the project is at [GitHub](https://github.com/latifaabdullayeva/Thesis)
+
 
 Notes for me: PostgreSQL 10: 
 
