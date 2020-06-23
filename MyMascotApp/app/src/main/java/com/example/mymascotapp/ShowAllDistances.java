@@ -37,7 +37,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-    InteractionRepository interactionRepository;
+//    InteractionRepository interactionRepository;
 
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
     int fromMascotId, toMascotId;
@@ -58,7 +58,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-        interactionRepository = new InteractionRepository(serverAddress);
+//        interactionRepository = new InteractionRepository(serverAddress);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -91,7 +91,7 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                     Log.d("test", "If personality DISTANCE == : " + round(beacon.getDistance() * 100));
                     vibrator.vibrate(100 * personality.getVibration_level());
                     Log.d(TAG, "personality.getVibration_level() = " + device.getDevicePersonality().getVibration_level());
-                    interactionRepository.sendNetworkRequest(myMascotId);
+//                    interactionRepository.sendNetworkRequest(myMascotId);
                 }
             }
         }

@@ -1,8 +1,8 @@
 package com.autonomoussystemserver.server.controller;
 
 import com.autonomoussystemserver.server.controller.model.InteractionTimesDto;
-import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
-import com.autonomoussystemserver.server.service.InteractionTimesService;
+//import com.autonomoussystemserver.server.database.repository.InteractionTimesRepository;
+//import com.autonomoussystemserver.server.service.InteractionTimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import retrofit2.Call;
@@ -16,16 +16,16 @@ class HueRepository {
     private final HueService hueService;
     private final String username;
 
-    @Autowired
-    InteractionTimesRepository interactionTimesRepository;
+//    @Autowired
+//    InteractionTimesRepository interactionTimesRepository;
 
     @Autowired
     private
     InteractionTimesDto interactionTimesDto;
 
-    @Autowired
-    private
-    InteractionTimesService interactionTimesService;
+//    @Autowired
+//    private
+//    InteractionTimesService interactionTimesService;
 
 
     HueRepository(String ipAddress, String user) {
@@ -49,7 +49,7 @@ class HueRepository {
                     @Override
                     public void onResponse(@NonNull Call<okhttp3.ResponseBody> call, @NonNull Response<okhttp3.ResponseBody> response) {
                         if (response.body() != null) {
-                            interactionTimesService.incrementInteractionTimes(interactionTimesDto);
+//                            interactionTimesService.incrementInteractionTimes(interactionTimesDto);
                         }
                     }
 

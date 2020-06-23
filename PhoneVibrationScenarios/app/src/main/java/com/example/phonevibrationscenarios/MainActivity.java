@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     then it vibrates 100 milliseconds => stops for 4 seconds (4000 milliseconds),
 
                 */
-                long[] pattern = {4000, 200, 3000, 100, 4000, 200, 3000, 200, 3000, 200, 3000};
+                long[] pattern = {10000, 100, 1000, 100, 1000, 100, 8000, 100, 1000, 100, 1000};
                 vibrator.vibrate(pattern, -1);
             }
         });
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                long[] pattern = {4000, 200, 3000, 100, 4000, 200, 3000, 200, 3000, 200, 3000};
+                long[] pattern = {10000, 200, 1000, 200, 1000, 200, 8000, 200, 1000, 200, 1000};
                 vibrator.vibrate(pattern, -1);
             }
         });
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                long[] pattern = {4000, 200, 3000, 100, 4000, 200, 3000, 200, 3000, 200, 3000};
+                long[] pattern = {10000, 300, 1000, 300, 1000, 300, 8000, 300, 1000, 300, 1000};
                 vibrator.vibrate(pattern, -1);
             }
         });
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                long[] pattern = {4000, 200, 3000, 100, 4000, 200, 3000, 200, 3000, 200, 3000};
+                long[] pattern = {10000, 400, 1000, 400, 1000, 400, 8000, 400, 1000, 400, 1000};
                 vibrator.vibrate(pattern, -1);
             }
         });
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                long[] pattern = {4000, 200, 3000, 100, 4000, 200, 3000, 200, 3000, 200, 3000};
+                long[] pattern = {10000, 500, 1000, 500, 1000, 500, 8000, 500, 1000, 500, 1000};
                 vibrator.vibrate(pattern, -1);
             }
         });

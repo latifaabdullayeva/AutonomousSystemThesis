@@ -31,7 +31,7 @@ public class BackgroundColorChange extends AppCompatActivity {
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-    InteractionRepository interactionRepository;
+//    InteractionRepository interactionRepository;
 
     String beaconTagValue, deviceTypeValue;
     Button redButton, greenButton;
@@ -51,19 +51,19 @@ public class BackgroundColorChange extends AppCompatActivity {
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-        interactionRepository = new InteractionRepository(serverAddress);
+//        interactionRepository = new InteractionRepository(serverAddress);
 
 
         beaconTagValue = getIntent().getStringExtra("BEACONUUID");
         deviceTypeValue = getIntent().getStringExtra("DEVICETYPE");
-        Log.d(TAG, "beaconTagValue = " + beaconTagValue + "; deviceTypeValue = " + deviceTypeValue);
+//        Log.d(TAG, "beaconTagValue = " + beaconTagValue + "; deviceTypeValue = " + deviceTypeValue);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                Log.d(TAG, "checkDistanceForProxemics()...");
+//                Log.d(TAG, "checkDistanceForProxemics()...");
                 distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
                     @Override
                     public void onResponse(Call<ApiDistanceResponse> call, Response<ApiDistanceResponse> response) {
@@ -75,7 +75,7 @@ public class BackgroundColorChange extends AppCompatActivity {
                         if (distanceResponse != null) {
                             int count = 0;
                             for (Distance distance : distanceResponse.getContent()) {
-                                if (distance.getFromDevice().getDeviceType().equals("Mascot") && distance.getToDevice().getDeviceType().equals("Tablet") && distance.getDistance() <= 45) {
+                                if (distance.getFromDevice().getDeviceType().equals("Mascot") && distance.getToDevice().getDeviceType().equals("Tablet") && distance.getDistance() <= 50) {
                                     Log.d(TAG, "Distance fits Proxemics -> " + distance.getDistance() + "; from = " + distance.getFromDevice().getDeviceId() + "; to = " + distance.getToDevice().getDeviceId());
                                     getPersonalityOfApproachingMascot(distance.getFromDevice(), distance.getToDevice().getDeviceId());
                                 } else {
@@ -99,47 +99,8 @@ public class BackgroundColorChange extends AppCompatActivity {
         }, 0, 1000);
     }
 
-//    private void checkProxemicsTheory() {
-//        Log.d(TAG, "checkDistanceForProxemics()...");
-//        distanceRepository.getNetworkRequest(new Callback<ApiDistanceResponse>() {
-//            @Override
-//            public void onResponse(Call<ApiDistanceResponse> call, Response<ApiDistanceResponse> response) {
-//                if (!response.isSuccessful()) {
-//                    Log.d(TAG, "Code: " + response.code());
-//                    return;
-//                }
-//                ApiDistanceResponse distanceResponse = response.body();
-//                if (distanceResponse != null) {
-//                    for (Distance distance : distanceResponse.getContent()) {
-////                        Log.d(TAG, "distance.getDistance() = " + distance.getDistance() +
-////                                "; getFromDevice = " + distance.getFromDevice().getDeviceId() + "(" + distance.getFromDevice().getDeviceType() + ")" +
-////                                "; getToDevice = " + distance.getToDevice().getDeviceId() + "(" + distance.getToDevice().getDeviceType() + ")");
-////                        if (distance.getDistance() >= 46 && distance.getDistance() <= 120) {
-//                        // TODO: if (devicetype is Tablet - Mascot)
-//                        if (distance.getDistance() <= 45) {
-//                            Log.d(TAG, "Distance fits Proxemics -> " + distance.getToDevice());
-//                            if (distance.getFromDevice().getDeviceType().equals("Mascot") && distance.getToDevice().getDeviceType().equals("Tablet")) {
-//                                Log.d(TAG, "Device type fits Proxemics -> ");
-//                                getPersonalityOfApproachingMascot(distance.getFromDevice(), distance.getToDevice().getDeviceId());
-//                            } else {
-//                                Log.d(TAG, "Device type does NOT fit Proxemics");
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Distance does NOT fit Proxemics: " + distance.getDistance());
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ApiDistanceResponse> call, Throwable t) {
-//                Log.d(TAG, t.getMessage());
-//            }
-//        });
-//    }
-
     private void getPersonalityOfApproachingMascot(Device device, Integer myTabletID) {
-        Log.d(TAG, "getPersonalityOfApproachingMascot()...");
+//        Log.d(TAG, "getPersonalityOfApproachingMascot()...");
         personalityRepository.getNetworkRequest(new Callback<ApiPersonalityResponse>() {
             @Override
             public void onResponse(Call<ApiPersonalityResponse> call, Response<ApiPersonalityResponse> response) {
@@ -152,9 +113,9 @@ public class BackgroundColorChange extends AppCompatActivity {
                     for (Personality personality : personalities.getContent()) {
                         if (personality.getPersonality_name().equals(device.getDevicePersonality().getPersonality_name())) {
                             String myColor = personality.getScreen_color();
-                            Log.d(TAG, "myColor = " + myColor);
+//                            Log.d(TAG, "myColor = " + myColor);
                             linearLayout.setBackgroundColor(Color.parseColor(myColor));
-                            interactionRepository.sendNetworkRequest(myTabletID);
+//                            interactionRepository.sendNetworkRequest(myTabletID);
                         }
                     }
                 }

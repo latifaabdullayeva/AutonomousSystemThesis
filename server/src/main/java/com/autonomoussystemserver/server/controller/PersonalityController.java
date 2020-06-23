@@ -19,13 +19,14 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
-        System.out.println("PersonalityController: getPersonality()");
+//        System.out.println("PersonalityController: getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 
     @PostMapping("/personality")
     public ResponseEntity<Personality> createPersonality(@RequestBody PersonalityDto personalityDto) {
-        System.out.println("PersonalityController: createPersonality()");
+        System.out.println("PersonalityController: createPersonality() from DTO: \n" + personalityDto.getPersonality_name() + "; "
+                + personalityDto.getHue_color() + "; " + personalityDto.getMusic_genre() + "; " + personalityDto.getVibration_level());
 
         Personality existingPersonality = personalityRepository.findByPersonalityName(personalityDto.getPersonality_name());
 
@@ -44,6 +45,10 @@ public class PersonalityController {
 
 
             personalityRepository.save(newPersonality);
+
+            System.out.println("PersonalityController: createPersonality(): \n" + newPersonality.getPersonality_name() + "; "
+                    + newPersonality.getHue_color() + "; " + newPersonality.getMusic_genre() + "; " + newPersonality.getVibration_level());
+
             return ResponseEntity.ok(newPersonality);
         }
     }

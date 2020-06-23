@@ -21,7 +21,7 @@ public class PersonalityInitialisation extends AppCompatActivity {
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-    InteractionRepository interactionRepository;
+//    InteractionRepository interactionRepository;
 
     Button nextButton;
 
@@ -42,27 +42,27 @@ public class PersonalityInitialisation extends AppCompatActivity {
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-        interactionRepository = new InteractionRepository(serverAddress);
+//        interactionRepository = new InteractionRepository(serverAddress);
 
         personalityRepository.sendNetworkRequestPers(null, "Openness",
-                "orange", 254, 3488, 220, "#FF9800",
-                3, "pop");
+                "OrangeYellow", 253, 12299, 251, "#fdac22",
+                3, "sophisticated");
 
         personalityRepository.sendNetworkRequestPers(null, "Conscientiousness",
-                "violet", 254, 49460, 150, "#673AB7",
-                4, "rock");
+                "GreenBlue", 253, 34152, 254, "#50ffab",
+                4, "unpretentious");
 
         personalityRepository.sendNetworkRequestPers(null, "Extroversion",
-                "pink", 254, 57805, 198, "#F436BE",
-                5, "classic");
+                "RedOrange", 253, 4008, 252, "#fb4c0c",
+                5, "contemporary");
 
         personalityRepository.sendNetworkRequestPers(null, "Agreeableness",
-                "blue", 254, 47110, 253, "#03A9F4",
-                2, "soul");
+                "PinkWhite", 242, 52489, 87, "#ffbfc8",
+                2, "unpretentious");
 
         personalityRepository.sendNetworkRequestPers(null, "Neuroticism",
-                "yellow", 254, 12828, 52, "#FFEB3B",
-                1, "jazz");
+                "RedBlack", 38, 271, 252, "#d90001",
+                1, "contemporary");
 
         nextButton = findViewById(R.id.nextButton);
         nextButtonListener();

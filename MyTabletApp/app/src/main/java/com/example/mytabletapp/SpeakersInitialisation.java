@@ -43,7 +43,7 @@ public class SpeakersInitialisation extends AppCompatActivity
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-    InteractionRepository interactionRepository;
+//    InteractionRepository interactionRepository;
 
     private BeaconManager beaconManager;
 
@@ -73,7 +73,7 @@ public class SpeakersInitialisation extends AppCompatActivity
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-        interactionRepository = new InteractionRepository(serverAddress);
+//        interactionRepository = new InteractionRepository(serverAddress);
 
         this.deviceListForSpeakers = new ArrayList<>();
         this.tempBeaconListForSpeakers = new ArrayList<>();

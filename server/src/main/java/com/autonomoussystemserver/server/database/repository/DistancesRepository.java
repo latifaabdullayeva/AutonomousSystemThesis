@@ -17,3 +17,19 @@ public interface DistancesRepository extends JpaRepository<Distances, Integer> {
         // HQL
     void delete(Integer fromDevice, Integer toDevice);
 }
+
+/*
+@Modifying
+    @Transactional
+    @Query("UPDATE Distances set distance = :distance WHERE fromDevice.deviceId=:fromDevice and toDevice.deviceId=:toDevice")
+        // HQL
+    void delete(Integer distance, Integer fromDevice, Integer toDevice);
+ */
+
+/*
+ @Modifying
+    @Transactional
+    @Query("DELETE FROM Distances WHERE fromDevice.deviceId=:fromDevice and toDevice.deviceId=:toDevice")
+        // HQL
+    void delete(Integer fromDevice, Integer toDevice);
+ */
