@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">PhoneVibrationScenarios</string>
-    <string name="scenario1">Scenario 1</string>
-    <string name="scenario2">Scenario 2</string>
-    <string name="scenario3">Scenario 3</string>
-    <string name="scenario4">Scenario 4</string>
-    <string name="scenario5">Scenario 5</string>
-</resources>
