@@ -15,7 +15,6 @@ import com.example.mytabletapp.api.devices.ApiDevicesResponse;
 import com.example.mytabletapp.api.devices.Device;
 import com.example.mytabletapp.api.devices.DeviceRepository;
 import com.example.mytabletapp.api.distance.DistanceRepository;
-import com.example.mytabletapp.api.interaction.InteractionRepository;
 import com.example.mytabletapp.api.personality.PersonalityRepository;
 
 import org.altbeacon.beacon.Beacon;
@@ -43,7 +42,6 @@ public class SpeakersInitialisation extends AppCompatActivity
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-//    InteractionRepository interactionRepository;
 
     private BeaconManager beaconManager;
 
@@ -73,7 +71,6 @@ public class SpeakersInitialisation extends AppCompatActivity
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-//        interactionRepository = new InteractionRepository(serverAddress);
 
         this.deviceListForSpeakers = new ArrayList<>();
         this.tempBeaconListForSpeakers = new ArrayList<>();
@@ -97,7 +94,6 @@ public class SpeakersInitialisation extends AppCompatActivity
         Intent myIntent = new Intent(SpeakersInitialisation.this, TabletInitialisation.class);
         beaconValue = beaconListForSpeakers.get(position);
         Toast.makeText(SpeakersInitialisation.this, "Selected Beacon: " + beaconValue, Toast.LENGTH_LONG).show();
-//        textViewSelectedBeacon.setText(getString(R.string.selectedBeaconForSpeakers, beaconValue));
     }
 
     @Override
@@ -141,7 +137,6 @@ public class SpeakersInitialisation extends AppCompatActivity
                             if (!tempBeaconListForSpeakers.contains(beacon.getId1().toString())) {
                                 tempBeaconListForSpeakers.add(beacon.getId1().toString());
                                 // if you want to get ID of beacon -> .getId1();
-                                // maybeSolved TODO: do not show this beacon if it is already in the database
                             }
                         }
 

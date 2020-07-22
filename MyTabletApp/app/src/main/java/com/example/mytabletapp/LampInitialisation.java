@@ -15,7 +15,6 @@ import com.example.mytabletapp.api.devices.ApiDevicesResponse;
 import com.example.mytabletapp.api.devices.Device;
 import com.example.mytabletapp.api.devices.DeviceRepository;
 import com.example.mytabletapp.api.distance.DistanceRepository;
-import com.example.mytabletapp.api.interaction.InteractionRepository;
 import com.example.mytabletapp.api.personality.PersonalityRepository;
 
 import org.altbeacon.beacon.Beacon;
@@ -43,7 +42,6 @@ public class LampInitialisation extends AppCompatActivity
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-    InteractionRepository interactionRepository;
 
     private BeaconManager beaconManager;
 
@@ -73,7 +71,6 @@ public class LampInitialisation extends AppCompatActivity
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-        interactionRepository = new InteractionRepository(serverAddress);
 
         this.deviceListForLamp = new ArrayList<>();
         this.tempBeaconListForLamp = new ArrayList<>();
@@ -141,7 +138,6 @@ public class LampInitialisation extends AppCompatActivity
                             if (!tempBeaconListForLamp.contains(beacon.getId1().toString())) {
                                 tempBeaconListForLamp.add(beacon.getId1().toString());
                                 // if you want to get ID of beacon -> .getId1();
-                                // maybeSolved TODO: do not show this beacon if it is already in the database
                             }
                         }
 
@@ -210,12 +206,15 @@ public class LampInitialisation extends AppCompatActivity
             if (beaconValue != null) {
                 deviceRepository.sendNetworkRequest(null, null, deviceTypeValue, beaconValue, null);
 
-                // Before starting  the ShowAllDIst Activity, check if the deviceRepository.sendNetworkRequest was successful or not
-                // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+                // Before starting  the ShowAllDIst Activity, check if the
+                // deviceRepository.sendNetworkRequest was successful or not
+                // The way how I check, I do getRequest and check if the beacon
+                // that I have saved is in the table.
                 // If not, then I will consider the request as failed
                 deviceRepository.getNetworkRequest(new Callback<ApiDevicesResponse>() {
                     @Override
-                    public void onResponse(Call<ApiDevicesResponse> call, Response<ApiDevicesResponse> response) {
+                    public void onResponse(Call<ApiDevicesResponse> call,
+                                           Response<ApiDevicesResponse> response) {
 
                         if (!response.isSuccessful()) {
                             Log.d(TAG, "getNetworkRequest DeviceRepository Code: " + response.code());
@@ -224,14 +223,19 @@ public class LampInitialisation extends AppCompatActivity
                         ApiDevicesResponse devicesResponse = response.body();
                         if (devicesResponse != null) {
                             for (Device device : devicesResponse.getContent()) {
-                                // The way how I check, I do getRequest and check if the beacon that I have saved is in the table.
+                                // The way how I check, I do getRequest and check
+                                // if the beacon that I have saved is in the table.
                                 // If not, then I will consider the request as failed
                                 if (device.getBeaconUuid().equals(beaconValue)) {
-                                    Toast.makeText(LampInitialisation.this, "You choice was successfully saved! :)", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LampInitialisation.this,
+                                            "You choice was successfully saved! :)",
+                                            Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d(TAG, "getNetworkRequest RESPONSE WAS NOT SUCCESSFUL :(");
                                     // Show a user a message that we could not save your data
-                                    Toast.makeText(LampInitialisation.this, "SOMETHING WENT WRONG :(\n We could not save your data", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LampInitialisation.this,
+                                            "SOMETHING WENT WRONG :(\n We could not save your data",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {

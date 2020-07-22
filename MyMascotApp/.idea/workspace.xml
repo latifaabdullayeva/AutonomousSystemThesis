@@ -17,40 +17,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3bec802-f35f-4c4e-a9dc-e6135509ab8f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/Initialisation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MyMascotApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/MyMascotApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/ShowAllDistances.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/DeviceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/devices/DeviceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/distance/DistanceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/ApiInteractionResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/Interaction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/InteractionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/interaction/InteractionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/personality/PersonalityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mymascotapp/network/api/personality/PersonalityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/recyclerview_row.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/ServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DevicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DevicesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DistancesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/DistancesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/HueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/HueRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/InteractionTimesController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/PersonalityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/PersonalityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/TestAudioCallbackAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/model/HueDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/model/InteractionTimesDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/model/PersonalityDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/controller/model/PersonalityDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/model/InteractionTimes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/model/Personality.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/model/Personality.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/repository/DistancesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/repository/DistancesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/database/repository/InteractionTimesRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/exception/ResourceNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/autonomoussystemserver/server/service/InteractionTimesService.java" beforeDir="false" />
-    </list>
+    <list default="true" id="c3bec802-f35f-4c4e-a9dc-e6135509ab8f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,7 +336,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.26180258" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.26180258" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -383,7 +350,7 @@
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
-      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="5" visible="true" weight="0.9219331" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Build" order="8" weight="0.2639405" />

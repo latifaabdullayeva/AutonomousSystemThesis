@@ -27,8 +27,6 @@ public class DeviceRepository extends AppCompatActivity {
 
     public DeviceRepository(String address) {
 
-        //        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
-        // IP uni: "http://10.20.130.243:8080/"
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -56,8 +54,6 @@ public class DeviceRepository extends AppCompatActivity {
     }
 
     public void sendNetworkRequest(Integer deviceId, String deviceName, String deviceType, String beaconUuid, Integer devicePersonality) {
-//        Intent myIntent = new Intent(DeviceRepository.this, Initialisation.class);
-
         Device deviceRequest;
         if (devicePersonality != null) {
             Personality personality = new Personality(devicePersonality);
@@ -73,7 +69,6 @@ public class DeviceRepository extends AppCompatActivity {
                 try {
                     if (response.body() != null) {
                         Log.d(TAG, "success! \n" + response.body().string());
-//                        myIntent.putExtra("DevRequestSTATUS", "success");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -91,4 +86,3 @@ public class DeviceRepository extends AppCompatActivity {
         deviceService.getDevices().enqueue(callback);
     }
 }
-// Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL

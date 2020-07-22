@@ -22,7 +22,6 @@ public class DistanceRepository {
     public DistanceRepository(String address) {
         Log.d("FLOW", "DistanceRepository");
 
-//        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -66,4 +65,3 @@ public class DistanceRepository {
 
     }
 }
-// Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL

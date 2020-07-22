@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import com.example.mytabletapp.api.devices.DeviceRepository;
 import com.example.mytabletapp.api.distance.DistanceRepository;
-import com.example.mytabletapp.api.interaction.InteractionRepository;
 import com.example.mytabletapp.api.personality.PersonalityRepository;
 
 import java.util.Objects;
@@ -21,7 +20,6 @@ public class PersonalityInitialisation extends AppCompatActivity {
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-//    InteractionRepository interactionRepository;
 
     Button nextButton;
 
@@ -42,26 +40,28 @@ public class PersonalityInitialisation extends AppCompatActivity {
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-//        interactionRepository = new InteractionRepository(serverAddress);
 
+        // Here we send to the database all values assigned to each personality trait
+        // Example, Neuroticism assigned with BloodRed color, contemporary music and level-1 (100 ms vibration)
+        // Example, Agreeableness assigned with Pink color, unpretentious music and level-2 (200 ms vibration)
         personalityRepository.sendNetworkRequestPers(null, "Openness",
-                "OrangeYellow", 253, 12299, 251, "#fdac22",
+                "Yellow", 253, 12299, 251, "#fdac22",
                 3, "sophisticated");
 
         personalityRepository.sendNetworkRequestPers(null, "Conscientiousness",
-                "GreenBlue", 253, 34152, 254, "#50ffab",
+                "Turquoise", 253, 34152, 254, "#50ffab",
                 4, "unpretentious");
 
         personalityRepository.sendNetworkRequestPers(null, "Extroversion",
-                "RedOrange", 253, 4008, 252, "#fb4c0c",
+                "Orange", 253, 4008, 252, "#fb4c0c",
                 5, "contemporary");
 
         personalityRepository.sendNetworkRequestPers(null, "Agreeableness",
-                "PinkWhite", 242, 52489, 87, "#ffbfc8",
+                "Pink", 242, 52489, 87, "#ffbfc8",
                 2, "unpretentious");
 
         personalityRepository.sendNetworkRequestPers(null, "Neuroticism",
-                "RedBlack", 38, 271, 252, "#d90001",
+                "BloodRed", 38, 271, 252, "#d90001",
                 1, "contemporary");
 
         nextButton = findViewById(R.id.nextButton);
