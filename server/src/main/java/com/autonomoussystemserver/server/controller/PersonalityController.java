@@ -19,7 +19,6 @@ public class PersonalityController {
 
     @GetMapping("/personality")
     public Page<Personality> getPersonality(Pageable pageable) {
-//        System.out.println("PersonalityController: getPersonality()");
         return personalityRepository.findAll(pageable);
     }
 

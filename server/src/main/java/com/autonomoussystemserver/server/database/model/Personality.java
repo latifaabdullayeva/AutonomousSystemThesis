@@ -99,12 +99,10 @@ public class Personality {
     }
 
     public String getMusic_genre() {
-//        System.out.println("Personality getMusic_genre() = " + music_genre);
         return music_genre;
     }
 
     public void setMusic_genre(String music_genre) {
         this.music_genre = music_genre;
-//        System.out.println("Personality setMusic_genre() = " + music_genre);
     }
 }

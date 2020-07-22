@@ -40,10 +40,9 @@ public class MainActivity extends AppCompatActivity {
         String devNameValue = preferences.getString("text3", "");
         String persValue = preferences.getString("text4", "");
 
-        // TODO: change to beacon not deviceTypeValue
         // here on app start we check if beacon is already saved in your phone, according to that it goes
         // either to device Initialisation, or if exists -> it starts measuring all distances
-        if (TextUtils.isEmpty(deviceTypeValue)) { // beaconValue, when you change it, test It
+        if (TextUtils.isEmpty(deviceTypeValue)) {
             Log.d(TAG, "MainAct if --> " + "deviceTypeValue: " + deviceTypeValue +
                     "; devNameValue " + devNameValue + "; persValue " + persValue + "; beaconValue " + beaconValue);
             verifyBluetooth();

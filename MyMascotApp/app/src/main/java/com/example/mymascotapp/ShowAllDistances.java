@@ -12,7 +12,6 @@ import com.example.mymascotapp.network.api.devices.ApiDevicesResponse;
 import com.example.mymascotapp.network.api.devices.Device;
 import com.example.mymascotapp.network.api.devices.DeviceRepository;
 import com.example.mymascotapp.network.api.distance.DistanceRepository;
-import com.example.mymascotapp.network.api.interaction.InteractionRepository;
 import com.example.mymascotapp.network.api.personality.ApiPersonalityResponse;
 import com.example.mymascotapp.network.api.personality.Personality;
 import com.example.mymascotapp.network.api.personality.PersonalityRepository;
@@ -37,10 +36,8 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
     DistanceRepository distanceRepository;
     DeviceRepository deviceRepository;
     PersonalityRepository personalityRepository;
-//    InteractionRepository interactionRepository;
 
     String beaconTagValue, deviceTypeValue, mascotNameValue, devicePersValue;
-    int fromMascotId, toMascotId;
 
     private BeaconManager beaconManager;
 
@@ -58,7 +55,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
         distanceRepository = new DistanceRepository(serverAddress);
         deviceRepository = new DeviceRepository(serverAddress);
         personalityRepository = new PersonalityRepository(serverAddress);
-//        interactionRepository = new InteractionRepository(serverAddress);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -91,7 +87,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
                     Log.d("test", "If personality DISTANCE == : " + round(beacon.getDistance() * 100));
                     vibrator.vibrate(100 * personality.getVibration_level());
                     Log.d(TAG, "personality.getVibration_level() = " + device.getDevicePersonality().getVibration_level());
-//                    interactionRepository.sendNetworkRequest(myMascotId);
                 }
             }
         }
@@ -105,7 +100,6 @@ public class ShowAllDistances extends AppCompatActivity implements BeaconConsume
 
         // We check whether user's device and the approaching device both are Mascots and their distance is less or equal 45 cm
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        // TODO: if (devicetype is Mascot - Mascot)
         if (round(beacon.getDistance() * 100) <= 45 && deviceTypeValue.equals("Mascot") && device.getDeviceType().equals("Mascot")) {
             Log.d("test", "If DISTANCE == : " + deviceTypeValue + "; " +
                     device.getDeviceType() + "; " + round(beacon.getDistance() * 100));

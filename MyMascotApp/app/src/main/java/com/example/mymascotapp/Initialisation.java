@@ -156,9 +156,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
 
                     if (beacons.size() > 0) {
                         for (Beacon beacon : beacons) {
-//                                Log.d(TAG, "beacons = " + beacons.toString());
-//                                Log.d(TAG, "beacon = " + beacon.getId1().toString());
-
                             if (!tempBeaconList.contains(beacon.getId1().toString())) {
                                 tempBeaconList.add(beacon.getId1().toString());
                             }
@@ -194,11 +191,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
     }
 
     public void checkDevButton(View view) {
-        int selectedRadioDevTypeId = radioGroupDevType.getCheckedRadioButtonId();
-        RadioButton radioButtonDevType;
-        radioButtonDevType = findViewById(selectedRadioDevTypeId);
-//        deviceTypeValue = radioButtonDevType.getText().toString();
-
         mascotNameEditText = findViewById(R.id.mascotNameEditText);
         personalityLayout = findViewById(R.id.radioGroupPersonality);
     }
@@ -240,8 +232,6 @@ public class Initialisation extends AppCompatActivity implements BeaconConsumer,
                     if (selectedRadioPersId == -1) {
                         Toast.makeText(Initialisation.this, "No Personality for Device selected", Toast.LENGTH_SHORT).show();
                     } else {
-                        // maybeSolved TODO: DO NOT DELETE: may need it later
-//                            saveData();
                         intent.putExtra("DEVICENAME", mascotValue);
                         intent.putExtra("PERSONALITY", devicePersonalityValue);
                     }

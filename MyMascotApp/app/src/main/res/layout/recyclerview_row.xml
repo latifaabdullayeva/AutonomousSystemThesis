@@ -6,12 +6,6 @@
     android:paddingTop="5dp"
     android:paddingBottom="10dp">
 
-    <!--    <CheckedTextView-->
-    <!--        android:id="@+id/checkedTextView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:checkMark="?android:attr/listChoiceIndicatorSingle" />-->
-
     <TextView
         android:id="@+id/beaconItem"
         android:layout_width="match_parent"

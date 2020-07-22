@@ -21,11 +21,10 @@ public class DevicesController {
     @Autowired
     private DevicesRepository devicesRepository;
 
-    // maps HTTP GET requests onto specific handler methods. It is a composed annotation that acts as a shortcut
-    // for @RequestMapping(method = RequestMethod.GET).
+    // maps HTTP GET requests onto specific handler methods. It is a composed annotation that acts as
+    // a shortcut for @RequestMapping(method = RequestMethod.GET).
     @GetMapping("/devices")
     public Page<Devices> getDevices(Pageable pageable) {
-//        System.out.println("DevicesController: getDevices()");
         return devicesRepository.findAll(pageable);
     }
 

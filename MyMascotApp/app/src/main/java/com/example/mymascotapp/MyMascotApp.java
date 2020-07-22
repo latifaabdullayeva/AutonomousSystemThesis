@@ -22,7 +22,6 @@ public class MyMascotApp extends Application {
         beaconManager.getBeaconParsers().add(new BeaconParser()
                 .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24")
         );
-        // BeaconManager.setDebug(true);
 
         // enables auto battery saving of about 60%
         new BackgroundPowerSaver(this);

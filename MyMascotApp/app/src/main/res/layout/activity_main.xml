@@ -28,14 +28,4 @@
         android:text="@string/let_s_go_to_questionnare"
         android:textColor="#ffffff" />
 
-    <!--<Button-->
-    <!--android:id="@+id/vibtationButton"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:background="#FFA71058"-->
-    <!--android:text="VIBRATE!!"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textSize="20sp" />-->
-
 </LinearLayout>

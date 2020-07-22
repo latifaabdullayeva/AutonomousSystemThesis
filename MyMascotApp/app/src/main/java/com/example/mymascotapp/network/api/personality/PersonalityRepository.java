@@ -22,8 +22,6 @@ public class PersonalityRepository {
     public PersonalityRepository(String address) {
         Log.d("FLOW", "PersonalityRepository");
 
-        // retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/")
-        // when you connect uni wi-fi (10.20.130.243)
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -39,8 +37,11 @@ public class PersonalityRepository {
         Log.d(TAG, "PersonalityRepo");
     }
 
-    public void sendNetworkRequestPers(Integer id, String personality_name, String hue_color, Integer bri, Integer hue, Integer sat, String screen_color, Integer vibration_level, String music_genre) {
-        Personality personalityRequest = new Personality(null, personality_name, hue_color, bri, hue, sat, screen_color, vibration_level, music_genre);
+    public void sendNetworkRequestPers(Integer id, String personality_name, String hue_color,
+                                       Integer bri, Integer hue, Integer sat, String screen_color,
+                                       Integer vibration_level, String music_genre) {
+        Personality personalityRequest = new Personality(null, personality_name,
+                hue_color, bri, hue, sat, screen_color, vibration_level, music_genre);
         Log.d(TAG, "Personality sendNetReq");
 
         personalityService.createPersonality(personalityRequest).enqueue(new Callback<ResponseBody>() {
@@ -70,4 +71,3 @@ public class PersonalityRepository {
         Log.d(TAG, "Personality getNetworkRequest");
     }
 }
-// Write in terminal ( ./ngrok http 8080 ) in order to ger bseURL
