@@ -15,9 +15,9 @@ To set up the Spring server fo the first time perform the following instructions
 # Setting up the database
 To set up the server for the first time perform the following steps:
 * Download pgAdmin tool EDB installer from the link:
-    
+    ```
     https://www.enterprisedb.com/downloads/postgres-postgresql-downloads.
-    
+    ```
     You can choose the alternative methods on how to install the postgres.
 * When installing the database, specify the superusername and the password
     * Default port is 5432
@@ -30,9 +30,9 @@ To set up the server for the first time perform the following steps:
 # Setting up the Philips Hue bridge
 To set up the Philips Hue bridge for the first time perform the the following steps:
 * Visit the following website to get the internal ip address of the Philips Hue bridge:
-
+```
 https://discovery.meethue.com
-
+```
 * Visit the following website by using the above-mentioned ip address: 
 ```
 https://<bridgeipaddress>/debug/clip.html
