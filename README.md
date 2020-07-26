@@ -45,3 +45,16 @@ https://<bridgeipaddress>/debug/clip.html
 * Press the round button on your hue bridge device and then press the POST
 button again on the website.
 * As a response you will get a username that Philips Hue bridge created for you.
+
+# Starting the server
+To run the server for the first time perform the following steps:
+* Start the server from AutonomousSystemThesis/server folder with the following command and the hibernate will generate all necessary tables for the system:
+```
+mvn spring-boot:run -e -X -Dspring-boot.run.arguments=–hueUsername=<hue_username>,–hueIPAddress=<hue_ip_address>,– musicFolderPath=<music_folder_path>
+```
+* Start the server broadcast with the following command:
+```
+dns-sd -R mythesis _socialiot._tcp local 8080
+```
+When running the server for the second time, you do not need to perform steps for setting up the database.
+
