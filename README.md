@@ -1,21 +1,19 @@
 # AutonomousSystemThesis
 Master Thesis Project
 
-Supervisor: Donald Degraen, German Research Center for Artificial Intelligence, Saarbrücken, Germany
-
 * The paper related to the project is at [GitHub](https://github.com/latifaabdullayeva/Thesis)
 
 
-Notes for me: PostgreSQL 10: 
+# Setting up the database
+To set up the server for the first time perform the following steps:
+* Download pgAdmin tool EDB installer from the link:
+    https://www.enterprisedb.com/downloads/postgres-postgresql-downloads.
+    You can choose the alternative methods on how to install the postgres.
+* When installing the database, specify the superusername and the password
+    * Default port is 5432
+    * Default hostname is localhost
+* When connected to the postgresql server in pgAdmin, create a new database with 'autonomousSystem' name.
+    The database name must match to the name specified in 'application.properties' file of a server.
+    When you choose a custom name for a database, specify it in a server configuration file.
+* Specify the database username and password in 'application.properties'.
 
-Directory under which you store data: /Library/PostgreSQL/10/data
-
-Port number the server should listen on: 5432
-
-http://127.0.0.1:56084/browser/
-
-To run the server run:
-
-```
-‘mvn spring-boot:run -e -X -Dspring-boot.run.arguments=--hueUsername=<yourHueUserName>,--hueIPAddress=<yourHueBridgeIpAddress>’
-```
