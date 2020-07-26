@@ -58,3 +58,13 @@ dns-sd -R mythesis _socialiot._tcp local 8080
 ```
 When running the server for the second time, you do not need to perform steps for setting up the database.
 
+# Setting up the client applications
+To set up the client application for the first time perform the following steps:
+* Turn on the Bluetooth and the location on your tablet.
+* Start the tablet application by running MyTabletApp.
+* Grant the required permission for the tablet application.
+* Register a tablet, a lamp, and the speakers in the system by following the instructions on the screen.
+* Turn on the Bluetooth and the location on your smartphone.
+* Start the mascot application by running MyMascotApp.
+* Grant the required permission for the mascot application.
+* Register your mascot in the system by following the instructions on the screen.
