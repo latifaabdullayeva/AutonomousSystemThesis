@@ -27,3 +27,21 @@ To set up the server for the first time perform the following steps:
     When you choose a custom name for a database, specify it in a server configuration file.
 * Specify the database username and password in 'application.properties'.
 
+# Setting up the Philips Hue bridge
+To set up the Philips Hue bridge for the first time perform the the following steps:
+* Visit the following website to get the internal ip address of the Philips Hue bridge:
+
+https://discovery.meethue.com
+
+* Visit the following website by using the above-mentioned ip address: 
+```
+https://<bridgeipaddress>/debug/clip.html
+``` 
+* Create a randomly generated username for your philips hue bridge by:
+    * changing the URL to api/
+    * inserting a Body such as "devicetype":"hueApp" 
+    * pressing the POST button to create a new device
+* The response that you will get is depicted in Figure A.1 in Appendix section of the thesis.
+* Press the round button on your hue bridge device and then press the POST
+button again on the website.
+* As a response you will get a username that Philips Hue bridge created for you.
