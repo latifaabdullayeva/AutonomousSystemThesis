@@ -3,6 +3,13 @@ Master Thesis Project
 
 * The paper related to the project is at [GitHub](https://github.com/latifaabdullayeva/Thesis)
 
+* The publication of the thesis is at [GitHub Thesis Publication](https://github.com/latifaabdullayeva/Thesis/tree/master/Thesis%20Paper)
+
+* The presentation for thesis is at [GitHub Thesis Presentation](https://github.com/latifaabdullayeva/Thesis/tree/master/Thesis%20Presentation)
+
+* The source code in R and the data from experiments are at [GitHub Thesis Statistical Analysis](https://github.com/latifaabdullayeva/ThesisStatisticalAnalysis)
+
+
 # Setting up the server.
 To set up the Spring server fo the first time perform the following instructions:
 * Install JDK version 1.8.
