@@ -1,4 +1,4 @@
-# AutonomousSystemThesis
+# autonomous-system-thesis
 Master Thesis Project
 
 * The publication of the thesis is at [GitHub Thesis Publication](https://github.com/latifaabdullayeva/Thesis/tree/master/Thesis%20Paper)
